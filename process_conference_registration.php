@@ -1,6 +1,8 @@
 <?php
-// process_conference_registration.php
+// process_conference_registration.php - Enhanced with duplicate email handling
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // Include required files
 require_once 'config/database.php';
@@ -11,8 +13,15 @@ require_once 'classes/BillDeskIntegration.php';
 require_once 'utils/ValidationHelper.php';
 
 // Initialize database connection
-$database = new Database();
-$db = $database->connect();
+try {
+    $database = new Database();
+    $db = $database->connect();
+} catch (Exception $e) {
+    $_SESSION['error'] = 'Database connection failed. Please try again later.';
+    $_SESSION['form_data'] = $_POST;
+    header('Location: registrationform.php?error=1');
+    exit;
+}
 
 // Initialize classes
 $registration = new ConferenceRegistration($db);
@@ -35,43 +44,59 @@ try {
         $paperTitle = isset($_POST['txtPaperTitle']) ? ValidationHelper::sanitizeInput($_POST['txtPaperTitle']) : null;
         $amount = floatval($_POST['txtAmount']);
         
-        // Validation
+        // Comprehensive validation
         $errors = [];
         
+        // Validate required fields
         if (!ValidationHelper::validateRequired($name) || strlen($name) < 2) {
             $errors[] = "Name must be at least 2 characters long";
         }
         
         if (!ValidationHelper::validateEmail($email)) {
-            $errors[] = "Invalid email address";
+            $errors[] = "Invalid email address format";
         }
         
         if (!ValidationHelper::validateMobile($mobile)) {
-            $errors[] = "Invalid mobile number";
+            $errors[] = "Invalid mobile number. Please enter a 10-digit number";
         }
         
         if ($category == '0') {
-            $errors[] = "Please select a category";
+            $errors[] = "Please select a participant category";
         }
         
-        if (empty($ieeeeMember) || empty($nationality) || empty($earlyBird)) {
-            $errors[] = "Please fill all required registration options";
+        if (empty($ieeeeMember) || !in_array($ieeeeMember, ['1', '2'])) {
+            $errors[] = "Please select IEEE membership status";
+        }
+        
+        if (empty($nationality) || !in_array($nationality, ['1', '2'])) {
+            $errors[] = "Please select nationality";
+        }
+        
+        if (empty($earlyBird) || !in_array($earlyBird, ['1', '2'])) {
+            $errors[] = "Please select early bird registration option";
         }
         
         if ($amount <= 0) {
-            $errors[] = "Invalid amount";
+            $errors[] = "Invalid registration amount";
         }
         
-        // Check if user already exists
+        // Check for duplicate email registration
         $existingUser = $registration->getRegistrationByEmail($email);
         if ($existingUser) {
-            $errors[] = "Registration with this email already exists";
+            $errors[] = "A registration with this email address already exists. Registration ID: " . $existingUser['iRegId'] . ". If you need to make changes, please contact support.";
+        }
+        
+        // Check for duplicate mobile number (optional but recommended)
+        $cleanMobile = ValidationHelper::cleanMobileNumber($mobile);
+        $existingMobile = $registration->getRegistrationByMobile($cleanMobile);
+        if ($existingMobile && $existingMobile['sEmail'] !== $email) {
+            $errors[] = "This mobile number is already registered with another email address. Please use a different mobile number or contact support.";
         }
         
         // Validate amount calculation
         $calculatedAmount = $registration->calculateAmount($category, $earlyBird, $nationality, $ieeeeMember, $email);
         if (abs($amount - $calculatedAmount) > 0.01) {
-            $errors[] = "Amount mismatch. Please refresh and try again.";
+            $errors[] = "Amount mismatch detected. Expected: ₹" . number_format($calculatedAmount, 2) . ", Received: ₹" . number_format($amount, 2) . ". Please refresh the page and try again.";
         }
         
         // Handle file upload if IEEE member
@@ -84,15 +109,26 @@ try {
                 $uploadResult = $fileHandler->uploadFile($_FILES['paperUpload']);
                 if ($uploadResult['success']) {
                     $paperUploadUrl = $uploadResult['url'];
+                    error_log("File uploaded successfully: " . $paperUploadUrl);
                 } else {
-                    $errors[] = $uploadResult['message'];
+                    $errors[] = "File upload failed: " . $uploadResult['message'];
                 }
             }
         }
         
+        // Paper details validation for IEEE members
+        if ($ieeeeMember == '1') {
+            $paperErrors = ValidationHelper::validatePaperDetails($paperId, $paperTitle, $ieeeeMember);
+            if (!empty($paperErrors)) {
+                $errors = array_merge($errors, array_values($paperErrors));
+            }
+        }
+        
+        // If there are validation errors, redirect back with errors
         if (!empty($errors)) {
             $_SESSION['errors'] = $errors;
             $_SESSION['form_data'] = $_POST;
+            error_log("Registration validation failed: " . json_encode($errors));
             header('Location: registrationform.php?error=1');
             exit;
         }
@@ -121,7 +157,7 @@ try {
         $ieeeeMemberText = ($ieeeeMember == '1') ? 'Yes' : 'No';
         $nationalityText = ($nationality == '1') ? 'Indian' : 'Foreign';
         $earlyBirdText = ($earlyBird == '1') ? 'Yes' : 'No';
-        $nielitText = $nielit ? (($nielit == '1') ? 'Yes' : 'No') : null;
+        $nielitText = $nielit ? (($nielit == '1') ? 'Yes' : 'No') : 'No';
         
         // Prepare registration data
         $registrationData = [
@@ -135,49 +171,82 @@ try {
             'paper_id' => $paperId,
             'paper_title' => $paperTitle,
             'name' => $name,
-            'mobile' => $mobile,
+            'mobile' => $cleanMobile,
             'email' => $email,
             'paper_upload' => $paperUploadUrl,
             'amount' => $amount,
             'ip_address' => $ipAddress
         ];
         
-        // Create registration record
-        $registrationId = $registration->createRegistration($registrationData);
-        
-        if (!$registrationId) {
-            throw new Exception("Failed to create registration record");
-        }
-        
-        // Create payment record
-        $payment->createPaymentRecord($registrationId);
-        
-        // Generate unique order ID
-        $orderId = 'UPWIECON2025_' . $registrationId . '_' . time();
-        
-        // Prepare customer info for payment
-        $customerInfo = [
-            'name' => $name,
+        // Log registration attempt
+        error_log("Registration attempt: " . json_encode([
             'email' => $email,
-            'mobile' => $mobile
-        ];
+            'name' => $name,
+            'category' => $categoryText,
+            'amount' => $amount,
+            'ip' => $ipAddress
+        ]));
         
-        // Create BillDesk payment request
-        $paymentRequest = $billDesk->createPaymentRequest($orderId, $amount, $customerInfo);
+        // Begin database transaction
+        $db->beginTransaction();
         
-        // Update payment record with order ID
-        $payment->updatePaymentStatus($registrationId, $orderId, $amount, 'PENDING');
-        
-        // Store registration info in session
-        $_SESSION['registration_id'] = $registrationId;
-        $_SESSION['order_id'] = $orderId;
-        $_SESSION['customer_name'] = $name;
-        
-        // BillDesk payment gateway URLs
-        $billDeskUrl = 'https://pgi.billdesk.com/pgidsk/PGIMerchantPayment'; // Test URL
-        // $billDeskUrl = 'https://www.billdesk.com/pgidsk/PGIMerchantPayment'; // Production URL
-        
-        ?>
+        try {
+            // Create registration record
+            $registrationId = $registration->createRegistration($registrationData);
+            
+            if (!$registrationId) {
+                throw new Exception("Failed to create registration record");
+            }
+            
+            error_log("Registration created successfully with ID: " . $registrationId);
+            
+            // Create payment record
+            $paymentCreated = $payment->createPaymentRecord($registrationId);
+            
+            if (!$paymentCreated) {
+                throw new Exception("Failed to create payment record");
+            }
+            
+            // Generate unique order ID
+            $orderId = 'UPWIECON2025_' . $registrationId . '_' . time();
+            
+            // Prepare customer info for payment
+            $customerInfo = [
+                'name' => $name,
+                'email' => $email,
+                'mobile' => $cleanMobile
+            ];
+            
+            // Create BillDesk payment request
+            $paymentRequest = $billDesk->createPaymentRequest($orderId, $amount, $customerInfo);
+            
+            if (!$paymentRequest) {
+                throw new Exception("Failed to create payment request");
+            }
+            
+            // Update payment record with order ID
+            $paymentUpdated = $payment->updatePaymentStatus($registrationId, $orderId, $amount, 'INITIATED');
+            
+            if (!$paymentUpdated) {
+                throw new Exception("Failed to update payment record with order ID");
+            }
+            
+            // Commit transaction
+            $db->commit();
+            
+            // Store registration info in session
+            $_SESSION['registration_id'] = $registrationId;
+            $_SESSION['order_id'] = $orderId;
+            $_SESSION['customer_name'] = $name;
+            $_SESSION['customer_email'] = $email;
+            $_SESSION['registration_amount'] = $amount;
+            
+            error_log("Registration and payment setup completed successfully for Registration ID: " . $registrationId);
+            
+            // BillDesk payment gateway URLs
+            $billDeskUrl = $billDesk->getPaymentUrl(true); // true for test mode
+            
+            ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -186,6 +255,12 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Payment Gateway</title>
     <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -203,7 +278,7 @@ try {
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         padding: 40px;
         text-align: center;
-        max-width: 500px;
+        max-width: 600px;
         width: 100%;
     }
 
@@ -229,6 +304,7 @@ try {
     .redirect-message {
         color: #666;
         margin-bottom: 30px;
+        line-height: 1.5;
     }
 
     .spinner {
@@ -263,7 +339,7 @@ try {
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;
-        padding: 5px 0;
+        padding: 8px 0;
         border-bottom: 1px solid #eee;
     }
 
@@ -274,12 +350,62 @@ try {
 
     .detail-value {
         color: #666;
+        font-weight: 500;
+    }
+
+    .amount-highlight {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px 0;
+        text-align: center;
     }
 
     .countdown {
         color: #667eea;
         font-weight: 600;
         margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .manual-redirect {
+        margin-top: 20px;
+        padding: 15px;
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        color: #856404;
+    }
+
+    .btn-manual {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-manual:hover {
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .redirect-container {
+            padding: 20px;
+        }
+
+        .detail-row {
+            flex-direction: column;
+            gap: 5px;
+        }
     }
     </style>
 </head>
@@ -288,8 +414,10 @@ try {
     <div class="redirect-container">
         <div class="success-icon">✓</div>
         <h2 class="redirect-title">Registration Successful!</h2>
-        <p class="redirect-message">Your registration has been submitted successfully. You will now be redirected to the
-            payment gateway to complete the payment.</p>
+        <p class="redirect-message">
+            Your registration has been submitted successfully. You will now be redirected to the secure payment gateway
+            to complete your registration fee payment.
+        </p>
 
         <div class="registration-details">
             <div class="detail-row">
@@ -309,25 +437,44 @@ try {
                 <span class="detail-value"><?php echo htmlspecialchars($email); ?></span>
             </div>
             <div class="detail-row">
+                <span class="detail-label">Mobile:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($cleanMobile); ?></span>
+            </div>
+            <div class="detail-row">
                 <span class="detail-label">Category:</span>
                 <span class="detail-value"><?php echo htmlspecialchars($categoryText); ?></span>
             </div>
             <div class="detail-row">
-                <span class="detail-label"><strong>Amount:</strong></span>
-                <span class="detail-value"><strong>₹<?php echo number_format($amount, 2); ?></strong></span>
+                <span class="detail-label">IEEE Member:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($ieeeeMemberText); ?></span>
             </div>
         </div>
 
-        <div class="spinner"></div>
-        <p class="countdown">Redirecting in <span id="countdown">5</span> seconds...</p>
+        <div class="amount-highlight">
+            <div style="font-size: 16px; margin-bottom: 5px;">Registration Fee</div>
+            <div style="font-size: 24px; font-weight: bold;">₹<?php echo number_format($amount, 2); ?></div>
+        </div>
 
-        <form id="billDeskForm" method="POST" action="<?php echo $billDeskUrl; ?>">
+        <div class="spinner"></div>
+        <p class="countdown">Redirecting to payment gateway in <span id="countdown">8</span> seconds...</p>
+
+        <div class="manual-redirect">
+            <strong>Note:</strong> Please complete the payment to confirm your registration.
+            <br>If you are not redirected automatically, click the button below:
+            <br><button onclick="submitPaymentForm()" class="btn-manual">Proceed to Payment</button>
+        </div>
+
+        <form id="billDeskForm" method="POST" action="<?php echo $billDeskUrl; ?>" style="display: none;">
             <input type="hidden" name="msg" value="<?php echo htmlspecialchars($paymentRequest); ?>">
         </form>
 
         <script>
-        let countdown = 5;
+        let countdown = 8;
         const countdownElement = document.getElementById('countdown');
+
+        function submitPaymentForm() {
+            document.getElementById('billDeskForm').submit();
+        }
 
         const timer = setInterval(function() {
             countdown--;
@@ -335,16 +482,24 @@ try {
 
             if (countdown <= 0) {
                 clearInterval(timer);
-                document.getElementById('billDeskForm').submit();
+                submitPaymentForm();
             }
         }, 1000);
 
-        // Also submit form if user clicks anywhere
-        document.addEventListener('click', function() {
-            if (countdown > 0) {
+        // Also submit form if user clicks anywhere on the container
+        document.querySelector('.redirect-container').addEventListener('click', function(e) {
+            if (countdown > 0 && !e.target.classList.contains('btn-manual')) {
                 clearInterval(timer);
-                document.getElementById('billDeskForm').submit();
+                submitPaymentForm();
             }
+        });
+
+        // Log payment request details for debugging
+        console.log('Payment request created:', {
+            registrationId: '<?php echo $registrationId; ?>',
+            orderId: '<?php echo $orderId; ?>',
+            amount: '<?php echo $amount; ?>',
+            gatewayUrl: '<?php echo $billDeskUrl; ?>'
         });
         </script>
     </div>
@@ -352,15 +507,28 @@ try {
 
 </html>
 <?php
+            
+        } catch (Exception $dbException) {
+            // Rollback transaction
+            $db->rollback();
+            
+            error_log("Database transaction failed: " . $dbException->getMessage());
+            throw new Exception("Registration failed due to database error: " . $dbException->getMessage());
+        }
         
     } else {
+        $_SESSION['error'] = 'Invalid request method';
         header('Location: registrationform.php');
         exit;
     }
     
 } catch (Exception $e) {
+    error_log("Registration processing error: " . $e->getMessage());
+    error_log("Stack trace: " . $e->getTraceAsString());
+    
     $_SESSION['error'] = 'Registration failed: ' . $e->getMessage();
-    $_SESSION['form_data'] = $_POST;
+    $_SESSION['form_data'] = $_POST ?? [];
+    
     header('Location: registrationform.php?error=1');
     exit;
 }

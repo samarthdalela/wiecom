@@ -1,3 +1,32 @@
+<?php
+session_start();
+
+// Get any error messages from session
+$errors = $_SESSION['errors'] ?? [];
+$formData = $_SESSION['form_data'] ?? [];
+$generalError = $_SESSION['error'] ?? '';
+
+// Clear errors from session after retrieving them
+unset($_SESSION['errors'], $_SESSION['form_data'], $_SESSION['error']);
+
+// Function to get form value with fallback
+function getFormValue($key, $default = '') {
+    global $formData;
+    return htmlspecialchars($formData[$key] ?? $default);
+}
+
+// Function to check if radio button should be selected
+function isRadioSelected($name, $value) {
+    global $formData;
+    return isset($formData[$name]) && $formData[$name] == $value ? 'checked' : '';
+}
+
+// Function to check if option should be selected
+function isOptionSelected($name, $value) {
+    global $formData;
+    return isset($formData[$name]) && $formData[$name] == $value ? 'selected' : '';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +49,7 @@
     }
 
     .registration-container {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         background: white;
         border-radius: 15px;
@@ -49,21 +78,72 @@
         padding: 40px;
     }
 
+    /* Error Messages */
+    .error-container {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .error-container h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+
+    .error-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .error-list li {
+        margin-bottom: 8px;
+        padding: 8px 12px;
+        background: rgba(220, 53, 69, 0.1);
+        border-radius: 4px;
+        border-left: 3px solid #dc3545;
+    }
+
+    .error-list li:before {
+        content: "⚠ ";
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    .success-container {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
     .form-section {
         margin-bottom: 30px;
-        padding: 20px;
+        padding: 25px;
         border: 1px solid #e1e5e9;
-        border-radius: 8px;
+        border-radius: 10px;
         background: #f8f9fa;
     }
 
     .section-title {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 600;
         color: #333;
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 2px solid #667eea;
+        display: flex;
+        align-items: center;
+    }
+
+    .section-title i {
+        margin-right: 10px;
+        font-size: 22px;
+        color: #667eea;
     }
 
     .form-row {
@@ -92,7 +172,7 @@
         border: 2px solid #e1e5e9;
         border-radius: 8px;
         font-size: 16px;
-        transition: border-color 0.3s ease;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .form-group input:focus,
@@ -103,16 +183,46 @@
         box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
 
+    .form-group.error input,
+    .form-group.error select {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+    }
+
+    .field-error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .field-error:before {
+        content: "⚠ ";
+        margin-right: 5px;
+    }
+
     .radio-group {
         display: flex;
         gap: 20px;
         margin-top: 10px;
+        flex-wrap: wrap;
     }
 
     .radio-option {
         display: flex;
         align-items: center;
         gap: 8px;
+        padding: 8px 12px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .radio-option:hover {
+        border-color: #667eea;
+        background: rgba(102, 126, 234, 0.05);
     }
 
     .radio-option input[type="radio"] {
@@ -120,29 +230,40 @@
         margin: 0;
     }
 
+    .radio-option input[type="radio"]:checked+label {
+        color: #667eea;
+        font-weight: 600;
+    }
+
+    .radio-option:has(input[type="radio"]:checked) {
+        border-color: #667eea;
+        background: rgba(102, 126, 234, 0.1);
+    }
+
     .amount-display {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 20px;
-        border-radius: 8px;
+        padding: 25px;
+        border-radius: 10px;
         text-align: center;
-        margin: 20px 0;
+        margin: 25px 0;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
     }
 
     .amount-display h3 {
-        font-size: 18px;
+        font-size: 20px;
         margin-bottom: 10px;
     }
 
     .amount-value {
-        font-size: 32px;
+        font-size: 36px;
         font-weight: bold;
     }
 
     .file-upload-section {
         background: #fff3cd;
         border: 1px solid #ffeaa7;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 20px;
         margin: 20px 0;
     }
@@ -150,31 +271,37 @@
     .file-upload-info {
         color: #856404;
         font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .file-upload-info h4 {
+        color: #856404;
         margin-bottom: 10px;
     }
 
     .submit-section {
         text-align: center;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #e1e5e9;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px solid #e1e5e9;
     }
 
     .submit-btn {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 15px 40px;
+        padding: 18px 50px;
         border: none;
-        border-radius: 8px;
+        border-radius: 10px;
         font-size: 18px;
         font-weight: 600;
         cursor: pointer;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
     }
 
     .submit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
     }
 
     .submit-btn:disabled {
@@ -183,14 +310,73 @@
         transform: none;
     }
 
-    .error-message {
-        color: #e74c3c;
-        font-size: 14px;
-        margin-top: 5px;
-    }
-
     .required {
         color: #e74c3c;
+    }
+
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .loading-content {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Test email section */
+    .test-section {
+        background: #e3f2fd;
+        border: 1px solid #bbdefb;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .test-section h4 {
+        color: #1976d2;
+        margin-bottom: 15px;
+    }
+
+    .test-btn {
+        background: #1976d2;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
     }
 
     @media (max-width: 768px) {
@@ -207,61 +393,108 @@
         .form-content {
             padding: 20px;
         }
+
+        .amount-value {
+            font-size: 28px;
+        }
     }
     </style>
+    <!-- Add FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3>Processing Registration...</h3>
+            <p>Please wait while we process your registration and redirect you to the payment gateway.</p>
+        </div>
+    </div>
+
     <div class="registration-container">
         <div class="form-header">
-            <h1>UPWIECON 2025</h1>
+            <h1><i class="fas fa-graduation-cap"></i> UPWIECON 2025</h1>
             <p>IEEE Uttarakhand Women in Engineering Conference - Registration Form</p>
         </div>
 
         <div class="form-content">
+            <!-- Display Errors -->
+            <?php if (!empty($errors) || !empty($generalError)): ?>
+            <div class="error-container">
+                <h3><i class="fas fa-exclamation-triangle"></i> Please correct the following errors:</h3>
+                <ul class="error-list">
+                    <?php if (!empty($generalError)): ?>
+                    <li><?php echo htmlspecialchars($generalError); ?></li>
+                    <?php endif; ?>
+                    <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <?php endif; ?>
+
+            <!-- Test Email Section (only show for specific test email) -->
+            <?php if (getFormValue('txtEmail') === 'samarthdalela@gmail.com' || (!empty($formData) && $formData['txtEmail'] === 'samarthdalela@gmail.com')): ?>
+            <div class="test-section">
+                <h4><i class="fas fa-envelope-open-text"></i> Email System Test</h4>
+                <p>Test the email notification system by sending a test email:</p>
+                <button type="button" class="test-btn" onclick="sendTestEmail()">Send Test Email</button>
+                <div id="testEmailResult" style="margin-top: 10px;"></div>
+            </div>
+            <?php endif; ?>
+
             <form id="registrationForm" method="POST" action="process_conference_registration.php"
                 enctype="multipart/form-data">
                 <!-- Personal Information Section -->
                 <div class="form-section">
-                    <h3 class="section-title">Personal Information</h3>
+                    <h3 class="section-title">
+                        <i class="fas fa-user"></i>
+                        Personal Information
+                    </h3>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="txtName">Full Name <span class="required">*</span></label>
-                            <input type="text" id="txtName" name="txtName" required>
-                            <div class="error-message" id="nameError"></div>
+                            <input type="text" id="txtName" name="txtName"
+                                value="<?php echo getFormValue('txtName'); ?>" required>
                         </div>
 
                         <div class="form-group">
                             <label for="txtEmail">Email Address <span class="required">*</span></label>
-                            <input type="email" id="txtEmail" name="txtEmail" required>
-                            <div class="error-message" id="emailError"></div>
+                            <input type="email" id="txtEmail" name="txtEmail"
+                                value="<?php echo getFormValue('txtEmail'); ?>" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="txtMobile">Mobile Number <span class="required">*</span></label>
-                            <input type="tel" id="txtMobile" name="txtMobile" required>
-                            <div class="error-message" id="mobileError"></div>
+                            <input type="tel" id="txtMobile" name="txtMobile"
+                                value="<?php echo getFormValue('txtMobile'); ?>" required
+                                placeholder="10-digit mobile number">
                         </div>
 
                         <div class="form-group">
-                            <label for="ddlCategory">Category <span class="required">*</span></label>
+                            <label for="ddlCategory">Participant Category <span class="required">*</span></label>
                             <select id="ddlCategory" name="ddlCategory" required onchange="calculateAmount()">
                                 <option value="0">Select Category</option>
-                                <option value="1">Professional/Industry</option>
-                                <option value="2">Academic/Faculty</option>
-                                <option value="3">Student</option>
+                                <option value="1" <?php echo isOptionSelected('ddlCategory', '1'); ?>>
+                                    Professional/Industry</option>
+                                <option value="2" <?php echo isOptionSelected('ddlCategory', '2'); ?>>Academic/Faculty
+                                </option>
+                                <option value="3" <?php echo isOptionSelected('ddlCategory', '3'); ?>>Student</option>
                             </select>
-                            <div class="error-message" id="categoryError"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Registration Options Section -->
                 <div class="form-section">
-                    <h3 class="section-title">Registration Options</h3>
+                    <h3 class="section-title">
+                        <i class="fas fa-cogs"></i>
+                        Registration Options
+                    </h3>
 
                     <div class="form-row">
                         <div class="form-group">
@@ -269,11 +502,13 @@
                             <div class="radio-group">
                                 <div class="radio-option">
                                     <input type="radio" id="ieeeYes" name="rdbIEEEMember" value="1"
+                                        <?php echo isRadioSelected('rdbIEEEMember', '1'); ?>
                                         onchange="calculateAmount(); togglePaperUpload()">
                                     <label for="ieeeYes">Yes</label>
                                 </div>
                                 <div class="radio-option">
                                     <input type="radio" id="ieeeNo" name="rdbIEEEMember" value="2"
+                                        <?php echo isRadioSelected('rdbIEEEMember', '2'); ?>
                                         onchange="calculateAmount(); togglePaperUpload()">
                                     <label for="ieeeNo">No</label>
                                 </div>
@@ -285,11 +520,13 @@
                             <div class="radio-group">
                                 <div class="radio-option">
                                     <input type="radio" id="nationalityIndian" name="rdbNationality" value="1"
+                                        <?php echo isRadioSelected('rdbNationality', '1'); ?>
                                         onchange="calculateAmount()">
                                     <label for="nationalityIndian">Indian</label>
                                 </div>
                                 <div class="radio-option">
                                     <input type="radio" id="nationalityForeign" name="rdbNationality" value="2"
+                                        <?php echo isRadioSelected('rdbNationality', '2'); ?>
                                         onchange="calculateAmount()">
                                     <label for="nationalityForeign">Foreign</label>
                                 </div>
@@ -303,13 +540,15 @@
                             <div class="radio-group">
                                 <div class="radio-option">
                                     <input type="radio" id="earlyBirdYes" name="rdbEarlyBird" value="1"
+                                        <?php echo isRadioSelected('rdbEarlyBird', '1'); ?>
                                         onchange="calculateAmount()">
-                                    <label for="earlyBirdYes">Yes</label>
+                                    <label for="earlyBirdYes">Yes (Before Aug 1, 2025)</label>
                                 </div>
                                 <div class="radio-option">
                                     <input type="radio" id="earlyBirdNo" name="rdbEarlyBird" value="2"
+                                        <?php echo isRadioSelected('rdbEarlyBird', '2'); ?>
                                         onchange="calculateAmount()">
-                                    <label for="earlyBirdNo">No</label>
+                                    <label for="earlyBirdNo">Regular (After Aug 1, 2025)</label>
                                 </div>
                             </div>
                         </div>
@@ -318,11 +557,13 @@
                             <label>NIELIT Participant</label>
                             <div class="radio-group">
                                 <div class="radio-option">
-                                    <input type="radio" id="nielitYes" name="rdbNielit" value="1">
+                                    <input type="radio" id="nielitYes" name="rdbNielit" value="1"
+                                        <?php echo isRadioSelected('rdbNielit', '1'); ?>>
                                     <label for="nielitYes">Yes</label>
                                 </div>
                                 <div class="radio-option">
-                                    <input type="radio" id="nielitNo" name="rdbNielit" value="2">
+                                    <input type="radio" id="nielitNo" name="rdbNielit" value="2"
+                                        <?php echo isRadioSelected('rdbNielit', '2'); ?>>
                                     <label for="nielitNo">No</label>
                                 </div>
                             </div>
@@ -331,48 +572,84 @@
                 </div>
 
                 <!-- Paper Details Section -->
-                <div class="form-section" id="paperSection" style="display: none;">
-                    <h3 class="section-title">Paper Details (For IEEE Members)</h3>
+                <div class="form-section" id="paperSection"
+                    style="<?php echo getFormValue('rdbIEEEMember') == '1' ? 'display: block;' : 'display: none;'; ?>">
+                    <h3 class="section-title">
+                        <i class="fas fa-file-alt"></i>
+                        Paper Details (For IEEE Members)
+                    </h3>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="txtPaperId">Paper ID</label>
-                            <input type="text" id="txtPaperId" name="txtPaperId">
+                            <input type="text" id="txtPaperId" name="txtPaperId"
+                                value="<?php echo getFormValue('txtPaperId'); ?>" placeholder="Optional">
                         </div>
 
                         <div class="form-group">
                             <label for="txtPaperTitle">Paper Title</label>
-                            <input type="text" id="txtPaperTitle" name="txtPaperTitle">
+                            <input type="text" id="txtPaperTitle" name="txtPaperTitle"
+                                value="<?php echo getFormValue('txtPaperTitle'); ?>" placeholder="Optional">
                         </div>
                     </div>
 
                     <div class="file-upload-section">
+                        <h4><i class="fas fa-upload"></i> Paper Upload Guidelines:</h4>
                         <div class="file-upload-info">
-                            <strong>Paper Upload Guidelines:</strong><br>
-                            • Accepted formats: PDF, DOC, DOCX<br>
-                            • Maximum file size: 3MB<br>
-                            • File will be uploaded to secure server
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li><strong>Accepted formats:</strong> PDF, DOC, DOCX</li>
+                                <li><strong>Maximum file size:</strong> 3MB</li>
+                                <li><strong>File naming:</strong> Use descriptive names (e.g.,
+                                    "PaperTitle_AuthorName.pdf")</li>
+                                <li><strong>Content:</strong> Research papers, abstracts, or presentation materials</li>
+                            </ul>
                         </div>
                         <div class="form-group">
-                            <label for="paperUpload">Upload Paper Document</label>
+                            <label for="paperUpload"><i class="fas fa-paperclip"></i> Upload Paper Document</label>
                             <input type="file" id="paperUpload" name="paperUpload" accept=".pdf,.doc,.docx">
-                            <div class="error-message" id="fileError"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Amount Section -->
-                <div class="amount-display" id="amountSection" style="display: none;">
-                    <h3>Registration Fee</h3>
-                    <div class="amount-value">₹ <span id="amountValue">0.00</span></div>
-                    <input type="hidden" id="txtAmount" name="txtAmount" value="0">
+                <div class="amount-display" id="amountSection"
+                    style="<?php echo getFormValue('txtAmount') ? 'display: block;' : 'display: none;'; ?>">
+                    <h3><i class="fas fa-rupee-sign"></i> Registration Fee</h3>
+                    <div class="amount-value">₹ <span
+                            id="amountValue"><?php echo getFormValue('txtAmount') ? number_format(floatval(getFormValue('txtAmount')), 2) : '0.00'; ?></span>
+                    </div>
+                    <input type="hidden" id="txtAmount" name="txtAmount"
+                        value="<?php echo getFormValue('txtAmount'); ?>">
+                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">
+                        <i class="fas fa-info-circle"></i>
+                        Amount calculated based on your selected options. Final amount will be processed securely
+                        through our payment gateway.
+                    </p>
                 </div>
 
                 <!-- Submit Section -->
                 <div class="submit-section">
+                    <div
+                        style="margin-bottom: 20px; padding: 20px; background: #e8f5e8; border-radius: 10px; text-align: left;">
+                        <h4 style="color: #155724; margin-bottom: 15px;"><i class="fas fa-shield-alt"></i> Security &
+                            Privacy Notice:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #155724;">
+                            <li>All personal information is encrypted and stored securely</li>
+                            <li>Payment processing is handled through secure, PCI-compliant gateways</li>
+                            <li>Your data will only be used for conference-related communications</li>
+                            <li>We do not share your information with third parties</li>
+                        </ul>
+                    </div>
+
                     <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-credit-card"></i>
                         Register & Proceed to Payment
                     </button>
+
+                    <p style="margin-top: 15px; font-size: 14px; color: #666;">
+                        By clicking "Register & Proceed to Payment", you agree to our terms and conditions and confirm
+                        that the information provided is accurate.
+                    </p>
                 </div>
             </form>
         </div>
@@ -429,6 +706,15 @@
             document.getElementById('amountValue').textContent = amount.toFixed(2);
             document.getElementById('txtAmount').value = amount.toFixed(2);
             document.getElementById('amountSection').style.display = 'block';
+
+            console.log('Amount calculated:', {
+                category,
+                earlyBird,
+                nationality,
+                ieeeMember,
+                email,
+                amount
+            });
         } else {
             document.getElementById('amountSection').style.display = 'none';
         }
@@ -445,14 +731,49 @@
         }
     }
 
+    // Send test email function
+    function sendTestEmail() {
+        const resultDiv = document.getElementById('testEmailResult');
+        resultDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending test email...';
+
+        fetch('test_email.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=send_test'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resultDiv.innerHTML =
+                        '<div style="color: #155724;"><i class="fas fa-check-circle"></i> Test email sent successfully!</div>';
+                } else {
+                    resultDiv.innerHTML =
+                        '<div style="color: #721c24;"><i class="fas fa-exclamation-circle"></i> Test email failed: ' +
+                        data.error + '</div>';
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML =
+                    '<div style="color: #721c24;"><i class="fas fa-exclamation-circle"></i> Error: ' + error
+                    .message + '</div>';
+            });
+    }
+
     // Form validation
     document.getElementById('registrationForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
+        // Show loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
+
         // Clear previous errors
-        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('.field-error').forEach(el => el.remove());
+        document.querySelectorAll('.form-group').forEach(el => el.classList.remove('error'));
 
         let isValid = true;
+        const errors = [];
 
         // Validate required fields
         const name = document.getElementById('txtName').value.trim();
@@ -461,41 +782,69 @@
         const category = document.getElementById('ddlCategory').value;
 
         if (name.length < 2) {
-            document.getElementById('nameError').textContent = 'Name must be at least 2 characters long';
+            errors.push({
+                field: 'txtName',
+                message: 'Name must be at least 2 characters long'
+            });
             isValid = false;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            document.getElementById('emailError').textContent = 'Please enter a valid email address';
+            errors.push({
+                field: 'txtEmail',
+                message: 'Please enter a valid email address'
+            });
             isValid = false;
         }
 
         const mobileRegex = /^[0-9]{10}$/;
         if (!mobileRegex.test(mobile.replace(/\D/g, ''))) {
-            document.getElementById('mobileError').textContent = 'Please enter a valid 10-digit mobile number';
+            errors.push({
+                field: 'txtMobile',
+                message: 'Please enter a valid 10-digit mobile number'
+            });
             isValid = false;
         }
 
         if (category === "0") {
-            document.getElementById('categoryError').textContent = 'Please select a category';
+            errors.push({
+                field: 'ddlCategory',
+                message: 'Please select a category'
+            });
             isValid = false;
         }
 
         // Validate radio buttons
         if (!document.querySelector('input[name="rdbIEEEMember"]:checked')) {
             isValid = false;
-            alert('Please select IEEE membership status');
+            errors.push({
+                field: 'rdbIEEEMember',
+                message: 'Please select IEEE membership status'
+            });
         }
 
         if (!document.querySelector('input[name="rdbNationality"]:checked')) {
             isValid = false;
-            alert('Please select nationality');
+            errors.push({
+                field: 'rdbNationality',
+                message: 'Please select nationality'
+            });
         }
 
         if (!document.querySelector('input[name="rdbEarlyBird"]:checked')) {
             isValid = false;
-            alert('Please select early bird registration option');
+            errors.push({
+                field: 'rdbEarlyBird',
+                message: 'Please select early bird registration option'
+            });
+        }
+
+        // Validate amount
+        const amount = parseFloat(document.getElementById('txtAmount').value || 0);
+        if (amount <= 0) {
+            isValid = false;
+            alert('Please ensure all registration options are selected to calculate the registration fee.');
         }
 
         // Validate file upload if IEEE member
@@ -510,24 +859,62 @@
             const maxSize = 3 * 1024 * 1024; // 3MB
 
             if (!allowedTypes.includes(file.type) && !file.name.match(/\.(pdf|doc|docx)$/i)) {
-                document.getElementById('fileError').textContent = 'Only PDF, DOC, and DOCX files are allowed';
+                errors.push({
+                    field: 'paperUpload',
+                    message: 'Only PDF, DOC, and DOCX files are allowed'
+                });
                 isValid = false;
             }
 
             if (file.size > maxSize) {
-                document.getElementById('fileError').textContent = 'File size must be less than 3MB';
+                errors.push({
+                    field: 'paperUpload',
+                    message: 'File size must be less than 3MB'
+                });
                 isValid = false;
             }
         }
 
-        if (isValid) {
-            // Show loading state
-            document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitBtn').textContent = 'Processing...';
+        if (!isValid) {
+            // Hide loading overlay
+            document.getElementById('loadingOverlay').style.display = 'none';
 
-            // Submit form
-            this.submit();
+            // Display field-specific errors
+            errors.forEach(error => {
+                const field = document.getElementById(error.field);
+                if (field) {
+                    const formGroup = field.closest('.form-group');
+                    if (formGroup) {
+                        formGroup.classList.add('error');
+
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'field-error';
+                        errorDiv.textContent = error.message;
+                        field.parentNode.appendChild(errorDiv);
+                    }
+                }
+            });
+
+            // Scroll to first error
+            const firstError = document.querySelector('.form-group.error');
+            if (firstError) {
+                firstError.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+
+            return false;
         }
+
+        // Show success message and submit
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+        // Submit form after a brief delay to show the loading state
+        setTimeout(() => {
+            this.submit();
+        }, 1000);
     });
 
     // Mobile number formatting
@@ -541,6 +928,109 @@
 
     // Recalculate amount when email changes (for special test case)
     document.getElementById('txtEmail').addEventListener('input', calculateAmount);
+
+    // Initialize form state based on existing values
+    document.addEventListener('DOMContentLoaded', function() {
+        calculateAmount();
+        togglePaperUpload();
+
+        // Auto-focus first empty field
+        const firstEmptyField = document.querySelector(
+            'input[required]:not([value]), select[required] option[value=""]:checked');
+        if (firstEmptyField) {
+            firstEmptyField.focus();
+        }
+    });
+
+    // Add real-time validation feedback
+    document.getElementById('txtName').addEventListener('blur', function() {
+        const name = this.value.trim();
+        const formGroup = this.closest('.form-group');
+        const existingError = formGroup.querySelector('.field-error');
+
+        if (existingError) {
+            existingError.remove();
+            formGroup.classList.remove('error');
+        }
+
+        if (name.length > 0 && name.length < 2) {
+            formGroup.classList.add('error');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.textContent = 'Name must be at least 2 characters long';
+            this.parentNode.appendChild(errorDiv);
+        }
+    });
+
+    document.getElementById('txtEmail').addEventListener('blur', function() {
+        const email = this.value.trim();
+        const formGroup = this.closest('.form-group');
+        const existingError = formGroup.querySelector('.field-error');
+
+        if (existingError) {
+            existingError.remove();
+            formGroup.classList.remove('error');
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email.length > 0 && !emailRegex.test(email)) {
+            formGroup.classList.add('error');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.textContent = 'Please enter a valid email address';
+            this.parentNode.appendChild(errorDiv);
+        }
+    });
+
+    document.getElementById('txtMobile').addEventListener('blur', function() {
+        const mobile = this.value.trim();
+        const formGroup = this.closest('.form-group');
+        const existingError = formGroup.querySelector('.field-error');
+
+        if (existingError) {
+            existingError.remove();
+            formGroup.classList.remove('error');
+        }
+
+        const mobileRegex = /^[0-9]{10}$/;
+        if (mobile.length > 0 && !mobileRegex.test(mobile.replace(/\D/g, ''))) {
+            formGroup.classList.add('error');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.textContent = 'Please enter a valid 10-digit mobile number';
+            this.parentNode.appendChild(errorDiv);
+        }
+    });
+
+    // File upload validation
+    document.getElementById('paperUpload').addEventListener('change', function() {
+        const formGroup = this.closest('.form-group');
+        const existingError = formGroup.querySelector('.field-error');
+
+        if (existingError) {
+            existingError.remove();
+            formGroup.classList.remove('error');
+        }
+
+        if (this.files.length > 0) {
+            const file = this.files[0];
+            const maxSize = 3 * 1024 * 1024; // 3MB
+
+            if (!file.name.match(/\.(pdf|doc|docx)$/i)) {
+                formGroup.classList.add('error');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'field-error';
+                errorDiv.textContent = 'Only PDF, DOC, and DOCX files are allowed';
+                this.parentNode.appendChild(errorDiv);
+            } else if (file.size > maxSize) {
+                formGroup.classList.add('error');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'field-error';
+                errorDiv.textContent = 'File size must be less than 3MB';
+                this.parentNode.appendChild(errorDiv);
+            }
+        }
+    });
     </script>
 </body>
 

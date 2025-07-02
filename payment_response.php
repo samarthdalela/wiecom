@@ -1,6 +1,8 @@
 <?php
-// payment_response.php - Conference Payment Response Handler
+// payment_response.php - Enhanced Conference Payment Response Handler
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // Include required files
 require_once 'config/database.php';
@@ -10,8 +12,13 @@ require_once 'classes/BillDeskIntegration.php';
 require_once 'classes/EmailNotification.php';
 
 // Initialize database connection
-$database = new Database();
-$db = $database->connect();
+try {
+    $database = new Database();
+    $db = $database->connect();
+} catch (Exception $e) {
+    error_log("Database connection failed: " . $e->getMessage());
+    die("Database connection failed. Please try again later.");
+}
 
 // Initialize classes
 $registration = new ConferenceRegistration($db);
@@ -20,25 +27,66 @@ $billDesk = new BillDeskIntegration($db);
 $emailNotification = new EmailNotification();
 
 try {
-    // Get response from BillDesk
-    $response = $_POST['msg'] ?? '';
+    // Get response from BillDesk (both POST and GET methods)
+    $response = $_POST['msg'] ?? $_GET['msg'] ?? '';
+    
+    // For testing purposes, create a mock response if none received
+    if (empty($response) && isset($_GET['test'])) {
+        $testOrderId = $_GET['order_id'] ?? 'UPWIECON2025_TEST_' . time();
+        $testAmount = $_GET['amount'] ?? '5.00';
+        $testStatus = $_GET['status'] ?? 'SUCCESS'; // SUCCESS, FAILED, PENDING, CANCELLED
+        
+        // Create mock BillDesk response format
+        $mockResponseParts = [
+            'TESTMERCHANT',           // Merchant ID
+            $testOrderId,             // Order ID
+            $testAmount,              // Amount
+            'TXN' . time(),          // Transaction ID
+            'BANK' . time(),         // Bank Transaction ID
+            $testStatus === 'SUCCESS' ? '0300' : '0002', // Status code
+            $testStatus === 'SUCCESS' ? '0300' : '0002', // Response code
+            $testStatus === 'SUCCESS' ? 'Transaction Successful' : 'Transaction Failed', // Response message
+            date('Y-m-d H:i:s'),     // Transaction date
+            'NA', 'NA', 'NA', 'NA', 'NA', // Additional info fields
+            'TESTSECURITY',           // Security ID
+        ];
+        $mockResponse = implode('|', $mockResponseParts);
+        $checksum = strtoupper(hash_hmac('sha256', $mockResponse, 'TEST_CHECKSUM_KEY'));
+        $response = $mockResponse . '|' . $checksum;
+        
+        error_log("MOCK RESPONSE CREATED: " . $response);
+    }
     
     if (empty($response)) {
-        throw new Exception("No payment response received");
+        throw new Exception("No payment response received from gateway");
     }
+    
+    error_log("PAYMENT RESPONSE RECEIVED: " . $response);
     
     // Process BillDesk response
     $responseData = $billDesk->processResponse($response);
+    error_log("PROCESSED RESPONSE DATA: " . json_encode($responseData));
     
-    // Get payment record
+    // Get payment record by order ID
     $paymentRecord = $payment->getPaymentByOrderId($responseData['order_id']);
     
     if (!$paymentRecord) {
-        throw new Exception("Payment record not found");
+        // Try to find payment record by partial order ID match
+        $orderIdParts = explode('_', $responseData['order_id']);
+        if (count($orderIdParts) >= 2) {
+            $regId = $orderIdParts[1];
+            $paymentRecord = $payment->getPaymentByRefId($regId);
+        }
+        
+        if (!$paymentRecord) {
+            throw new Exception("Payment record not found for Order ID: " . $responseData['order_id']);
+        }
     }
     
+    error_log("PAYMENT RECORD FOUND: " . json_encode($paymentRecord));
+    
     // Update payment status
-    $payment->updatePaymentStatus(
+    $updateSuccess = $payment->updatePaymentStatus(
         $paymentRecord['RefId'],
         $responseData['order_id'],
         $responseData['amount'],
@@ -47,60 +95,72 @@ try {
         $responseData['raw_response']
     );
     
+    if (!$updateSuccess) {
+        error_log("Failed to update payment status for RefId: " . $paymentRecord['RefId']);
+    }
+    
     // Get registration details
     $registrationDetails = $registration->getRegistrationById($paymentRecord['RefId']);
     
-    // Log the email attempt details
-    error_log("EMAIL ATTEMPT: Status=" . $responseData['status'] . ", Email=" . $registrationDetails['sEmail'] . ", OrderID=" . $responseData['order_id']);
+    if (!$registrationDetails) {
+        throw new Exception("Registration details not found for RefId: " . $paymentRecord['RefId']);
+    }
     
-    // Send email notifications with detailed logging
+    error_log("REGISTRATION DETAILS: " . json_encode($registrationDetails));
+    
+    // Send email notifications with enhanced error handling
     $emailSent = false;
     $emailError = '';
+    $emailAttempts = [];
     
     try {
         if ($responseData['status'] === 'SUCCESS') {
             error_log("Attempting to send SUCCESS email to: " . $registrationDetails['sEmail']);
             $emailSent = $emailNotification->sendPaymentConfirmation($registrationDetails, $responseData);
+            $emailAttempts[] = ['type' => 'success_email', 'result' => $emailSent];
             error_log("SUCCESS email result: " . ($emailSent ? 'SENT' : 'FAILED'));
-        } elseif ($responseData['status'] === 'FAILED' || $responseData['status'] === 'CANCELLED') {
+        } elseif (in_array($responseData['status'], ['FAILED', 'CANCELLED'])) {
             error_log("Attempting to send FAILURE email to: " . $registrationDetails['sEmail']);
             $emailSent = $emailNotification->sendPaymentFailure($registrationDetails, $responseData);
+            $emailAttempts[] = ['type' => 'failure_email', 'result' => $emailSent];
             error_log("FAILURE email result: " . ($emailSent ? 'SENT' : 'FAILED'));
         }
         
-        // If email failed, try a simple backup email
-        if (!$emailSent && ($responseData['status'] === 'SUCCESS' || $responseData['status'] === 'FAILED' || $responseData['status'] === 'CANCELLED')) {
-            error_log("Primary email failed, trying backup method");
-            $emailSent = $emailNotification->sendTestEmail($registrationDetails['sEmail']);
-            error_log("Backup email result: " . ($emailSent ? 'SENT' : 'FAILED'));
+        // If primary email failed, try a simple backup email
+        if (!$emailSent && in_array($responseData['status'], ['SUCCESS', 'FAILED', 'CANCELLED'])) {
+            error_log("Primary email failed, trying simple backup method");
+            $backupSent = sendSimpleEmail($registrationDetails, $responseData);
+            $emailAttempts[] = ['type' => 'backup_email', 'result' => $backupSent];
+            error_log("Backup email result: " . ($backupSent ? 'SENT' : 'FAILED'));
+            
+            if ($backupSent) {
+                $emailSent = true;
+            }
         }
         
     } catch (Exception $emailException) {
         $emailError = $emailException->getMessage();
         error_log("Email notification error: " . $emailError);
         
-        // Try simple fallback email
+        // Final fallback - simple mail function
         try {
-            $fallbackSubject = "UPWIECON 2025 - Payment " . $responseData['status'];
-            $fallbackMessage = "Dear " . $registrationDetails['sName'] . ",\n\n";
-            $fallbackMessage .= "Your payment status: " . $responseData['status'] . "\n";
-            $fallbackMessage .= "Registration ID: " . $registrationDetails['iRegId'] . "\n";
-            $fallbackMessage .= "Order ID: " . $responseData['order_id'] . "\n\n";
-            $fallbackMessage .= "Best regards,\nUPWIECON 2025 Team";
+            $fallbackSent = sendFallbackEmail($registrationDetails, $responseData);
+            $emailAttempts[] = ['type' => 'fallback_email', 'result' => $fallbackSent];
+            error_log("Fallback email result: " . ($fallbackSent ? 'SENT' : 'FAILED'));
             
-            $fallbackHeaders = "From: samarthdalela@gmail.com\r\nContent-Type: text/plain; charset=UTF-8";
-            
-            $fallbackResult = mail($registrationDetails['sEmail'], $fallbackSubject, $fallbackMessage, $fallbackHeaders);
-            error_log("Fallback email result: " . ($fallbackResult ? 'SENT' : 'FAILED'));
-            
-            if ($fallbackResult) {
+            if ($fallbackSent) {
                 $emailSent = true;
             }
-            
         } catch (Exception $fallbackException) {
-            error_log("Fallback email also failed: " . $fallbackException->getMessage());
+            error_log("All email methods failed: " . $fallbackException->getMessage());
+            $emailError = "All email delivery methods failed: " . $fallbackException->getMessage();
         }
     }
+    
+    // Log final email status
+    error_log("FINAL EMAIL STATUS: " . ($emailSent ? 'SUCCESS' : 'FAILED') . 
+              " | Attempts: " . json_encode($emailAttempts) . 
+              " | Error: " . $emailError);
     
     ?>
 <!DOCTYPE html>
@@ -135,6 +195,14 @@ try {
         width: 100%;
         max-width: 700px;
         text-align: center;
+    }
+
+    .conference-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
     }
 
     .status-icon {
@@ -178,43 +246,22 @@ try {
         line-height: 1.5;
     }
 
-    .conference-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-
-    .conference-title {
-        font-size: 24px;
-        margin-bottom: 5px;
-    }
-
-    .conference-subtitle {
-        font-size: 16px;
-        opacity: 0.9;
-    }
-
     .email-status {
-        background: #fff3cd;
-        border: 1px solid #ffeaa7;
-        color: #856404;
-        padding: 10px;
-        border-radius: 5px;
-        margin: 15px 0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px 0;
         font-size: 14px;
     }
 
     .email-success {
         background: #d4edda;
-        border-color: #c3e6cb;
+        border: 1px solid #c3e6cb;
         color: #155724;
     }
 
     .email-failed {
         background: #f8d7da;
-        border-color: #f5c6cb;
+        border: 1px solid #f5c6cb;
         color: #721c24;
     }
 
@@ -267,24 +314,6 @@ try {
         margin: 20px 0;
     }
 
-    .amount-label {
-        font-size: 16px;
-        margin-bottom: 5px;
-    }
-
-    .amount-value {
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .action-buttons {
-        margin-top: 30px;
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
     .btn {
         display: inline-block;
         padding: 12px 25px;
@@ -296,6 +325,7 @@ try {
         cursor: pointer;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         min-width: 150px;
+        margin: 10px;
     }
 
     .btn:hover {
@@ -313,11 +343,6 @@ try {
         color: white;
     }
 
-    .btn-success {
-        background: linear-gradient(135deg, #27ae60, #2ecc71);
-        color: white;
-    }
-
     .status-badge {
         display: inline-block;
         padding: 5px 15px;
@@ -327,39 +352,20 @@ try {
         text-transform: uppercase;
     }
 
-    .status-success {
-        background: #d4edda;
-        color: #155724;
-    }
-
-    .status-failed {
-        background: #f8d7da;
-        color: #721c24;
-    }
-
-    .status-pending {
-        background: #fff3cd;
-        color: #856404;
-    }
-
-    .status-cancelled {
-        background: #e2e3e5;
-        color: #383d41;
+    .debug-info {
+        background: #f1f3f4;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+        text-align: left;
+        font-size: 12px;
+        color: #5f6368;
     }
 
     @media (max-width: 768px) {
         .detail-grid {
             grid-template-columns: 1fr;
-        }
-
-        .action-buttons {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .btn {
-            width: 100%;
-            max-width: 300px;
         }
 
         .result-container {
@@ -372,82 +378,67 @@ try {
 <body>
     <div class="result-container">
         <div class="conference-header">
-            <div class="conference-title">UPWIECON 2025</div>
-            <div class="conference-subtitle">IEEE Uttarakhand Women in Engineering Conference</div>
+            <h1>UPWIECON 2025</h1>
+            <p>IEEE Uttarakhand Women in Engineering Conference</p>
         </div>
 
         <?php if ($responseData['status'] === 'SUCCESS'): ?>
         <div class="status-icon success-icon">✓</div>
         <h1 class="result-title" style="color: #27ae60;">Payment Successful!</h1>
-        <p class="result-message">
-            Congratulations! Your registration payment has been processed successfully.
-        </p>
+        <p class="result-message">Congratulations! Your registration payment has been processed successfully.</p>
+
         <?php elseif ($responseData['status'] === 'PENDING'): ?>
         <div class="status-icon pending-icon">⏳</div>
         <h1 class="result-title" style="color: #f39c12;">Payment Pending</h1>
-        <p class="result-message">
-            Your payment is being processed. You will receive a confirmation once the payment is completed.
-        </p>
+        <p class="result-message">Your payment is being processed. You will receive a confirmation once completed.</p>
+
         <?php elseif ($responseData['status'] === 'CANCELLED'): ?>
         <div class="status-icon cancelled-icon">✕</div>
         <h1 class="result-title" style="color: #95a5a6;">Payment Cancelled</h1>
-        <p class="result-message">
-            Your payment was cancelled. Your registration details have been saved and you can complete the payment
-            later.
-        </p>
+        <p class="result-message">Your payment was cancelled. You can retry the payment at any time.</p>
+
         <?php else: ?>
         <div class="status-icon failure-icon">✕</div>
         <h1 class="result-title" style="color: #e74c3c;">Payment Failed</h1>
-        <p class="result-message">
-            Unfortunately, your payment could not be processed. Your registration details have been saved for your
-            convenience.
-        </p>
+        <p class="result-message">Unfortunately, your payment could not be processed. Please try again.</p>
         <?php endif; ?>
 
         <!-- Email Status Notification -->
-        <?php if ($responseData['status'] === 'SUCCESS' || $responseData['status'] === 'FAILED' || $responseData['status'] === 'CANCELLED'): ?>
         <div class="email-status <?php echo $emailSent ? 'email-success' : 'email-failed'; ?>">
             <?php if ($emailSent): ?>
             ✓ Email notification sent successfully to <?php echo htmlspecialchars($registrationDetails['sEmail']); ?>
             <?php else: ?>
             ⚠ Email notification could not be sent. Please save your registration details.
             <?php if (!empty($emailError)): ?>
-            <br><small>Error: <?php echo htmlspecialchars($emailError); ?></small>
+            <br><small>Technical details: <?php echo htmlspecialchars($emailError); ?></small>
             <?php endif; ?>
             <?php endif; ?>
         </div>
-        <?php endif; ?>
 
         <!-- Registration Details -->
         <div class="details-section">
             <h3 class="section-title">Registration Details</h3>
-
             <div class="detail-grid">
                 <div class="detail-item">
                     <span class="detail-label">Registration ID:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($registrationDetails['iRegId']); ?></span>
                 </div>
-
                 <div class="detail-item">
-                    <span class="detail-label">Participant Name:</span>
+                    <span class="detail-label">Name:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($registrationDetails['sName']); ?></span>
                 </div>
-
                 <div class="detail-item">
                     <span class="detail-label">Email:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($registrationDetails['sEmail']); ?></span>
                 </div>
-
                 <div class="detail-item">
                     <span class="detail-label">Mobile:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($registrationDetails['sMobile']); ?></span>
                 </div>
-
                 <div class="detail-item">
                     <span class="detail-label">Category:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($registrationDetails['sCategory']); ?></span>
                 </div>
-
                 <div class="detail-item">
                     <span class="detail-label">IEEE Member:</span>
                     <span
@@ -459,75 +450,59 @@ try {
         <!-- Payment Details -->
         <div class="details-section">
             <h3 class="section-title">Payment Details</h3>
-
             <div class="detail-grid">
                 <div class="detail-item">
                     <span class="detail-label">Order ID:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($responseData['order_id']); ?></span>
                 </div>
-
                 <div class="detail-item">
                     <span class="detail-label">Transaction ID:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($responseData['txn_id']); ?></span>
                 </div>
-
                 <div class="detail-item">
-                    <span class="detail-label">Payment Status:</span>
+                    <span class="detail-label">Status:</span>
                     <span class="detail-value">
-                        <span class="status-badge status-<?php echo strtolower($responseData['status']); ?>">
+                        <span class="status-badge" style="background: <?php 
+                            echo $responseData['status'] === 'SUCCESS' ? '#d4edda; color: #155724' : 
+                                ($responseData['status'] === 'PENDING' ? '#fff3cd; color: #856404' : '#f8d7da; color: #721c24'); 
+                        ?>">
                             <?php echo $responseData['status']; ?>
                         </span>
                     </span>
                 </div>
-
                 <div class="detail-item">
-                    <span class="detail-label">Response Message:</span>
+                    <span class="detail-label">Response:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($responseData['response_message']); ?></span>
                 </div>
             </div>
 
             <div class="amount-highlight">
-                <div class="amount-label">Registration Fee</div>
-                <div class="amount-value">₹<?php echo number_format($responseData['amount'], 2); ?></div>
+                <div style="font-size: 16px; margin-bottom: 5px;">Registration Fee</div>
+                <div style="font-size: 28px; font-weight: bold;">
+                    ₹<?php echo number_format($responseData['amount'], 2); ?></div>
             </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="action-buttons">
+        <div style="margin-top: 30px;">
             <?php if ($responseData['status'] === 'SUCCESS'): ?>
-            <a href="mailto:support@nielit.ac.in?subject=UPWIECON2025 Registration Confirmation&body=Registration ID: <?php echo $registrationDetails['iRegId']; ?>"
-                class="btn btn-secondary">
-                Contact Support
-            </a>
-            <?php elseif ($responseData['status'] === 'FAILED' || $responseData['status'] === 'CANCELLED'): ?>
-            <a href="registrationform.php" class="btn btn-primary">
-                Try Again
-            </a>
-            <a href="mailto:support@nielit.ac.in?subject=UPWIECON2025 Payment Issue&body=Order ID: <?php echo $responseData['order_id']; ?>"
-                class="btn btn-secondary">
-                Contact Support
-            </a>
+            <a href="Default.php" class="btn btn-primary">Return to Home</a>
+            <a href="mailto:ieeeconference@nielit.ac.in?subject=UPWIECON2025 Registration Confirmation&body=Registration ID: <?php echo $registrationDetails['iRegId']; ?>"
+                class="btn btn-secondary">Contact Support</a>
             <?php else: ?>
-            <a href="mailto:support@nielit.ac.in?subject=UPWIECON2025 Payment Query&body=Order ID: <?php echo $responseData['order_id']; ?>"
-                class="btn btn-secondary">
-                Contact Support
-            </a>
+            <a href="registrationform.php" class="btn btn-primary">Try Again</a>
+            <a href="mailto:ieeeconference@nielit.ac.in?subject=UPWIECON2025 Payment Issue&body=Order ID: <?php echo $responseData['order_id']; ?>"
+                class="btn btn-secondary">Contact Support</a>
             <?php endif; ?>
         </div>
 
-        <?php if ($responseData['status'] === 'SUCCESS'): ?>
-        <div style="margin-top: 30px; padding: 20px; background: #e8f5e8; border-radius: 8px;">
-            <h4 style="color: #27ae60; margin-bottom: 10px;">Next Steps:</h4>
-            <ul style="text-align: left; color: #666; line-height: 1.6;">
-                <li>Please save your Registration ID: <strong><?php echo $registrationDetails['iRegId']; ?></strong>
-                </li>
-                <li>Conference details and schedule will be sent closer to the event date</li>
-                <li>For any queries, contact us at support@nielit.ac.in</li>
-                <?php if (!$emailSent): ?>
-                <li><strong>Important:</strong> Email notification failed. Please contact support with your Registration
-                    ID.</li>
-                <?php endif; ?>
-            </ul>
+        <!-- Debug Information (only show in development) -->
+        <?php if (isset($_GET['debug']) || isset($_GET['test'])): ?>
+        <div class="debug-info">
+            <strong>Debug Information:</strong><br>
+            Response Data: <?php echo json_encode($responseData, JSON_PRETTY_PRINT); ?><br>
+            Email Attempts: <?php echo json_encode($emailAttempts, JSON_PRETTY_PRINT); ?><br>
+            Raw Response: <?php echo htmlspecialchars(substr($response, 0, 200)) . '...'; ?>
         </div>
         <?php endif; ?>
     </div>
@@ -538,8 +513,8 @@ try {
 <?php
     
 } catch (Exception $e) {
-    // Log the main error
     error_log("Payment processing error: " . $e->getMessage());
+    error_log("Stack trace: " . $e->getTraceAsString());
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -610,19 +585,57 @@ try {
         <div class="error-icon">⚠</div>
         <h1 style="color: #e74c3c; margin-bottom: 15px;">Payment Processing Error</h1>
         <p style="color: #666; margin-bottom: 20px; line-height: 1.5;">
-            An error occurred while processing your payment response.
-            Please try again or contact support for assistance.
+            An error occurred while processing your payment response. Please try again or contact support.
         </p>
         <p style="color: #999; font-size: 14px; margin-bottom: 30px;">
             Error: <?php echo htmlspecialchars($e->getMessage()); ?>
         </p>
         <a href="registrationform.php" class="btn">Try Again</a>
-        <a href="mailto:samarthdalela@gmail.com?subject=UPWIECON2025 Payment Error" class="btn btn-secondary">Contact
-            Support</a>
+        <a href="mailto:ieeeconference@nielit.ac.in?subject=UPWIECON2025 Payment Error"
+            class="btn btn-secondary">Contact Support</a>
     </div>
 </body>
 
 </html>
 <?php
+}
+
+// Helper functions for email fallbacks
+function sendSimpleEmail($registrationDetails, $responseData) {
+    $to = $registrationDetails['sEmail'];
+    $subject = "UPWIECON 2025 - Payment " . $responseData['status'];
+    
+    $message = "Dear " . $registrationDetails['sName'] . ",\n\n";
+    $message .= "Your payment status: " . $responseData['status'] . "\n";
+    $message .= "Registration ID: " . $registrationDetails['iRegId'] . "\n";
+    $message .= "Order ID: " . $responseData['order_id'] . "\n";
+    $message .= "Amount: ₹" . number_format($responseData['amount'], 2) . "\n\n";
+    $message .= "Best regards,\nUPWIECON 2025 Team";
+    
+    $headers = "From: UPWIECON2025 <samarthdalela@gmail.com>\r\n";
+    $headers .= "Reply-To: ieeeconference@nielit.ac.in\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    
+    return mail($to, $subject, $message, $headers);
+}
+
+function sendFallbackEmail($registrationDetails, $responseData) {
+    $to = $registrationDetails['sEmail'];
+    $subject = "UPWIECON 2025 - Payment " . $responseData['status'];
+    
+    $message = "<h2>UPWIECON 2025 - Payment " . $responseData['status'] . "</h2>";
+    $message .= "<p>Dear " . htmlspecialchars($registrationDetails['sName']) . ",</p>";
+    $message .= "<p>Payment Status: <strong>" . $responseData['status'] . "</strong></p>";
+    $message .= "<p>Registration ID: " . htmlspecialchars($registrationDetails['iRegId']) . "</p>";
+    $message .= "<p>Order ID: " . htmlspecialchars($responseData['order_id']) . "</p>";
+    $message .= "<p>Amount: ₹" . number_format($responseData['amount'], 2) . "</p>";
+    $message .= "<p>Best regards,<br>UPWIECON 2025 Team</p>";
+    
+    $headers = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: UPWIECON2025 <samarthdalela@gmail.com>\r\n";
+    $headers .= "Reply-To: ieeeconference@nielit.ac.in\r\n";
+    
+    return mail($to, $subject, $message, $headers);
 }
 ?>
