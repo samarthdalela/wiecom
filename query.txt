@@ -1,0 +1,114 @@
+-- Conference Registration Database Schema
+CREATE DATABASE upwiecon2025_registration;
+USE upwiecon2025_registration;
+
+-- Main registration table
+CREATE TABLE tblUPWIECON2025 (
+    iRegId INT PRIMARY KEY AUTO_INCREMENT,
+    sEventName VARCHAR(50) DEFAULT 'UPWIECON2025',
+    sCampus VARCHAR(100) DEFAULT 'Uttarakhand',
+    sNielit VARCHAR(10),
+    sIEEEMember VARCHAR(20),
+    sNationality VARCHAR(20),
+    sEarlyBird VARCHAR(20),
+    sCategory VARCHAR(50),
+    sPaperId VARCHAR(50),
+    sPaperTitle VARCHAR(255),
+    sName VARCHAR(100) NOT NULL,
+    sMobile VARCHAR(15) NOT NULL,
+    sEmail VARCHAR(100) NOT NULL,
+    sPaperUpload VARCHAR(500),
+    iAmount DECIMAL(10,2) NOT NULL,
+    sIP VARCHAR(45),
+    dtCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    dtUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_email (sEmail)
+);
+
+-- Payment tracking table
+CREATE TABLE tblUPWIECON2025Payment (
+    iPaymentId INT PRIMARY KEY AUTO_INCREMENT,
+    RefId INT NOT NULL,
+    EventName VARCHAR(50) DEFAULT 'UPWIECON2025',
+    order_id VARCHAR(50) UNIQUE,
+    amount DECIMAL(10,2),
+    payment_status ENUM('PENDING', 'SUCCESS', 'FAILED', 'CANCELLED') DEFAULT 'PENDING',
+    billdesk_txn_id VARCHAR(100),
+    billdesk_response TEXT,
+    payment_date DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (RefId) REFERENCES tblUPWIECON2025(iRegId) ON DELETE CASCADE
+);
+
+-- BillDesk configuration
+CREATE TABLE billdesk_config (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    merchant_id VARCHAR(50) NOT NULL,
+    security_id VARCHAR(50) NOT NULL,
+    checksum_key VARCHAR(100) NOT NULL,
+    return_url VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert sample configuration
+INSERT INTO billdesk_config (merchant_id, security_id, checksum_key, return_url) 
+VALUES ('YOUR_MERCHANT_ID', 'YOUR_SECURITY_ID', 'YOUR_CHECKSUM_KEY', 'http://yoursite.com/payment_response.php');
+
+-- Categories reference table
+CREATE TABLE conference_categories (
+    id INT PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL
+);
+
+INSERT INTO conference_categories VALUES 
+(1, 'Professional/Industry'),
+(2, 'Academic/Faculty'), 
+(3, 'Student');
+
+-- Pricing matrix table for easier management
+CREATE TABLE pricing_matrix (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT,
+    early_bird ENUM('Yes', 'No'),
+    nationality ENUM('Indian', 'Foreign'),
+    ieee_member ENUM('Yes', 'No'),
+    amount DECIMAL(10,2),
+    FOREIGN KEY (category_id) REFERENCES conference_categories(id)
+);
+
+-- Insert pricing data
+INSERT INTO pricing_matrix VALUES
+-- Indian Delegates - Early Bird - IEEE Member
+(NULL, 1, 'Yes', 'Indian', 'Yes', 9000.00),
+(NULL, 2, 'Yes', 'Indian', 'Yes', 4000.00),
+(NULL, 3, 'Yes', 'Indian', 'Yes', 2500.00),
+-- Indian Delegates - Early Bird - Non-IEEE Member
+(NULL, 1, 'Yes', 'Indian', 'No', 10000.00),
+(NULL, 2, 'Yes', 'Indian', 'No', 5000.00),
+(NULL, 3, 'Yes', 'Indian', 'No', 2500.00),
+-- Indian Delegates - Regular - IEEE Member
+(NULL, 1, 'No', 'Indian', 'Yes', 7000.00),
+(NULL, 2, 'No', 'Indian', 'Yes', 3000.00),
+(NULL, 3, 'No', 'Indian', 'Yes', 2500.00),
+-- Indian Delegates - Regular - Non-IEEE Member
+(NULL, 1, 'No', 'Indian', 'No', 8000.00),
+(NULL, 2, 'No', 'Indian', 'No', 4000.00),
+(NULL, 3, 'No', 'Indian', 'No', 2500.00),
+-- Foreign Delegates - Early Bird - IEEE Member
+(NULL, 1, 'Yes', 'Foreign', 'Yes', 25800.00),
+(NULL, 2, 'Yes', 'Foreign', 'Yes', 12900.00),
+(NULL, 3, 'Yes', 'Foreign', 'Yes', 8600.00),
+-- Foreign Delegates - Early Bird - Non-IEEE Member
+(NULL, 1, 'Yes', 'Foreign', 'No', 34400.00),
+(NULL, 2, 'Yes', 'Foreign', 'No', 17200.00),
+(NULL, 3, 'Yes', 'Foreign', 'No', 8600.00),
+-- Foreign Delegates - Regular - IEEE Member
+(NULL, 1, 'No', 'Foreign', 'Yes', 17200.00),
+(NULL, 2, 'No', 'Foreign', 'Yes', 8600.00),
+(NULL, 3, 'No', 'Foreign', 'Yes', 8600.00),
+-- Foreign Delegates - Regular - Non-IEEE Member
+(NULL, 1, 'No', 'Foreign', 'No', 25800.00),
+(NULL, 2, 'No', 'Foreign', 'No', 12900.00),
+(NULL, 3, 'No', 'Foreign', 'No', 8600.00);
