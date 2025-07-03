@@ -4,12 +4,16 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Load Composer's autoloader for PHPMailer
+require_once __DIR__ . '/vendor/autoload.php';
+
 // Include required files
 require_once 'config/database.php';
 require_once 'classes/ConferenceRegistration.php';
 require_once 'classes/ConferencePayment.php';
 require_once 'classes/BillDeskIntegration.php';
 require_once 'classes/EmailNotification.php';
+
 
 // Initialize database connection
 try {

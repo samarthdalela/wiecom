@@ -153,7 +153,7 @@ class ConferenceRegistration {
     public function calculateAmount($category, $earlyBird, $nationality, $ieeeMember, $email = '') {
         // Special case for test email
         if ($email === 'samarthdalela@gmail.com') {
-            return 5.00;
+            return 1.00;
         }
         
         // Pricing matrix based on the C# code

@@ -700,7 +700,7 @@ function isOptionSelected($name, $value) {
 
             // Special case for test email
             if (email === "samarthdalela@gmail.com") {
-                amount = 5.00;
+                amount = 1.00;
             }
 
             document.getElementById('amountValue').textContent = amount.toFixed(2);
@@ -841,11 +841,11 @@ function isOptionSelected($name, $value) {
         }
 
         // Validate amount
-        const amount = parseFloat(document.getElementById('txtAmount').value || 0);
-        if (amount <= 0) {
-            isValid = false;
-            alert('Please ensure all registration options are selected to calculate the registration fee.');
-        }
+        // const amount = parseFloat(document.getElementById('txtAmount').value || 0);
+        // if (amount <= 0) {
+        //     isValid = false;
+        //     alert('Please ensure all registration options are selected to calculate the registration fee.');
+        // }
 
         // Validate file upload if IEEE member
         const ieeeYes = document.getElementById('ieeeYes').checked;
