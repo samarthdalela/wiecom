@@ -1146,7 +1146,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 3rem;">
-                    <a href="#" class="register-btn50 highlight-animation50">REGISTER NOW</a>
+                    <a href="./registrationform.php" class="register-btn50 highlight-animation50">REGISTER NOW</a>
                 </div>
             </div>
         </div>
