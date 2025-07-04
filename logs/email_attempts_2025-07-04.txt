@@ -1,0 +1,2 @@
+2025-07-04 14:22:54 | {"timestamp":"2025-07-04 14:22:54","type":"PAYMENT_FAILED","to":"samarthdalela@gmail.com","subject":"UPWIECON 2025 - Payment Issue Notification","order_id":"UPWIECON2025_60_1751619143","server":"2343-103-165-89-10.ngrok-free.app","ip":"::1"}
+2025-07-04 14:36:42 | {"timestamp":"2025-07-04 14:36:42","type":"PAYMENT_SUCCESS","to":"samarthdalela@gmail.com","subject":"UPWIECON 2025 - Payment Confirmation & Registration Success","order_id":"UPWIECON2025_61_1751619968","server":"2343-103-165-89-10.ngrok-free.app","ip":"::1"}
