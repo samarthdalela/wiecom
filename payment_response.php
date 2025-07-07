@@ -11,7 +11,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once 'config/database.php';
 require_once 'classes/ConferenceRegistration.php';
 require_once 'classes/ConferencePayment.php';
-require_once 'classes/BillDeskIntegration.php';
+// require_once 'classes/BillDeskIntegration.php';
+require_once 'classes/EasebuzzIntegration.php';
 require_once 'classes/EmailNotification.php';
 
 
@@ -42,7 +43,7 @@ try {
         
         // Create mock BillDesk response format
         $mockResponseParts = [
-            'TESTMERCHANT',           // Merchant ID
+            'KHQEZNXWNW',           // Merchant ID
             $testOrderId,             // Order ID
             $testAmount,              // Amount
             'TXN' . time(),          // Transaction ID

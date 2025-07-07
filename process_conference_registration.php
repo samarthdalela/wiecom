@@ -1,5 +1,5 @@
 <?php
-// process_conference_registration.php - Enhanced with duplicate email handling and IEEE ID
+// process_conference_registration.php - Complete Implementation with EaseBuzz Integration
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -9,7 +9,6 @@ require_once 'config/database.php';
 require_once 'classes/ConferenceRegistration.php';
 require_once 'classes/ConferencePayment.php';
 require_once 'classes/FileUploadHandler.php';
-// require_once 'classes/BillDeskIntegration.php';
 require_once 'classes/EasebuzzIntegration.php';
 require_once 'utils/ValidationHelper.php';
 
@@ -28,7 +27,6 @@ try {
 $registration = new ConferenceRegistration($db);
 $payment = new ConferencePayment($db);
 $fileHandler = new FileUploadHandler('uploads/papers/');
-// $billDesk = new BillDeskIntegration($db);
 $easebuzz = new EasebuzzIntegration($db);
 
 try {
@@ -46,7 +44,7 @@ try {
         $paperTitle = isset($_POST['txtPaperTitle']) ? ValidationHelper::sanitizeInput($_POST['txtPaperTitle']) : null;
         $amount = floatval($_POST['txtAmount']);
         
-        // ✅ NEW: Handle IEEE ID
+        // Handle IEEE ID
         $ieeeId = isset($_POST['txtIEEEId']) ? ValidationHelper::sanitizeInput($_POST['txtIEEEId']) : null;
         
         // Comprehensive validation
@@ -85,15 +83,13 @@ try {
             $errors[] = "Invalid registration amount";
         }
         
-        // ✅ NEW: Validate IEEE ID if IEEE member is selected
+        // Validate IEEE ID if IEEE member is selected
         if ($ieeeeMember == '1') {
             if (empty($ieeeId)) {
                 $errors[] = "IEEE Member ID is required for IEEE members";
             } elseif (!preg_match('/^[0-9]{8}$/', $ieeeId)) {
                 $errors[] = "IEEE Member ID must be exactly 8 digits";
-            }
-            // ✅ NEW: Check for duplicate IEEE ID (optional but recommended)
-             else {
+            } else {
                 $existingIEEEId = $registration->getRegistrationByIEEEId($ieeeId);
                 if ($existingIEEEId && $existingIEEEId['sEmail'] !== $email) {
                     $errors[] = "This IEEE Member ID is already registered with another email address. Please verify your IEEE ID or contact support.";
@@ -107,7 +103,7 @@ try {
             $errors[] = "A registration with this email address already exists. Registration ID: " . $existingUser['iRegId'] . ". If you need to make changes, please contact support.";
         }
         
-        // Check for duplicate mobile number (optional but recommended)
+        // Check for duplicate mobile number
         $cleanMobile = ValidationHelper::cleanMobileNumber($mobile);
         $existingMobile = $registration->getRegistrationByMobile($cleanMobile);
         if ($existingMobile && $existingMobile['sEmail'] !== $email) {
@@ -186,7 +182,7 @@ try {
             'campus' => 'Uttarakhand',
             'nielit' => $nielitText,
             'ieee_member' => $ieeeeMemberText,
-            'ieee_id' => $ieeeId, // ✅ NEW: Include IEEE ID in registration data
+            'ieee_id' => $ieeeId,
             'nationality' => $nationalityText,
             'early_bird' => $earlyBirdText,
             'category' => $categoryText,
@@ -200,7 +196,7 @@ try {
             'ip_address' => $ipAddress
         ];
         
-        // ✅ NEW: Enhanced logging with IEEE ID
+        // Enhanced logging with IEEE ID
         error_log("Registration attempt: " . json_encode([
             'email' => $email,
             'name' => $name,
@@ -241,7 +237,7 @@ try {
                 'mobile' => $cleanMobile
             ];
             
-            // Create Easebuzz payment request
+            // Create EaseBuzz payment request (returns form data like your working code)
             $paymentRequest = $easebuzz->createPaymentRequest($orderId, $amount, $customerInfo);
 
             if (!$paymentRequest) {
@@ -267,7 +263,7 @@ try {
             
             error_log("Registration and payment setup completed successfully for Registration ID: " . $registrationId);
             
-            // Easebuzz payment gateway URL
+            // Get EaseBuzz payment gateway URL
             $easebuzzUrl = $easebuzz->getPaymentUrl();
 
             ?>
@@ -278,178 +274,12 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Payment Gateway</title>
-    <!-- <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 20px;
-    }
-
-    .redirect-container {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        padding: 40px;
-        text-align: center;
-        max-width: 600px;
-        width: 100%;
-    }
-
-    .success-icon {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 50%;
-        margin: 0 auto 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 40px;
-        color: white;
-    }
-
-    .redirect-title {
-        font-size: 24px;
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    .redirect-message {
-        color: #666;
-        margin-bottom: 30px;
-        line-height: 1.5;
-    }
-
-    .spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #667eea;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    .registration-details {
-        background: #f8f9fa;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 20px 0;
-        text-align: left;
-    }
-
-    .detail-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        padding: 8px 0;
-        border-bottom: 1px solid #eee;
-    }
-
-    .detail-label {
-        font-weight: 600;
-        color: #333;
-    }
-
-    .detail-value {
-        color: #666;
-        font-weight: 500;
-    }
-
-    .amount-highlight {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 15px;
-        border-radius: 8px;
-        margin: 20px 0;
-        text-align: center;
-    }
-
-    .countdown {
-        color: #667eea;
-        font-weight: 600;
-        margin-top: 20px;
-        font-size: 16px;
-    }
-
-    .manual-redirect {
-        margin-top: 20px;
-        padding: 15px;
-        background: #fff3cd;
-        border: 1px solid #ffeaa7;
-        border-radius: 8px;
-        color: #856404;
-    }
-
-    .btn-manual {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-        transition: transform 0.2s ease;
-    }
-
-    .btn-manual:hover {
-        transform: translateY(-2px);
-    }
-
-    /* ✅ NEW: IEEE ID highlight styling */
-    .ieee-highlight {
-        background: #e8f5e8;
-        border: 1px solid #c3e6cb;
-        border-radius: 6px;
-        padding: 8px 12px;
-        color: #155724;
-        font-weight: 600;
-    }
-
-    @media (max-width: 768px) {
-        .redirect-container {
-            padding: 20px;
-        }
-
-        .detail-row {
-            flex-direction: column;
-            gap: 5px;
-        }
-    }
-    </style> -->
     <style>
     :root {
         --primary-blue: rgba(70, 12, 82, 0.99);
         --primary-bluebg: rgba(70, 12, 82, 0.49);
         --accent-blue: rgba(91, 2, 109, 0.99);
         --light-blue: rgba(232, 217, 235, 0.99);
-        --gold: #f39c12;
-        --goldbg: rgba(243, 156, 18, 0.46);
         --text-dark: #2c3e50;
         --primarySecond: rgba(91, 2, 109, 0.49);
     }
@@ -462,7 +292,7 @@ try {
 
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, var(--primarySecond ) 0%, var(--primary-blue) 100%);
+        background: linear-gradient(135deg, var(--primarySecond) 0%, var(--primary-blue) 100%);
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -517,13 +347,8 @@ try {
     }
 
     @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
     .registration-details {
@@ -596,7 +421,6 @@ try {
         transform: translateY(-2px);
     }
 
-    /* ✅ UPDATED: IEEE ID highlight styling */
     .ieee-highlight {
         background: var(--light-blue);
         border: 1px solid rgba(70, 12, 82, 0.3);
@@ -610,13 +434,12 @@ try {
         .redirect-container {
             padding: 20px;
         }
-
         .detail-row {
             flex-direction: column;
             gap: 5px;
         }
     }
-</style>
+    </style>
 </head>
 
 <body>
@@ -624,8 +447,7 @@ try {
         <div class="success-icon">✓</div>
         <h2 class="redirect-title">Registration Successful!</h2>
         <p class="redirect-message">
-            Your registration has been submitted successfully. You will now be redirected to the secure payment gateway
-            to complete your registration fee payment.
+            Your registration has been submitted successfully. You will now be redirected to the secure EaseBuzz payment gateway to complete your registration fee payment.
         </p>
 
         <div class="registration-details">
@@ -658,7 +480,6 @@ try {
                 <span class="detail-value"><?php echo htmlspecialchars($ieeeeMemberText); ?></span>
             </div>
             <?php if ($ieeeId && $ieeeeMember == '1'): ?>
-            <!-- ✅ NEW: Display IEEE ID if provided -->
             <div class="detail-row">
                 <span class="detail-label">IEEE Member ID:</span>
                 <span class="detail-value ieee-highlight"><?php echo htmlspecialchars($ieeeId); ?></span>
@@ -672,7 +493,7 @@ try {
         </div>
 
         <div class="spinner"></div>
-        <p class="countdown">Redirecting to payment gateway in <span id="countdown">8</span> seconds...</p>
+        <p class="countdown">Redirecting to EaseBuzz payment gateway in <span id="countdown">5</span> seconds...</p>
 
         <div class="manual-redirect">
             <strong>Note:</strong> Please complete the payment to confirm your registration.
@@ -680,9 +501,10 @@ try {
             <br><button onclick="submitPaymentForm()" class="btn-manual">Proceed to Payment</button>
         </div>
 
-        <!-- ✅ FIXED: Corrected form structure and action -->
+        <!-- EaseBuzz Payment Form - Exactly like your working code -->
         <form id="easebuzzForm" method="POST" action="<?php echo htmlspecialchars($easebuzzUrl); ?>" style="display: none;">
             <?php
+            // Output all form fields from payment request
             if (is_array($paymentRequest)) {
                 foreach ($paymentRequest as $key => $value) {
                     echo '<input type="hidden" name="'.htmlspecialchars($key).'" value="'.htmlspecialchars($value).'">' . "\n";
@@ -692,15 +514,15 @@ try {
         </form>
 
         <script>
-        // ✅ FIXED: Corrected JavaScript variables and functionality
-        let countdown = 8;
+        // Simple countdown and form submission (like your working code)
+        let countdown = 5;
         const countdownElement = document.getElementById('countdown');
 
         function submitPaymentForm() {
             try {
                 const form = document.getElementById('easebuzzForm');
                 if (form) {
-                    console.log('Submitting payment form to Easebuzz...');
+                    console.log('Submitting payment form to EaseBuzz...');
                     form.submit();
                 } else {
                     console.error('Payment form not found!');
@@ -724,7 +546,7 @@ try {
             }
         }, 1000);
 
-        // Also submit form if user clicks anywhere on the container (except the manual button)
+        // Click anywhere to proceed
         document.querySelector('.redirect-container').addEventListener('click', function(e) {
             if (countdown > 0 && !e.target.classList.contains('btn-manual') && !e.target.closest('.btn-manual')) {
                 clearInterval(timer);
@@ -736,29 +558,28 @@ try {
             }
         });
 
-        // ✅ FIXED: Corrected console logging
-        console.log('Payment request created:', {
+        // Debug logging
+        console.log('Payment form setup:', {
             registrationId: <?php echo json_encode($registrationId); ?>,
             orderId: <?php echo json_encode($orderId); ?>,
             amount: <?php echo json_encode($amount); ?>,
             ieeeId: <?php echo json_encode($ieeeId); ?>,
             ieeeMember: <?php echo json_encode($ieeeeMemberText); ?>,
-            gatewayUrl: <?php echo json_encode($easebuzzUrl); ?>
+            gatewayUrl: <?php echo json_encode($easebuzzUrl); ?>,
+            formFields: <?php echo json_encode(is_array($paymentRequest) ? array_keys($paymentRequest) : []); ?>
         });
 
-        // Auto-focus prevention to avoid form submission issues
+        // Ensure countdown starts
         document.addEventListener('DOMContentLoaded', function() {
-            // Ensure countdown starts properly
             if (countdownElement) {
                 countdownElement.textContent = countdown;
             }
             
-            // Log form contents for debugging
             const form = document.getElementById('easebuzzForm');
             if (form) {
-                console.log('Payment form found with', form.elements.length, 'fields');
+                console.log('✅ Payment form ready with', form.elements.length, 'fields');
             } else {
-                console.error('Payment form not found on page load!');
+                console.error('❌ Payment form not found!');
             }
         });
         </script>
@@ -766,6 +587,7 @@ try {
 </body>
 
 </html>
+
 <?php
             
         } catch (Exception $dbException) {
