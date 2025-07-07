@@ -9,7 +9,8 @@ require_once 'config/database.php';
 require_once 'classes/ConferenceRegistration.php';
 require_once 'classes/ConferencePayment.php';
 require_once 'classes/FileUploadHandler.php';
-require_once 'classes/BillDeskIntegration.php';
+// require_once 'classes/BillDeskIntegration.php';
+require_once 'classes/EasebuzzIntegration.php';
 require_once 'utils/ValidationHelper.php';
 
 // Initialize database connection
@@ -27,7 +28,8 @@ try {
 $registration = new ConferenceRegistration($db);
 $payment = new ConferencePayment($db);
 $fileHandler = new FileUploadHandler('uploads/papers/');
-$billDesk = new BillDeskIntegration($db);
+// $billDesk = new BillDeskIntegration($db);
+$easebuzz = new EasebuzzIntegration($db);
 
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -239,13 +241,13 @@ try {
                 'mobile' => $cleanMobile
             ];
             
-            // Create BillDesk payment request
-            $paymentRequest = $billDesk->createPaymentRequest($orderId, $amount, $customerInfo);
-            
+            // Create Easebuzz payment request
+            $paymentRequest = $easebuzz->createPaymentRequest($orderId, $amount, $customerInfo);
+
             if (!$paymentRequest) {
                 throw new Exception("Failed to create payment request");
             }
-            
+
             // Update payment record with order ID
             $paymentUpdated = $payment->updatePaymentStatus($registrationId, $orderId, $amount, 'INITIATED');
             
@@ -265,9 +267,9 @@ try {
             
             error_log("Registration and payment setup completed successfully for Registration ID: " . $registrationId);
             
-            // BillDesk payment gateway URLs
-            $billDeskUrl = $billDesk->getPaymentUrl(true); // true for test mode
-            
+            // Easebuzz payment gateway URL
+            $easebuzzUrl = $easebuzz->getPaymentUrl();
+
             ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -276,7 +278,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Payment Gateway</title>
-    <style>
+    <!-- <style>
     * {
         margin: 0;
         padding: 0;
@@ -439,7 +441,182 @@ try {
             gap: 5px;
         }
     }
-    </style>
+    </style> -->
+    <style>
+    :root {
+        --primary-blue: rgba(70, 12, 82, 0.99);
+        --primary-bluebg: rgba(70, 12, 82, 0.49);
+        --accent-blue: rgba(91, 2, 109, 0.99);
+        --light-blue: rgba(232, 217, 235, 0.99);
+        --gold: #f39c12;
+        --goldbg: rgba(243, 156, 18, 0.46);
+        --text-dark: #2c3e50;
+        --primarySecond: rgba(91, 2, 109, 0.49);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--primarySecond ) 0%, var(--primary-blue) 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .redirect-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        color: white;
+    }
+
+    .redirect-title {
+        font-size: 24px;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+    }
+
+    .redirect-message {
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.5;
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--primary-blue);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .registration-details {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        text-align: left;
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+
+    .detail-value {
+        color: #666;
+        font-weight: 500;
+    }
+
+    .amount-highlight {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .countdown {
+        color: var(--primary-blue);
+        font-weight: 600;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .manual-redirect {
+        margin-top: 20px;
+        padding: 15px;
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        color: #856404;
+    }
+
+    .btn-manual {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-manual:hover {
+        transform: translateY(-2px);
+    }
+
+    /* ✅ UPDATED: IEEE ID highlight styling */
+    .ieee-highlight {
+        background: var(--light-blue);
+        border: 1px solid rgba(70, 12, 82, 0.3);
+        border-radius: 6px;
+        padding: 8px 12px;
+        color: var(--text-dark);
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .redirect-container {
+            padding: 20px;
+        }
+
+        .detail-row {
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+</style>
 </head>
 
 <body>
@@ -503,21 +680,43 @@ try {
             <br><button onclick="submitPaymentForm()" class="btn-manual">Proceed to Payment</button>
         </div>
 
-        <form id="billDeskForm" method="POST" action="<?php echo $billDeskUrl; ?>" style="display: none;">
-            <input type="hidden" name="msg" value="<?php echo htmlspecialchars($paymentRequest); ?>">
+        <!-- ✅ FIXED: Corrected form structure and action -->
+        <form id="easebuzzForm" method="POST" action="<?php echo htmlspecialchars($easebuzzUrl); ?>" style="display: none;">
+            <?php
+            if (is_array($paymentRequest)) {
+                foreach ($paymentRequest as $key => $value) {
+                    echo '<input type="hidden" name="'.htmlspecialchars($key).'" value="'.htmlspecialchars($value).'">' . "\n";
+                }
+            }
+            ?>
         </form>
 
         <script>
+        // ✅ FIXED: Corrected JavaScript variables and functionality
         let countdown = 8;
         const countdownElement = document.getElementById('countdown');
 
         function submitPaymentForm() {
-            document.getElementById('billDeskForm').submit();
+            try {
+                const form = document.getElementById('easebuzzForm');
+                if (form) {
+                    console.log('Submitting payment form to Easebuzz...');
+                    form.submit();
+                } else {
+                    console.error('Payment form not found!');
+                    alert('Payment form not found. Please try again or contact support.');
+                }
+            } catch (error) {
+                console.error('Error submitting payment form:', error);
+                alert('Error redirecting to payment gateway. Please try again.');
+            }
         }
 
         const timer = setInterval(function() {
             countdown--;
-            countdownElement.textContent = countdown;
+            if (countdownElement) {
+                countdownElement.textContent = countdown;
+            }
 
             if (countdown <= 0) {
                 clearInterval(timer);
@@ -525,22 +724,42 @@ try {
             }
         }, 1000);
 
-        // Also submit form if user clicks anywhere on the container
+        // Also submit form if user clicks anywhere on the container (except the manual button)
         document.querySelector('.redirect-container').addEventListener('click', function(e) {
-            if (countdown > 0 && !e.target.classList.contains('btn-manual')) {
+            if (countdown > 0 && !e.target.classList.contains('btn-manual') && !e.target.closest('.btn-manual')) {
                 clearInterval(timer);
+                countdown = 0;
+                if (countdownElement) {
+                    countdownElement.textContent = '0';
+                }
                 submitPaymentForm();
             }
         });
 
-        // ✅ NEW: Enhanced logging with IEEE ID
+        // ✅ FIXED: Corrected console logging
         console.log('Payment request created:', {
-            registrationId: '<?php echo $registrationId; ?>',
-            orderId: '<?php echo $orderId; ?>',
-            amount: '<?php echo $amount; ?>',
-            ieeeId: '<?php echo $ieeeId; ?>',
-            ieeeMember: '<?php echo $ieeeeMemberText; ?>',
-            gatewayUrl: '<?php echo $billDeskUrl; ?>'
+            registrationId: <?php echo json_encode($registrationId); ?>,
+            orderId: <?php echo json_encode($orderId); ?>,
+            amount: <?php echo json_encode($amount); ?>,
+            ieeeId: <?php echo json_encode($ieeeId); ?>,
+            ieeeMember: <?php echo json_encode($ieeeeMemberText); ?>,
+            gatewayUrl: <?php echo json_encode($easebuzzUrl); ?>
+        });
+
+        // Auto-focus prevention to avoid form submission issues
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure countdown starts properly
+            if (countdownElement) {
+                countdownElement.textContent = countdown;
+            }
+            
+            // Log form contents for debugging
+            const form = document.getElementById('easebuzzForm');
+            if (form) {
+                console.log('Payment form found with', form.elements.length, 'fields');
+            } else {
+                console.error('Payment form not found on page load!');
+            }
         });
         </script>
     </div>

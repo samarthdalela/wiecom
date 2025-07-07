@@ -27,7 +27,7 @@ try {
 // Initialize classes
 $registration = new ConferenceRegistration($db);
 $payment = new ConferencePayment($db);
-$billDesk = new BillDeskIntegration($db);
+// $billDesk = new BillDeskIntegration($db);
 $emailNotification = new EmailNotification();
 
 try {

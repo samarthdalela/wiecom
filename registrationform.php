@@ -35,6 +35,418 @@ function isOptionSelected($name, $value) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UPWIECON 2025 Registration</title>
     <style>
+    :root {
+        --primary-blue: rgba(70, 12, 82, 0.99);
+        --primary-bluebg: rgba(70, 12, 82, 0.49);
+        --accent-blue: rgba(91, 2, 109, 0.99);
+        --light-blue: rgba(232, 217, 235, 0.99);
+        --gold: #f39c12;
+        --goldbg: rgba(243, 156, 18, 0.46);
+        --text-dark: #2c3e50;
+        --primarySecond: rgba(91, 2, 109, 0.49);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--primarySecond ) 0%, var(--primary-blue) 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .registration-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .form-header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .form-header p {
+        font-size: 16px;
+        opacity: 0.9;
+    }
+
+    .form-content {
+        padding: 40px;
+    }
+
+    /* Error Messages */
+    .error-container {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .error-container h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+
+    .error-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .error-list li {
+        margin-bottom: 8px;
+        padding: 8px 12px;
+        background: rgba(220, 53, 69, 0.1);
+        border-radius: 4px;
+        border-left: 3px solid #dc3545;
+    }
+
+    .error-list li:before {
+        content: "⚠ ";
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    .success-container {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+        padding: 25px;
+        border: 1px solid #e1e5e9;
+        border-radius: 10px;
+        background: #f8f9fa;
+    }
+
+    .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--primary-blue);
+        display: flex;
+        align-items: center;
+    }
+
+    .section-title i {
+        margin-right: 10px;
+        font-size: 22px;
+        color: var(--primary-blue);
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        flex: 1;
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-dark);
+        font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(70, 12, 82, 0.1);
+    }
+
+    .form-group.error input,
+    .form-group.error select {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+    }
+
+    .field-error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .field-error:before {
+        content: "⚠ ";
+        margin-right: 5px;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .radio-option:hover {
+        border-color: var(--primary-blue);
+        background: rgba(70, 12, 82, 0.05);
+    }
+
+    .radio-option input[type="radio"] {
+        width: auto;
+        margin: 0;
+    }
+
+    .radio-option input[type="radio"]:checked+label {
+        color: var(--primary-blue);
+        font-weight: 600;
+    }
+
+    .radio-option:has(input[type="radio"]:checked) {
+        border-color: var(--primary-blue);
+        background: rgba(70, 12, 82, 0.1);
+    }
+
+    .amount-display {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+        margin: 25px 0;
+        box-shadow: 0 10px 30px rgba(70, 12, 82, 0.3);
+    }
+
+    .amount-display h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .amount-value {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .file-upload-section {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .file-upload-info {
+        color: #856404;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .file-upload-info h4 {
+        color: #856404;
+        margin-bottom: 10px;
+    }
+
+    .submit-section {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px solid #e1e5e9;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        color: white;
+        padding: 18px 50px;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 10px 30px rgba(70, 12, 82, 0.3);
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(70, 12, 82, 0.4);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .required {
+        color: #e74c3c;
+    }
+
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .loading-content {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid var(--primary-blue);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Test email section */
+    .test-section {
+        background: var(--light-blue);
+        border: 1px solid rgba(70, 12, 82, 0.3);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .test-section h4 {
+        color: var(--primary-blue);
+        margin-bottom: 15px;
+    }
+
+    .test-btn {
+        background: var(--primary-blue);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    /* IEEE ID Section */
+    .ieee-id-section {
+        background: var(--light-blue);
+        border: 1px solid rgba(70, 12, 82, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        display: none;
+    }
+
+    .ieee-id-section.show {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .ieee-info {
+        background: rgba(232, 217, 235, 0.6);
+        border: 1px solid rgba(70, 12, 82, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        color: var(--text-dark);
+        font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .radio-group {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-content {
+            padding: 20px;
+        }
+
+        .amount-value {
+            font-size: 28px;
+        }
+    }
+</style>
+    <!-- <style>
     * {
         margin: 0;
         padding: 0;
@@ -434,7 +846,7 @@ function isOptionSelected($name, $value) {
             font-size: 28px;
         }
     }
-    </style>
+    </style> -->
     <!-- Add FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
