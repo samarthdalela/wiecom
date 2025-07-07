@@ -30,7 +30,8 @@ class BillDeskIntegration {
                 $this->securityId = 'nielit';
                 $this->checksumKey = 'WYZZHkyZuU9K';
                 $this->isTestMode = false;
-                $this->returnUrl = 'https://2343-103-165-89-10.ngrok-free.app/payment_response.php';
+                // $this->returnUrl = 'https://2343-103-165-89-10.ngrok-free.app/payment_response.php';
+                $this->returnUrl = 'https://0fbb-103-165-89-10.ngrok-free.app/newWiecom/payment_response.php';
             }
 
             if (empty($this->returnUrl)) {

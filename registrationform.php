@@ -379,6 +379,42 @@ function isOptionSelected($name, $value) {
         font-size: 14px;
     }
 
+    /* IEEE ID Section */
+    .ieee-id-section {
+        background: #e8f5e8;
+        border: 1px solid #c3e6cb;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        display: none;
+    }
+
+    .ieee-id-section.show {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .ieee-info {
+        background: #d1ecf1;
+        border: 1px solid #bee5eb;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        color: #0c5460;
+        font-size: 14px;
+    }
+
     @media (max-width: 768px) {
         .form-row {
             flex-direction: column;
@@ -503,13 +539,13 @@ function isOptionSelected($name, $value) {
                                 <div class="radio-option">
                                     <input type="radio" id="ieeeYes" name="rdbIEEEMember" value="1"
                                         <?php echo isRadioSelected('rdbIEEEMember', '1'); ?>
-                                        onchange="calculateAmount(); togglePaperUpload()">
+                                        onchange="calculateAmount(); toggleIEEESection(); togglePaperUpload()">
                                     <label for="ieeeYes">Yes</label>
                                 </div>
                                 <div class="radio-option">
                                     <input type="radio" id="ieeeNo" name="rdbIEEEMember" value="2"
                                         <?php echo isRadioSelected('rdbIEEEMember', '2'); ?>
-                                        onchange="calculateAmount(); togglePaperUpload()">
+                                        onchange="calculateAmount(); toggleIEEESection(); togglePaperUpload()">
                                     <label for="ieeeNo">No</label>
                                 </div>
                             </div>
@@ -569,6 +605,29 @@ function isOptionSelected($name, $value) {
                             </div>
                         </div>
                     </div>
+
+                    <!-- IEEE ID Section - Shows when IEEE member is selected -->
+                    <div class="ieee-id-section" id="ieeeIdSection">
+                        <div class="ieee-info">
+                            <h4><i class="fas fa-info-circle"></i> IEEE Membership Information</h4>
+                            <p><strong>Please enter your IEEE Member ID number.</strong> This helps us verify your membership status and apply the appropriate registration discount.</p>
+                            <p><small><i class="fas fa-lightbulb"></i> <strong>Note:</strong> Your IEEE Member ID is typically 8 digits long and can be found on your IEEE membership card or in your IEEE account profile.</small></p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="txtIEEEId">
+                                <i class="fas fa-id-card"></i> IEEE Member ID <span class="required">*</span>
+                            </label>
+                            <input type="text" id="txtIEEEId" name="txtIEEEId"
+                                value="<?php echo getFormValue('txtIEEEId'); ?>"
+                                placeholder="Enter your 8-digit IEEE Member ID"
+                                maxlength="8"
+                                pattern="[0-9]{8}">
+                            <small style="color: #666; font-size: 12px; margin-top: 5px; display: block;">
+                                <i class="fas fa-question-circle"></i> Example: 12345678 (8 digits only)
+                            </small>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Paper Details Section -->
@@ -581,32 +640,15 @@ function isOptionSelected($name, $value) {
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="txtPaperId">Paper ID</label>
+                            <label for="txtPaperId">Paper ID<span class="required">*</span></label>
                             <input type="text" id="txtPaperId" name="txtPaperId"
-                                value="<?php echo getFormValue('txtPaperId'); ?>" placeholder="Optional">
+                                value="<?php echo getFormValue('txtPaperId'); ?>" placeholder="Paper ID" required>
                         </div>
 
                         <div class="form-group">
                             <label for="txtPaperTitle">Paper Title</label>
                             <input type="text" id="txtPaperTitle" name="txtPaperTitle"
-                                value="<?php echo getFormValue('txtPaperTitle'); ?>" placeholder="Optional">
-                        </div>
-                    </div>
-
-                    <div class="file-upload-section">
-                        <h4><i class="fas fa-upload"></i> Paper Upload Guidelines:</h4>
-                        <div class="file-upload-info">
-                            <ul style="margin: 10px 0; padding-left: 20px;">
-                                <li><strong>Accepted formats:</strong> PDF, DOC, DOCX</li>
-                                <li><strong>Maximum file size:</strong> 3MB</li>
-                                <li><strong>File naming:</strong> Use descriptive names (e.g.,
-                                    "PaperTitle_AuthorName.pdf")</li>
-                                <li><strong>Content:</strong> Research papers, abstracts, or presentation materials</li>
-                            </ul>
-                        </div>
-                        <div class="form-group">
-                            <label for="paperUpload"><i class="fas fa-paperclip"></i> Upload Paper Document</label>
-                            <input type="file" id="paperUpload" name="paperUpload" accept=".pdf,.doc,.docx">
+                                value="<?php echo getFormValue('txtPaperTitle'); ?>" placeholder="Paper Title" required>
                         </div>
                     </div>
                 </div>
@@ -634,7 +676,6 @@ function isOptionSelected($name, $value) {
                         <h4 style="color: #155724; margin-bottom: 15px;"><i class="fas fa-shield-alt"></i> Security &
                             Privacy Notice:</h4>
                         <ul style="margin: 0; padding-left: 20px; color: #155724;">
-                            <li>All personal information is encrypted and stored securely</li>
                             <li>Payment processing is handled through secure, PCI-compliant gateways</li>
                             <li>Your data will only be used for conference-related communications</li>
                             <li>We do not share your information with third parties</li>
@@ -720,6 +761,21 @@ function isOptionSelected($name, $value) {
         }
     }
 
+    function toggleIEEESection() {
+        const ieeeYes = document.getElementById('ieeeYes').checked;
+        const ieeeIdSection = document.getElementById('ieeeIdSection');
+        const ieeeIdInput = document.getElementById('txtIEEEId');
+
+        if (ieeeYes) {
+            ieeeIdSection.classList.add('show');
+            ieeeIdInput.required = true;
+        } else {
+            ieeeIdSection.classList.remove('show');
+            ieeeIdInput.required = false;
+            ieeeIdInput.value = '';
+        }
+    }
+
     function togglePaperUpload() {
         const ieeeYes = document.getElementById('ieeeYes').checked;
         const paperSection = document.getElementById('paperSection');
@@ -760,6 +816,35 @@ function isOptionSelected($name, $value) {
                     .message + '</div>';
             });
     }
+
+    // IEEE ID input validation
+    document.getElementById('txtIEEEId').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 8) {
+            value = value.substring(0, 8);
+        }
+        e.target.value = value;
+    });
+
+    // IEEE ID real-time validation
+    document.getElementById('txtIEEEId').addEventListener('blur', function() {
+        const ieeeId = this.value.trim();
+        const formGroup = this.closest('.form-group');
+        const existingError = formGroup.querySelector('.field-error');
+
+        if (existingError) {
+            existingError.remove();
+            formGroup.classList.remove('error');
+        }
+
+        if (ieeeId.length > 0 && ieeeId.length !== 8) {
+            formGroup.classList.add('error');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.textContent = 'IEEE Member ID must be exactly 8 digits';
+            this.parentNode.appendChild(errorDiv);
+        }
+    });
 
     // Form validation
     document.getElementById('registrationForm').addEventListener('submit', function(e) {
@@ -840,36 +925,41 @@ function isOptionSelected($name, $value) {
             });
         }
 
-        // Validate amount
-        // const amount = parseFloat(document.getElementById('txtAmount').value || 0);
-        // if (amount <= 0) {
-        //     isValid = false;
-        //     alert('Please ensure all registration options are selected to calculate the registration fee.');
-        // }
-
-        // Validate file upload if IEEE member
+        // Validate IEEE ID if IEEE member is selected
         const ieeeYes = document.getElementById('ieeeYes').checked;
-        const fileUpload = document.getElementById('paperUpload');
-
-        if (ieeeYes && fileUpload.files.length > 0) {
-            const file = fileUpload.files[0];
-            const allowedTypes = ['application/pdf', 'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-            ];
-            const maxSize = 3 * 1024 * 1024; // 3MB
-
-            if (!allowedTypes.includes(file.type) && !file.name.match(/\.(pdf|doc|docx)$/i)) {
+        const ieeeId = document.getElementById('txtIEEEId').value.trim();
+        
+        if (ieeeYes) {
+            if (!ieeeId) {
                 errors.push({
-                    field: 'paperUpload',
-                    message: 'Only PDF, DOC, and DOCX files are allowed'
+                    field: 'txtIEEEId',
+                    message: 'IEEE Member ID is required for IEEE members'
+                });
+                isValid = false;
+            } else if (ieeeId.length !== 8 || !/^[0-9]{8}$/.test(ieeeId)) {
+                errors.push({
+                    field: 'txtIEEEId',
+                    message: 'IEEE Member ID must be exactly 8 digits'
                 });
                 isValid = false;
             }
 
-            if (file.size > maxSize) {
+            // Validate paper details for IEEE members
+            const paperId = document.getElementById('txtPaperId').value.trim();
+            const paperTitle = document.getElementById('txtPaperTitle').value.trim();
+
+            if (!paperId) {
                 errors.push({
-                    field: 'paperUpload',
-                    message: 'File size must be less than 3MB'
+                    field: 'txtPaperId',
+                    message: 'Paper ID is required for IEEE members'
+                });
+                isValid = false;
+            }
+
+            if (!paperTitle) {
+                errors.push({
+                    field: 'txtPaperTitle',
+                    message: 'Paper Title is required for IEEE members'
                 });
                 isValid = false;
             }
@@ -932,6 +1022,7 @@ function isOptionSelected($name, $value) {
     // Initialize form state based on existing values
     document.addEventListener('DOMContentLoaded', function() {
         calculateAmount();
+        toggleIEEESection();
         togglePaperUpload();
 
         // Auto-focus first empty field
@@ -999,36 +1090,6 @@ function isOptionSelected($name, $value) {
             errorDiv.className = 'field-error';
             errorDiv.textContent = 'Please enter a valid 10-digit mobile number';
             this.parentNode.appendChild(errorDiv);
-        }
-    });
-
-    // File upload validation
-    document.getElementById('paperUpload').addEventListener('change', function() {
-        const formGroup = this.closest('.form-group');
-        const existingError = formGroup.querySelector('.field-error');
-
-        if (existingError) {
-            existingError.remove();
-            formGroup.classList.remove('error');
-        }
-
-        if (this.files.length > 0) {
-            const file = this.files[0];
-            const maxSize = 3 * 1024 * 1024; // 3MB
-
-            if (!file.name.match(/\.(pdf|doc|docx)$/i)) {
-                formGroup.classList.add('error');
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'field-error';
-                errorDiv.textContent = 'Only PDF, DOC, and DOCX files are allowed';
-                this.parentNode.appendChild(errorDiv);
-            } else if (file.size > maxSize) {
-                formGroup.classList.add('error');
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'field-error';
-                errorDiv.textContent = 'File size must be less than 3MB';
-                this.parentNode.appendChild(errorDiv);
-            }
         }
     });
     </script>

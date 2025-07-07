@@ -89,9 +89,8 @@ try {
                 $errors[] = "IEEE Member ID is required for IEEE members";
             } elseif (!preg_match('/^[0-9]{8}$/', $ieeeId)) {
                 $errors[] = "IEEE Member ID must be exactly 8 digits";
-            }
-            // ✅ NEW: Check for duplicate IEEE ID (optional but recommended)
-             else {
+            } else {
+                // ✅ NEW: Check for duplicate IEEE ID (optional but recommended)
                 $existingIEEEId = $registration->getRegistrationByIEEEId($ieeeId);
                 if ($existingIEEEId && $existingIEEEId['sEmail'] !== $email) {
                     $errors[] = "This IEEE Member ID is already registered with another email address. Please verify your IEEE ID or contact support.";
