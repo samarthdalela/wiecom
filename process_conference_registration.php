@@ -427,12 +427,12 @@ try {
             <div style="font-size: 24px; font-weight: bold;">₹<?php echo number_format($amount, 2); ?></div>
         </div>
 
-        <div class="payment-info">
+        <!-- <div class="payment-info">
             <h4 style="color: #155724; margin-bottom: 10px;">🔒 Payment Information</h4>
             <p><strong>Session Token:</strong> <?php echo htmlspecialchars($paymentRequest['session_token']); ?></p>
             <p><strong>Payment URL:</strong> <a href="<?php echo htmlspecialchars($paymentRequest['payment_url']); ?>"
                     target="_blank">Click to open payment page</a></p>
-        </div>
+        </div> -->
 
         <div class="spinner"></div>
         <p class="countdown">Redirecting to EaseBuzz payment gateway in <span id="countdown">5</span> seconds...</p>

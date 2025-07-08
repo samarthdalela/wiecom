@@ -6,3 +6,5 @@
 2025-07-08 16:59:38 | {"timestamp":"2025-07-08 16:59:38","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2025_127_1751974148"}
 2025-07-08 17:23:09 | {"timestamp":"2025-07-08 17:23:09","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
 2025-07-08 17:23:09 | {"timestamp":"2025-07-08 17:23:09","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2025_128_1751975552"}
+2025-07-08 17:38:05 | {"timestamp":"2025-07-08 17:38:05","to":"samarthdalela@gmail.com","status":"FAILED","method":"All 3 attempts failed. Last error: PHPMailer failed: SMTP Error: Could not authenticate., Basic mail also failed on attempt 3","order_id":null}
+2025-07-08 17:38:05 | {"timestamp":"2025-07-08 17:38:05","to":"samarthdalela@gmail.com","status":"FAILED","method":"Payment confirmation email","order_id":"UPWIECON2025_130_1751976439"}
