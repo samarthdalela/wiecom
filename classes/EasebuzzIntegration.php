@@ -20,7 +20,7 @@ class EasebuzzIntegration {
         $this->env = 'production';
         
         // Production return URL - Update this to your actual domain
-        $this->returnUrl = 'https://08da62ac74dd.ngrok-free.app/abc/payment_response.php';
+        $this->returnUrl = 'https://bc53643a3e08.ngrok-free.app/abc/payment_response.php';
         
         error_log("EaseBuzz Production Config Loaded - API Key: {$this->apiKey}");
     }

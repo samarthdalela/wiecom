@@ -619,15 +619,6 @@ function isOptionSelected($name, $value) {
                         Professional Classification
                     </h3>
 
-                    <div class="classification-info">
-                        <h4><i class="fas fa-info-circle"></i> Classification Guidelines</h4>
-                        <p><strong>Please select your professional status:</strong></p>
-                        <ul>
-                            <li><strong>Academic/Professional:</strong> Faculty members, researchers, industry professionals, working professionals</li>
-                            <li><strong>Student:</strong> Undergraduate students, graduate students, Ph.D. candidates (not yet graduated)</li>
-                        </ul>
-                        <p><small><strong>Note:</strong> This classification may affect your registration fee. Please select the most appropriate category.</small></p>
-                    </div>
 
                     <div class="form-group">
                         <label>Professional Status <span class="required">*</span></label>
@@ -651,48 +642,6 @@ function isOptionSelected($name, $value) {
                         </div>
                     </div>
 
-                    <!-- Additional Details for Academic/Professional
-                    <div id="academicProfessionalDetails" class="form-group" style="display: none;">
-                        <label for="txtInstitution">Institution/Organization <span class="required">*</span></label>
-                        <input type="text" id="txtInstitution" name="txtInstitution"
-                            value="<?php echo getFormValue('txtInstitution'); ?>"
-                            placeholder="Enter your institution or organization name">
-                    </div> -->
-
-                    <!-- Additional Details for Student -->
-                    <div id="studentDetails" style="display: none;">
-                        <!-- <div class="form-row">
-                            <div class="form-group">
-                                <label for="txtUniversity">University/College <span class="required">*</span></label>
-                                <input type="text" id="txtUniversity" name="txtUniversity"
-                                    value="<?php echo getFormValue('txtUniversity'); ?>"
-                                    placeholder="Enter your university or college name">
-                            </div>
-                            <div class="form-group">
-                                <label for="txtStudentId">Student ID</label>
-                                <input type="text" id="txtStudentId" name="txtStudentId"
-                                    value="<?php echo getFormValue('txtStudentId'); ?>"
-                                    placeholder="Enter your student ID">
-                            </div>
-                        </div> -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="ddlDegreeLevel">Degree Level <span class="required">*</span></label>
-                                <select id="ddlDegreeLevel" name="ddlDegreeLevel">
-                                    <option value="">Select Degree Level</option>
-                                    <option value="undergraduate" <?php echo isOptionSelected('ddlDegreeLevel', 'undergraduate'); ?>>Undergraduate (Bachelor's)</option>
-                                    <option value="graduate" <?php echo isOptionSelected('ddlDegreeLevel', 'graduate'); ?>>Graduate (Master's)</option>
-                                    <option value="phd" <?php echo isOptionSelected('ddlDegreeLevel', 'phd'); ?>>Ph.D. Candidate</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="txtFieldOfStudy">Field of Study</label>
-                                <input type="text" id="txtFieldOfStudy" name="txtFieldOfStudy"
-                                    value="<?php echo getFormValue('txtFieldOfStudy'); ?>"
-                                    placeholder="e.g., Computer Science, Electrical Engineering">
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Registration Options Section -->
@@ -805,7 +754,7 @@ function isOptionSelected($name, $value) {
                     style="<?php echo getFormValue('rdbIEEEMember') == '1' ? 'display: block;' : 'display: none;'; ?>">
                     <h3 class="section-title">
                         <i class="fas fa-file-alt"></i>
-                        Paper Details (For IEEE Members)
+                        Paper Details 
                     </h3>
 
                     <div class="form-row">
@@ -821,7 +770,15 @@ function isOptionSelected($name, $value) {
                                 value="<?php echo getFormValue('txtPaperTitle'); ?>" placeholder="Paper Title" required>
                         </div>
                     </div>
-                </div>
+                    <div class="classification-info" id="listenerInstructions" style="display: none;">
+    <h4><i class="fas fa-info-circle"></i> Instructions for Listener Participants</h4>
+    <p><strong>Please follow the guidelines below if you are registering as a Listener:</strong></p>
+    <ul>
+        <li><strong>Listener:</strong> Please enter <code>-</code> in the Paper ID and Paper Title sections.</li>
+    </ul>
+    <p><small><strong>Note:</strong> This classification may affect your registration fee. Please select the most appropriate category.</small></p>
+</div>
+
 
                 <!-- Amount Section -->
                 <div class="amount-display" id="amountSection"
@@ -1182,46 +1139,46 @@ function isOptionSelected($name, $value) {
             isValid = false;
         }
 
-        // Validate professional status
-        const professionalStatus = document.querySelector('input[name="chkProfessionalStatus[]"]:checked');
-        if (!professionalStatus) {
-            errors.push({
-                field: 'chkProfessionalStatus',
-                message: 'Please select your professional status'
-            });
-            isValid = false;
-        } else {
-            // Validate based on selected professional status
-            if (professionalStatus.value === 'academic_professional') {
-                const institution = document.getElementById('txtInstitution').value.trim();
-                if (!institution) {
-                    errors.push({
-                        field: 'txtInstitution',
-                        message: 'Institution/Organization is required for Academic/Professional'
-                    });
-                    isValid = false;
-                }
-            } else if (professionalStatus.value === 'student') {
-                const university = document.getElementById('txtUniversity').value.trim();
-                const degreeLevel = document.getElementById('ddlDegreeLevel').value;
+    //     // Validate professional status
+    //     const professionalStatus = document.querySelector('input[name="chkProfessionalStatus[]"]:checked');
+    //     if (!professionalStatus) {
+    //         errors.push({
+    //             field: 'chkProfessionalStatus',
+    //             message: 'Please select your professional status'
+    //         });
+    //         isValid = false;
+    //     } else {
+    //         // Validate based on selected professional status
+    //         if (professionalStatus.value === 'academic_professional') {
+    //             const institution = document.getElementById('txtInstitution').value.trim();
+    //             if (!institution) {
+    //                 errors.push({
+    //                     field: 'txtInstitution',
+    //                     message: 'Institution/Organization is required for Academic/Professional'
+    //                 });
+    //                 isValid = false;
+    //             }
+    //         } else if (professionalStatus.value === 'student') {
+    //             const university = document.getElementById('txtUniversity').value.trim();
+    //             const degreeLevel = document.getElementById('ddlDegreeLevel').value;
                 
-                if (!university) {
-                    errors.push({
-                        field: 'txtUniversity',
-                        message: 'University/College is required for students'
-                    });
-                    isValid = false;
-                }
+    //             if (!university) {
+    //                 errors.push({
+    //                     field: 'txtUniversity',
+    //                     message: 'University/College is required for students'
+    //                 });
+    //                 isValid = false;
+    //             }
                 
-                if (!degreeLevel) {
-                    errors.push({
-                        field: 'ddlDegreeLevel',
-                        message: 'Please select your degree level'
-                    });
-                    isValid = false;
-                }
-            }
-        }
+    //             if (!degreeLevel) {
+    //                 errors.push({
+    //                     field: 'ddlDegreeLevel',
+    //                     message: 'Please select your degree level'
+    //                 });
+    //                 isValid = false;
+    //             }
+    //         }
+    //     }
 
         // Validate radio buttons
         if (!document.querySelector('input[name="rdbIEEEMember"]:checked')) {
@@ -1248,45 +1205,45 @@ function isOptionSelected($name, $value) {
             });
         }
 
-        // Validate IEEE ID if IEEE member is selected
-        const ieeeYes = document.getElementById('ieeeYes').checked;
-        const ieeeId = document.getElementById('txtIEEEId').value.trim();
+    //     // Validate IEEE ID if IEEE member is selected
+    //     const ieeeYes = document.getElementById('ieeeYes').checked;
+    //     const ieeeId = document.getElementById('txtIEEEId').value.trim();
         
-        if (ieeeYes) {
-            if (!ieeeId) {
-                errors.push({
-                    field: 'txtIEEEId',
-                    message: 'IEEE Member ID is required for IEEE members'
-                });
-                isValid = false;
-            } else if (ieeeId.length !== 8 || !/^[0-9]{8}$/.test(ieeeId)) {
-                errors.push({
-                    field: 'txtIEEEId',
-                    message: 'IEEE Member ID must be exactly 8 digits'
-                });
-                isValid = false;
-            }
+        // if (ieeeYes) {
+        //     if (!ieeeId) {
+        //         errors.push({
+        //             field: 'txtIEEEId',
+        //             message: 'IEEE Member ID is required for IEEE members'
+        //         });
+        //         isValid = false;
+        //     } else if (ieeeId.length !== 8 || !/^[0-9]{8}$/.test(ieeeId)) {
+        //         errors.push({
+        //             field: 'txtIEEEId',
+        //             message: 'IEEE Member ID must be exactly 8 digits'
+        //         });
+        //         isValid = false;
+        //     }
 
-            // Validate paper details for IEEE members
-            const paperId = document.getElementById('txtPaperId').value.trim();
-            const paperTitle = document.getElementById('txtPaperTitle').value.trim();
+    //         // Validate paper details for IEEE members
+    //         const paperId = document.getElementById('txtPaperId').value.trim();
+    //         const paperTitle = document.getElementById('txtPaperTitle').value.trim();
 
-            if (!paperId) {
-                errors.push({
-                    field: 'txtPaperId',
-                    message: 'Paper ID is required for IEEE members'
-                });
-                isValid = false;
-            }
+    //         if (!paperId) {
+    //             errors.push({
+    //                 field: 'txtPaperId',
+    //                 message: 'Paper ID is required for IEEE members'
+    //             });
+    //             isValid = false;
+    //         }
 
-            if (!paperTitle) {
-                errors.push({
-                    field: 'txtPaperTitle',
-                    message: 'Paper Title is required for IEEE members'
-                });
-                isValid = false;
-            }
-        }
+    //         if (!paperTitle) {
+    //             errors.push({
+    //                 field: 'txtPaperTitle',
+    //                 message: 'Paper Title is required for IEEE members'
+    //             });
+                // isValid = false;
+            
+        // }
 
         if (!isValid) {
             // Hide loading overlay
@@ -1431,7 +1388,24 @@ function isOptionSelected($name, $value) {
             this.parentNode.appendChild(errorDiv);
         }
     });
-    </script>
+    function toggleListenerInstructions() {
+        const category = document.getElementById('ddlCategory').value;
+        const listenerInfo = document.getElementById('listenerInstructions');
+
+        if (category === '2') { // Assuming '2' is Listener
+            listenerInfo.style.display = 'block';
+        } else {
+            listenerInfo.style.display = 'none';
+        }
+    }
+
+    // Trigger once on page load
+    document.addEventListener('DOMContentLoaded', toggleListenerInstructions);
+
+    // Update when dropdown changes
+    document.getElementById('ddlCategory').addEventListener('change', toggleListenerInstructions);
+</script>
+    
 </body>
 
 </html>
