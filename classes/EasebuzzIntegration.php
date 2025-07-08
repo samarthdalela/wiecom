@@ -20,7 +20,7 @@ class EasebuzzIntegration {
         $this->env = 'production';
         
         // Production return URL - Update this to your actual domain
-        $this->returnUrl = 'https://d592-2401-4900-820b-e56e-3cb7-8bcd-7139-e97b.ngrok-free.app/abc/payment_response.php';
+        $this->returnUrl = 'https://08da62ac74dd.ngrok-free.app/abc/payment_response.php';
         
         error_log("EaseBuzz Production Config Loaded - API Key: {$this->apiKey}");
     }
@@ -166,10 +166,10 @@ class EasebuzzIntegration {
      */
     private function getAlternativePaymentUrl($sessionToken) {
         $alternatives = [
-            'direct' => 'https://pay.easebuzz.in/payment/page/' . $sessionToken,
-            'with_slash' => 'https://pay.easebuzz.in/payment/page/' . $sessionToken . '/',
-            'query_param' => 'https://pay.easebuzz.in/payment/page?token=' . $sessionToken,
-            'access_key' => 'https://pay.easebuzz.in/payment/page?access_key=' . $sessionToken
+            'direct' => 'https://pay.easebuzz.in/pay/' . $sessionToken,
+            'with_slash' => 'https://pay.easebuzz.in/pay/' . $sessionToken . '/',
+            'query_param' => 'https://pay.easebuzz.in/pay?token=' . $sessionToken,
+            'access_key' => 'https://pay.easebuzz.in/pay?access_key=' . $sessionToken
         ];
         
         error_log("Alternative Payment URLs: " . json_encode($alternatives));

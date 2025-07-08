@@ -365,7 +365,7 @@ try {
     <div class="result-container">
         <div class="conference-header">
             <h1>UPWIECON 2025</h1>
-            <p>IEEE Uttarakhand Women in Engineering Conference</p>
+            <p>IEEE Uttar Pradesh Women in Engineering Conference</p>
         </div>
 
         <?php if ($responseData['status'] === 'SUCCESS'): ?>
@@ -605,7 +605,7 @@ function sendProductionEmail($registrationDetails, $responseData) {
     if ($responseData['status'] === 'SUCCESS') {
         $message .= "Your registration for UPWIECON 2025 is confirmed!\n\n";
         $message .= "Conference Details:\n";
-        $message .= "- Event: IEEE Uttarakhand Women in Engineering Conference 2025\n";
+        $message .= "- Event: IEEE Uttar Pradesh Women in Engineering Conference 2025\n";
         $message .= "- Registration Category: " . $registrationDetails['sCategory'] . "\n";
         $message .= "- IEEE Member: " . $registrationDetails['sIEEEMember'] . "\n";
         if (!empty($registrationDetails['ieee_id'])) {

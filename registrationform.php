@@ -21,6 +21,19 @@ function isRadioSelected($name, $value) {
     return isset($formData[$name]) && $formData[$name] == $value ? 'checked' : '';
 }
 
+// Function to check if checkbox should be checked
+function isCheckboxChecked($name, $value) {
+    global $formData;
+    if (isset($formData[$name])) {
+        if (is_array($formData[$name])) {
+            return in_array($value, $formData[$name]) ? 'checked' : '';
+        } else {
+            return $formData[$name] == $value ? 'checked' : '';
+        }
+    }
+    return '';
+}
+
 // Function to check if option should be selected
 function isOptionSelected($name, $value) {
     global $formData;
@@ -251,6 +264,69 @@ function isOptionSelected($name, $value) {
         background: rgba(70, 12, 82, 0.1);
     }
 
+    .checkbox-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    .checkbox-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .checkbox-option:hover {
+        border-color: var(--primary-blue);
+        background: rgba(70, 12, 82, 0.05);
+    }
+
+    .checkbox-option input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+    }
+
+    .checkbox-option input[type="checkbox"]:checked+label {
+        color: var(--primary-blue);
+        font-weight: 600;
+    }
+
+    .checkbox-option:has(input[type="checkbox"]:checked) {
+        border-color: var(--primary-blue);
+        background: rgba(70, 12, 82, 0.1);
+    }
+
+    .classification-info {
+        background: rgba(232, 217, 235, 0.6);
+        border: 1px solid rgba(70, 12, 82, 0.2);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        color: var(--text-dark);
+        font-size: 14px;
+    }
+
+    .classification-info h4 {
+        color: var(--primary-blue);
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .classification-info ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .classification-info li {
+        margin-bottom: 5px;
+    }
+
     .amount-display {
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
         color: white;
@@ -432,7 +508,7 @@ function isOptionSelected($name, $value) {
             gap: 0;
         }
 
-        .radio-group {
+        .radio-group, .checkbox-group {
             flex-direction: column;
             gap: 10px;
         }
@@ -446,407 +522,6 @@ function isOptionSelected($name, $value) {
         }
     }
 </style>
-    <!-- <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        min-height: 100vh;
-        padding: 20px;
-    }
-
-    .registration-container {
-        max-width: 900px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    .form-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 30px;
-        text-align: center;
-    }
-
-    .form-header h1 {
-        font-size: 28px;
-        margin-bottom: 10px;
-    }
-
-    .form-header p {
-        font-size: 16px;
-        opacity: 0.9;
-    }
-
-    .form-content {
-        padding: 40px;
-    }
-
-    /* Error Messages */
-    .error-container {
-        background: #f8d7da;
-        border: 1px solid #f5c6cb;
-        color: #721c24;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-
-    .error-container h3 {
-        margin-bottom: 15px;
-        font-size: 18px;
-    }
-
-    .error-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .error-list li {
-        margin-bottom: 8px;
-        padding: 8px 12px;
-        background: rgba(220, 53, 69, 0.1);
-        border-radius: 4px;
-        border-left: 3px solid #dc3545;
-    }
-
-    .error-list li:before {
-        content: "⚠ ";
-        font-weight: bold;
-        margin-right: 8px;
-    }
-
-    .success-container {
-        background: #d4edda;
-        border: 1px solid #c3e6cb;
-        color: #155724;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-
-    .form-section {
-        margin-bottom: 30px;
-        padding: 25px;
-        border: 1px solid #e1e5e9;
-        border-radius: 10px;
-        background: #f8f9fa;
-    }
-
-    .section-title {
-        font-size: 20px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #667eea;
-        display: flex;
-        align-items: center;
-    }
-
-    .section-title i {
-        margin-right: 10px;
-        font-size: 22px;
-        color: #667eea;
-    }
-
-    .form-row {
-        display: flex;
-        gap: 20px;
-        margin-bottom: 20px;
-    }
-
-    .form-group {
-        flex: 1;
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: #333;
-        font-weight: 600;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        width: 100%;
-        padding: 12px 15px;
-        border: 2px solid #e1e5e9;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .form-group.error input,
-    .form-group.error select {
-        border-color: #dc3545;
-        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
-    }
-
-    .field-error {
-        color: #dc3545;
-        font-size: 14px;
-        margin-top: 5px;
-        display: flex;
-        align-items: center;
-    }
-
-    .field-error:before {
-        content: "⚠ ";
-        margin-right: 5px;
-    }
-
-    .radio-group {
-        display: flex;
-        gap: 20px;
-        margin-top: 10px;
-        flex-wrap: wrap;
-    }
-
-    .radio-option {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border: 2px solid #e1e5e9;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .radio-option:hover {
-        border-color: #667eea;
-        background: rgba(102, 126, 234, 0.05);
-    }
-
-    .radio-option input[type="radio"] {
-        width: auto;
-        margin: 0;
-    }
-
-    .radio-option input[type="radio"]:checked+label {
-        color: #667eea;
-        font-weight: 600;
-    }
-
-    .radio-option:has(input[type="radio"]:checked) {
-        border-color: #667eea;
-        background: rgba(102, 126, 234, 0.1);
-    }
-
-    .amount-display {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 25px;
-        border-radius: 10px;
-        text-align: center;
-        margin: 25px 0;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-    }
-
-    .amount-display h3 {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .amount-value {
-        font-size: 36px;
-        font-weight: bold;
-    }
-
-    .file-upload-section {
-        background: #fff3cd;
-        border: 1px solid #ffeaa7;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 20px 0;
-    }
-
-    .file-upload-info {
-        color: #856404;
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
-
-    .file-upload-info h4 {
-        color: #856404;
-        margin-bottom: 10px;
-    }
-
-    .submit-section {
-        text-align: center;
-        margin-top: 40px;
-        padding-top: 30px;
-        border-top: 2px solid #e1e5e9;
-    }
-
-    .submit-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 18px 50px;
-        border: none;
-        border-radius: 10px;
-        font-size: 18px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-    }
-
-    .submit-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-    }
-
-    .submit-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .required {
-        color: #e74c3c;
-    }
-
-    .loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-
-    .loading-content {
-        background: white;
-        padding: 40px;
-        border-radius: 15px;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .spinner {
-        width: 50px;
-        height: 50px;
-        border: 5px solid #f3f3f3;
-        border-top: 5px solid #667eea;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 20px;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    /* Test email section */
-    .test-section {
-        background: #e3f2fd;
-        border: 1px solid #bbdefb;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 20px 0;
-    }
-
-    .test-section h4 {
-        color: #1976d2;
-        margin-bottom: 15px;
-    }
-
-    .test-btn {
-        background: #1976d2;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    /* IEEE ID Section */
-    .ieee-id-section {
-        background: #e8f5e8;
-        border: 1px solid #c3e6cb;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 15px 0;
-        display: none;
-    }
-
-    .ieee-id-section.show {
-        display: block;
-        animation: slideDown 0.3s ease;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .ieee-info {
-        background: #d1ecf1;
-        border: 1px solid #bee5eb;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 15px;
-        color: #0c5460;
-        font-size: 14px;
-    }
-
-    @media (max-width: 768px) {
-        .form-row {
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .radio-group {
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .form-content {
-            padding: 20px;
-        }
-
-        .amount-value {
-            font-size: 28px;
-        }
-    }
-    </style> -->
     <!-- Add FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -863,7 +538,7 @@ function isOptionSelected($name, $value) {
     <div class="registration-container">
         <div class="form-header">
             <h1><i class="fas fa-graduation-cap"></i> UPWIECON 2025</h1>
-            <p>IEEE Uttarakhand Women in Engineering Conference - Registration Form</p>
+            <p>IEEE Uttar Pradesh Women in Engineering Conference - Registration Form</p>
         </div>
 
         <div class="form-content">
@@ -928,11 +603,94 @@ function isOptionSelected($name, $value) {
                             <select id="ddlCategory" name="ddlCategory" required onchange="calculateAmount()">
                                 <option value="0">Select Category</option>
                                 <option value="1" <?php echo isOptionSelected('ddlCategory', '1'); ?>>
-                                    Professional/Industry</option>
-                                <option value="2" <?php echo isOptionSelected('ddlCategory', '2'); ?>>Academic/Faculty
+                                Presenter</option>
+                                <option value="2" <?php echo isOptionSelected('ddlCategory', '2'); ?>>Listener
                                 </option>
-                                <option value="3" <?php echo isOptionSelected('ddlCategory', '3'); ?>>Student</option>
+                                <option value="3" <?php echo isOptionSelected('ddlCategory', '3'); ?>>Ph.D. Colloquium</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Classification Section -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        Professional Classification
+                    </h3>
+
+                    <div class="classification-info">
+                        <h4><i class="fas fa-info-circle"></i> Classification Guidelines</h4>
+                        <p><strong>Please select your professional status:</strong></p>
+                        <ul>
+                            <li><strong>Academic/Professional:</strong> Faculty members, researchers, industry professionals, working professionals</li>
+                            <li><strong>Student:</strong> Undergraduate students, graduate students, Ph.D. candidates (not yet graduated)</li>
+                        </ul>
+                        <p><small><strong>Note:</strong> This classification may affect your registration fee. Please select the most appropriate category.</small></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Professional Status <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="academicProfessional" name="chkProfessionalStatus[]" value="academic_professional"
+                                    <?php echo isCheckboxChecked('chkProfessionalStatus', 'academic_professional'); ?>
+                                    onchange="handleProfessionalStatusChange(this); calculateAmount()">
+                                <label for="academicProfessional">
+                                    <i class="fas fa-briefcase"></i> Academic/Professional
+                                </label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="student" name="chkProfessionalStatus[]" value="student"
+                                    <?php echo isCheckboxChecked('chkProfessionalStatus', 'student'); ?>
+                                    onchange="handleProfessionalStatusChange(this); calculateAmount()">
+                                <label for="student">
+                                    <i class="fas fa-user-graduate"></i> Student
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details for Academic/Professional
+                    <div id="academicProfessionalDetails" class="form-group" style="display: none;">
+                        <label for="txtInstitution">Institution/Organization <span class="required">*</span></label>
+                        <input type="text" id="txtInstitution" name="txtInstitution"
+                            value="<?php echo getFormValue('txtInstitution'); ?>"
+                            placeholder="Enter your institution or organization name">
+                    </div> -->
+
+                    <!-- Additional Details for Student -->
+                    <div id="studentDetails" style="display: none;">
+                        <!-- <div class="form-row">
+                            <div class="form-group">
+                                <label for="txtUniversity">University/College <span class="required">*</span></label>
+                                <input type="text" id="txtUniversity" name="txtUniversity"
+                                    value="<?php echo getFormValue('txtUniversity'); ?>"
+                                    placeholder="Enter your university or college name">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStudentId">Student ID</label>
+                                <input type="text" id="txtStudentId" name="txtStudentId"
+                                    value="<?php echo getFormValue('txtStudentId'); ?>"
+                                    placeholder="Enter your student ID">
+                            </div>
+                        </div> -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ddlDegreeLevel">Degree Level <span class="required">*</span></label>
+                                <select id="ddlDegreeLevel" name="ddlDegreeLevel">
+                                    <option value="">Select Degree Level</option>
+                                    <option value="undergraduate" <?php echo isOptionSelected('ddlDegreeLevel', 'undergraduate'); ?>>Undergraduate (Bachelor's)</option>
+                                    <option value="graduate" <?php echo isOptionSelected('ddlDegreeLevel', 'graduate'); ?>>Graduate (Master's)</option>
+                                    <option value="phd" <?php echo isOptionSelected('ddlDegreeLevel', 'phd'); ?>>Ph.D. Candidate</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtFieldOfStudy">Field of Study</label>
+                                <input type="text" id="txtFieldOfStudy" name="txtFieldOfStudy"
+                                    value="<?php echo getFormValue('txtFieldOfStudy'); ?>"
+                                    placeholder="e.g., Computer Science, Electrical Engineering">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1058,7 +816,7 @@ function isOptionSelected($name, $value) {
                         </div>
 
                         <div class="form-group">
-                            <label for="txtPaperTitle">Paper Title</label>
+                            <label for="txtPaperTitle">Paper Title<span class="required">*</span></label>
                             <input type="text" id="txtPaperTitle" name="txtPaperTitle"
                                 value="<?php echo getFormValue('txtPaperTitle'); ?>" placeholder="Paper Title" required>
                         </div>
@@ -1109,35 +867,79 @@ function isOptionSelected($name, $value) {
     </div>
 
     <script>
-    // Pricing matrix matching the C# logic
+    // Updated Pricing Matrix based on UPWIECON 2025 Official Registration Table
     const pricingMatrix = {
-        // Indian Delegates
-        "1_1_1_1": 9000.00, // Professional, Early Bird, Indian, IEEE
-        "2_1_1_1": 4000.00, // Academic, Early Bird, Indian, IEEE
-        "3_1_1_1": 2500.00, // Student, Early Bird, Indian, IEEE
-        "1_1_1_2": 10000.00, // Professional, Early Bird, Indian, Non-IEEE
-        "2_1_1_2": 5000.00, // Academic, Early Bird, Indian, Non-IEEE
-        "3_1_1_2": 2500.00, // Student, Early Bird, Indian, Non-IEEE
-        "1_2_1_1": 7000.00, // Professional, Regular, Indian, IEEE
-        "2_2_1_1": 3000.00, // Academic, Regular, Indian, IEEE
-        "3_2_1_1": 2500.00, // Student, Regular, Indian, IEEE
-        "1_2_1_2": 8000.00, // Professional, Regular, Indian, Non-IEEE
-        "2_2_1_2": 4000.00, // Academic, Regular, Indian, Non-IEEE
-        "3_2_1_2": 2500.00, // Student, Regular, Indian, Non-IEEE
-
-        // Foreign Delegates
-        "1_1_2_1": 25800.00, // Professional, Early Bird, Foreign, IEEE
-        "2_1_2_1": 12900.00, // Academic, Early Bird, Foreign, IEEE
-        "3_1_2_1": 8600.00, // Student, Early Bird, Foreign, IEEE
-        "1_1_2_2": 34400.00, // Professional, Early Bird, Foreign, Non-IEEE
-        "2_1_2_2": 17200.00, // Academic, Early Bird, Foreign, Non-IEEE
-        "3_1_2_2": 8600.00, // Student, Early Bird, Foreign, Non-IEEE
-        "1_2_2_1": 17200.00, // Professional, Regular, Foreign, IEEE
-        "2_2_2_1": 8600.00, // Academic, Regular, Foreign, IEEE
-        "3_2_2_1": 8600.00, // Student, Regular, Foreign, IEEE
-        "1_2_2_2": 25800.00, // Professional, Regular, Foreign, Non-IEEE
-        "2_2_2_2": 12900.00, // Academic, Regular, Foreign, Non-IEEE
-        "3_2_2_2": 8600.00 // Student, Regular, Foreign, Non-IEEE
+        // Format: "category_earlybird_nationality_ieeemember_professionalstatus"
+        // Category: 1=Presenter, 2=Listener, 3=Ph.D. Colloquium
+        // Early Bird: 1=Yes (Before 1 Aug 2025), 2=No (After 1-Aug-2025)
+        // Nationality: 1=Indian, 2=Foreign
+        // IEEE Member: 1=Yes, 2=No
+        // Professional Status: 1=Academic/Professional, 2=Student
+        
+        // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
+        "1_1_1_1_1": 9000.00,  // Presenter, Early Bird, Indian, IEEE Member, Academic/Professional
+        "1_1_1_2_1": 10000.00, // Presenter, Early Bird, Indian, Non-IEEE, Academic/Professional
+        "2_1_1_1_1": 4000.00,  // Listener, Early Bird, Indian, IEEE Member, Academic/Professional
+        "2_1_1_2_1": 5000.00,  // Listener, Early Bird, Indian, Non-IEEE, Academic/Professional
+        "3_1_1_1_1": 3000.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Academic/Professional
+        "3_1_1_2_1": 3500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Academic/Professional
+        
+        // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
+        "1_1_1_1_2": 7000.00,  // Presenter, Early Bird, Indian, IEEE Member, Student
+        "1_1_1_2_2": 8000.00,  // Presenter, Early Bird, Indian, Non-IEEE, Student
+        "2_1_1_1_2": 3000.00,  // Listener, Early Bird, Indian, IEEE Member, Student
+        "2_1_1_2_2": 3500.00,  // Listener, Early Bird, Indian, Non-IEEE, Student
+        "3_1_1_1_2": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Student
+        "3_1_1_2_2": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Student
+        
+        // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2025) - ACADEMIC/PROFESSIONAL ==========
+        "1_2_1_1_1": 10000.00, // Presenter, Regular, Indian, IEEE Member, Academic/Professional
+        "1_2_1_2_1": 11000.00, // Presenter, Regular, Indian, Non-IEEE, Academic/Professional
+        "2_2_1_1_1": 5000.00,  // Listener, Regular, Indian, IEEE Member, Academic/Professional
+        "2_2_1_2_1": 6000.00,  // Listener, Regular, Indian, Non-IEEE, Academic/Professional
+        "3_2_1_1_1": 3500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Academic/Professional
+        "3_2_1_2_1": 4000.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Academic/Professional
+        
+        // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
+        "1_2_1_1_2": 8000.00,  // Presenter, Regular, Indian, IEEE Member, Student
+        "1_2_1_2_2": 9000.00,  // Presenter, Regular, Indian, Non-IEEE, Student
+        "2_2_1_1_2": 4000.00,  // Listener, Regular, Indian, IEEE Member, Student
+        "2_2_1_2_2": 4500.00,  // Listener, Regular, Indian, Non-IEEE, Student
+        "3_2_1_1_2": 2500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Student
+        "3_2_1_2_2": 2500.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Student
+        
+        // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
+        // Note: Converting USD to INR at approximate rate of USD 1 = INR 86
+        "1_1_2_1_1": 25800.00, // Presenter, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 300)
+        "1_1_2_2_1": 34400.00, // Presenter, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 400)
+        "2_1_2_1_1": 12900.00, // Listener, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 150)
+        "2_1_2_2_1": 17200.00, // Listener, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 200)
+        "3_1_2_1_1": 10750.00, // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 125)
+        "3_1_2_2_1": 12900.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 150)
+        
+        // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
+        "1_1_2_1_2": 20640.00, // Presenter, Early Bird, Foreign, IEEE Member, Student (USD 240)
+        "1_1_2_2_2": 25800.00, // Presenter, Early Bird, Foreign, Non-IEEE, Student (USD 300)
+        "2_1_2_1_2": 10320.00, // Listener, Early Bird, Foreign, IEEE Member, Student (USD 120)
+        "2_1_2_2_2": 12900.00, // Listener, Early Bird, Foreign, Non-IEEE, Student (USD 150)
+        "3_1_2_1_2": 8600.00,  // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Student (USD 100)
+        "3_1_2_2_2": 10320.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Student (USD 120)
+        
+        // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - ACADEMIC/PROFESSIONAL ==========
+        "1_2_2_1_1": 30100.00, // Presenter, Regular, Foreign, IEEE Member, Academic/Professional (USD 350)
+        "1_2_2_2_1": 38700.00, // Presenter, Regular, Foreign, Non-IEEE, Academic/Professional (USD 450)
+        "2_2_2_1_1": 17200.00, // Listener, Regular, Foreign, IEEE Member, Academic/Professional (USD 200)
+        "2_2_2_2_1": 21500.00, // Listener, Regular, Foreign, Non-IEEE, Academic/Professional (USD 250)
+        "3_2_2_1_1": 12900.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Academic/Professional (USD 150)
+        "3_2_2_2_1": 15480.00, // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Academic/Professional (USD 180)
+        
+        // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
+        "1_2_2_1_2": 25800.00, // Presenter, Regular, Foreign, IEEE Member, Student (USD 300)
+        "1_2_2_2_2": 30100.00, // Presenter, Regular, Foreign, Non-IEEE, Student (USD 350)
+        "2_2_2_1_2": 12900.00, // Listener, Regular, Foreign, IEEE Member, Student (USD 150)
+        "2_2_2_2_2": 17200.00, // Listener, Regular, Foreign, Non-IEEE, Student (USD 200)
+        "3_2_2_1_2": 10320.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Student (USD 120)
+        "3_2_2_2_2": 12900.00  // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Student (USD 150)
     };
 
     function calculateAmount() {
@@ -1145,10 +947,19 @@ function isOptionSelected($name, $value) {
         const earlyBird = document.querySelector('input[name="rdbEarlyBird"]:checked')?.value;
         const nationality = document.querySelector('input[name="rdbNationality"]:checked')?.value;
         const ieeeMember = document.querySelector('input[name="rdbIEEEMember"]:checked')?.value;
+        const professionalStatus = document.querySelector('input[name="chkProfessionalStatus[]"]:checked')?.value;
         const email = document.getElementById('txtEmail').value;
 
-        if (category !== "0" && earlyBird && nationality && ieeeMember) {
-            const key = `${category}_${earlyBird}_${nationality}_${ieeeMember}`;
+        // Convert professional status to numeric value for pricing matrix
+        let professionalStatusCode = '';
+        if (professionalStatus === 'academic_professional') {
+            professionalStatusCode = '1';
+        } else if (professionalStatus === 'student') {
+            professionalStatusCode = '2';
+        }
+
+        if (category !== "0" && earlyBird && nationality && ieeeMember && professionalStatusCode) {
+            const key = `${category}_${earlyBird}_${nationality}_${ieeeMember}_${professionalStatusCode}`;
             let amount = pricingMatrix[key] || 0;
 
             // Special case for test email
@@ -1165,12 +976,71 @@ function isOptionSelected($name, $value) {
                 earlyBird,
                 nationality,
                 ieeeMember,
+                professionalStatus,
+                professionalStatusCode,
+                key,
                 email,
                 amount
             });
         } else {
             document.getElementById('amountSection').style.display = 'none';
+            console.log('Missing required fields for amount calculation:', {
+                category: category !== "0" ? category : 'missing',
+                earlyBird: earlyBird || 'missing',
+                nationality: nationality || 'missing',
+                ieeeMember: ieeeMember || 'missing',
+                professionalStatus: professionalStatus || 'missing'
+            });
         }
+    }
+
+    // Handle professional status checkbox changes (only one can be selected)
+    function handleProfessionalStatusChange(checkbox) {
+        const checkboxes = document.querySelectorAll('input[name="chkProfessionalStatus[]"]');
+        const academicDetails = document.getElementById('academicProfessionalDetails');
+        const studentDetails = document.getElementById('studentDetails');
+        
+        // Uncheck all other checkboxes
+        checkboxes.forEach(cb => {
+            if (cb !== checkbox) {
+                cb.checked = false;
+            }
+        });
+
+        // Show/hide relevant sections
+        if (checkbox.value === 'academic_professional' && checkbox.checked) {
+            academicDetails.style.display = 'block';
+            studentDetails.style.display = 'none';
+            
+            // Make institution required
+            document.getElementById('txtInstitution').required = true;
+            
+            // Remove requirements from student fields
+            document.getElementById('txtUniversity').required = false;
+            document.getElementById('ddlDegreeLevel').required = false;
+        } else if (checkbox.value === 'student' && checkbox.checked) {
+            studentDetails.style.display = 'block';
+            academicDetails.style.display = 'none';
+            
+            // Make student fields required
+            document.getElementById('txtUniversity').required = true;
+            document.getElementById('ddlDegreeLevel').required = true;
+            
+            // Remove institution requirement
+            document.getElementById('txtInstitution').required = false;
+        } else {
+            // If unchecked or no selection
+            academicDetails.style.display = 'none';
+            studentDetails.style.display = 'none';
+            
+            // Remove all requirements
+            document.getElementById('txtInstitution').required = false;
+            document.getElementById('txtUniversity').required = false;
+            document.getElementById('ddlDegreeLevel').required = false;
+        }
+        
+        // Recalculate amount when professional status changes
+        calculateAmount();
     }
 
     function toggleIEEESection() {
@@ -1195,7 +1065,7 @@ function isOptionSelected($name, $value) {
         if (ieeeYes) {
             paperSection.style.display = 'block';
         } else {
-            paperSection.style.display = 'none';
+            paperSection.style.display = 'block';
         }
     }
 
@@ -1312,6 +1182,47 @@ function isOptionSelected($name, $value) {
             isValid = false;
         }
 
+        // Validate professional status
+        const professionalStatus = document.querySelector('input[name="chkProfessionalStatus[]"]:checked');
+        if (!professionalStatus) {
+            errors.push({
+                field: 'chkProfessionalStatus',
+                message: 'Please select your professional status'
+            });
+            isValid = false;
+        } else {
+            // Validate based on selected professional status
+            if (professionalStatus.value === 'academic_professional') {
+                const institution = document.getElementById('txtInstitution').value.trim();
+                if (!institution) {
+                    errors.push({
+                        field: 'txtInstitution',
+                        message: 'Institution/Organization is required for Academic/Professional'
+                    });
+                    isValid = false;
+                }
+            } else if (professionalStatus.value === 'student') {
+                const university = document.getElementById('txtUniversity').value.trim();
+                const degreeLevel = document.getElementById('ddlDegreeLevel').value;
+                
+                if (!university) {
+                    errors.push({
+                        field: 'txtUniversity',
+                        message: 'University/College is required for students'
+                    });
+                    isValid = false;
+                }
+                
+                if (!degreeLevel) {
+                    errors.push({
+                        field: 'ddlDegreeLevel',
+                        message: 'Please select your degree level'
+                    });
+                    isValid = false;
+                }
+            }
+        }
+
         // Validate radio buttons
         if (!document.querySelector('input[name="rdbIEEEMember"]:checked')) {
             isValid = false;
@@ -1394,11 +1305,21 @@ function isOptionSelected($name, $value) {
                         errorDiv.textContent = error.message;
                         field.parentNode.appendChild(errorDiv);
                     }
+                } else if (error.field === 'chkProfessionalStatus') {
+                    // Handle checkbox group error
+                    const checkboxGroup = document.querySelector('.checkbox-group');
+                    if (checkboxGroup) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'field-error';
+                        errorDiv.textContent = error.message;
+                        errorDiv.style.marginTop = '10px';
+                        checkboxGroup.parentNode.appendChild(errorDiv);
+                    }
                 }
             });
 
             // Scroll to first error
-            const firstError = document.querySelector('.form-group.error');
+            const firstError = document.querySelector('.form-group.error, .field-error');
             if (firstError) {
                 firstError.scrollIntoView({
                     behavior: 'smooth',
@@ -1436,6 +1357,12 @@ function isOptionSelected($name, $value) {
         calculateAmount();
         toggleIEEESection();
         togglePaperUpload();
+
+        // Initialize professional status based on form data
+        const checkedStatus = document.querySelector('input[name="chkProfessionalStatus[]"]:checked');
+        if (checkedStatus) {
+            handleProfessionalStatusChange(checkedStatus);
+        }
 
         // Auto-focus first empty field
         const firstEmptyField = document.querySelector(
