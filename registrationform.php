@@ -47,6 +47,8 @@ function isOptionSelected($name, $value) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UPWIECON 2025 Registration</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo-1.jpg">
+
     <style>
     :root {
         --primary-blue: rgba(70, 12, 82, 0.99);

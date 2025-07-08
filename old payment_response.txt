@@ -1,5 +1,5 @@
 <?php
-// payment_response.php - Complete Production Version with Fixed Response Processing
+// payment_response.php - Production Version
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 0); // Disable error display in production
@@ -11,185 +11,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once 'config/database.php';
 require_once 'classes/ConferenceRegistration.php';
 require_once 'classes/ConferencePayment.php';
+require_once 'classes/EasebuzzIntegration.php';
 require_once 'classes/EmailNotification.php';
-
-// Fixed EaseBuzz Integration Class
-class EasebuzzIntegration {
-    private $db;
-    
-    public function __construct($database) {
-        $this->db = $database;
-    }
-    
-    public function processResponse($rawResponse) {
-        try {
-            error_log("Processing EaseBuzz Response: " . json_encode($rawResponse));
-            
-            // Initialize response data with defaults
-            $responseData = [
-                'order_id' => '',
-                'transaction_id' => '',
-                'amount' => 0,
-                'status' => 'FAILED',
-                'payment_method' => 'Unknown',
-                'bank_name' => '',
-                'payment_source' => '',
-                'error_message' => '',
-                'upi_id' => '',
-                'gateway_reference' => '',
-                'payment_date' => '',
-                'hash_verified' => false,
-                'raw_response' => json_encode($rawResponse)
-            ];
-            
-            // Extract Order ID (txnid)
-            if (isset($rawResponse['txnid'])) {
-                $responseData['order_id'] = $rawResponse['txnid'];
-            }
-            
-            // Extract Transaction ID (easepayid is EaseBuzz's main transaction ID)
-            if (isset($rawResponse['easepayid'])) {
-                $responseData['transaction_id'] = $rawResponse['easepayid'];
-            }
-            
-            // Extract Gateway Reference Number
-            if (isset($rawResponse['bank_ref_num']) && $rawResponse['bank_ref_num'] !== 'NA') {
-                $responseData['gateway_reference'] = $rawResponse['bank_ref_num'];
-            }
-            
-            // Extract and convert amount
-            if (isset($rawResponse['amount'])) {
-                $responseData['amount'] = floatval($rawResponse['amount']);
-            }
-            
-            // Extract and normalize status
-            if (isset($rawResponse['status'])) {
-                $status = strtolower(trim($rawResponse['status']));
-                switch ($status) {
-                    case 'success':
-                        $responseData['status'] = 'SUCCESS';
-                        break;
-                    case 'failure':
-                    case 'failed':
-                        $responseData['status'] = 'FAILED';
-                        break;
-                    case 'pending':
-                        $responseData['status'] = 'PENDING';
-                        break;
-                    case 'cancelled':
-                    case 'cancel':
-                        $responseData['status'] = 'CANCELLED';
-                        break;
-                    default:
-                        $responseData['status'] = 'UNKNOWN';
-                }
-            }
-            
-            // Extract Payment Method with detailed formatting
-            $paymentMethod = 'Unknown';
-            if (isset($rawResponse['mode'])) {
-                $mode = strtoupper($rawResponse['mode']);
-                switch ($mode) {
-                    case 'UPI':
-                        $paymentMethod = 'UPI';
-                        if (isset($rawResponse['upi_va']) && $rawResponse['upi_va'] !== 'NA' && !empty($rawResponse['upi_va'])) {
-                            $responseData['upi_id'] = $rawResponse['upi_va'];
-                            $paymentMethod = 'UPI (' . $rawResponse['upi_va'] . ')';
-                        }
-                        break;
-                    case 'CC':
-                        $paymentMethod = 'Credit Card';
-                        if (isset($rawResponse['cardnum']) && $rawResponse['cardnum'] !== 'NA') {
-                            $maskedCard = '**** **** **** ' . substr($rawResponse['cardnum'], -4);
-                            $paymentMethod = 'Credit Card (' . $maskedCard . ')';
-                        }
-                        break;
-                    case 'DC':
-                        $paymentMethod = 'Debit Card';
-                        if (isset($rawResponse['cardnum']) && $rawResponse['cardnum'] !== 'NA') {
-                            $maskedCard = '**** **** **** ' . substr($rawResponse['cardnum'], -4);
-                            $paymentMethod = 'Debit Card (' . $maskedCard . ')';
-                        }
-                        break;
-                    case 'NB':
-                        $paymentMethod = 'Net Banking';
-                        break;
-                    case 'WALLET':
-                        $paymentMethod = 'Digital Wallet';
-                        break;
-                    default:
-                        $paymentMethod = ucfirst(strtolower($mode));
-                }
-            } elseif (isset($rawResponse['card_type']) && $rawResponse['card_type'] !== 'NA') {
-                $paymentMethod = $rawResponse['card_type'];
-            }
-            
-            $responseData['payment_method'] = $paymentMethod;
-            
-            // Extract Payment Source/Gateway
-            if (isset($rawResponse['payment_source']) && $rawResponse['payment_source'] !== 'NA') {
-                $responseData['payment_source'] = $rawResponse['payment_source'];
-            }
-            
-            // Extract Bank Name
-            if (isset($rawResponse['bank_name']) && $rawResponse['bank_name'] !== 'NA' && !empty($rawResponse['bank_name'])) {
-                $responseData['bank_name'] = $rawResponse['bank_name'];
-            } elseif (isset($rawResponse['issuing_bank']) && $rawResponse['issuing_bank'] !== 'NA' && !empty($rawResponse['issuing_bank'])) {
-                $responseData['bank_name'] = $rawResponse['issuing_bank'];
-            }
-            
-            // Extract Error Message
-            if (isset($rawResponse['error_Message'])) {
-                $responseData['error_message'] = $rawResponse['error_Message'];
-            } elseif (isset($rawResponse['error'])) {
-                $responseData['error_message'] = $rawResponse['error'];
-            }
-            
-            // Extract Payment Date
-            if (isset($rawResponse['addedon'])) {
-                $responseData['payment_date'] = $rawResponse['addedon'];
-            }
-            
-            // Hash verification (basic implementation)
-            $responseData['hash_verified'] = $this->verifyHash($rawResponse);
-            
-            error_log("Processed EaseBuzz Response: " . json_encode($responseData));
-            return $responseData;
-            
-        } catch (Exception $e) {
-            error_log("Error processing EaseBuzz response: " . $e->getMessage());
-            return [
-                'order_id' => $rawResponse['txnid'] ?? 'UNKNOWN',
-                'transaction_id' => $rawResponse['easepayid'] ?? 'UNKNOWN',
-                'amount' => floatval($rawResponse['amount'] ?? 0),
-                'status' => 'FAILED',
-                'payment_method' => 'Processing Error',
-                'bank_name' => '',
-                'payment_source' => '',
-                'error_message' => 'Response processing error: ' . $e->getMessage(),
-                'hash_verified' => false,
-                'raw_response' => json_encode($rawResponse)
-            ];
-        }
-    }
-    
-    private function verifyHash($responseData) {
-        try {
-            // Implement proper hash verification based on EaseBuzz documentation
-            // For now, basic verification for successful transactions
-            if (isset($responseData['status']) && strtolower($responseData['status']) === 'success') {
-                if (isset($responseData['hash']) && !empty($responseData['hash'])) {
-                    // Add your hash verification logic here
-                    return true;
-                }
-            }
-            return false;
-        } catch (Exception $e) {
-            error_log("Hash verification error: " . $e->getMessage());
-            return false;
-        }
-    }
-}
 
 // Initialize database connection
 try {
@@ -209,7 +32,7 @@ $emailNotification = new EmailNotification();
 try {
     // Get response from EaseBuzz
     $responseData = null;
-    $rawResponse = [];
+    $rawResponse = '';
     
     // Check for POST data (primary method)
     if (!empty($_POST)) {
@@ -228,11 +51,11 @@ try {
     // Process EaseBuzz response
     $responseData = $easebuzz->processResponse($rawResponse);
     
-    if (!$responseData || empty($responseData['order_id'])) {
+    if (!$responseData || !isset($responseData['order_id'])) {
         throw new Exception("Invalid payment response format");
     }
     
-    error_log("Production Response Processed: OrderID={$responseData['order_id']}, Status={$responseData['status']}, Amount=₹{$responseData['amount']}, TxnID={$responseData['transaction_id']}");
+    error_log("Production Response Processed: OrderID={$responseData['order_id']}, Status={$responseData['status']}, Amount=₹{$responseData['amount']}");
     
     // Security: Verify hash before proceeding
     if (!$responseData['hash_verified']) {
@@ -323,7 +146,7 @@ try {
     }
     
     // Log final status for production monitoring
-    error_log("Production Payment Complete: OrderID={$responseData['order_id']}, PaymentStatus={$responseData['status']}, EmailSent=" . ($emailSent ? 'YES' : 'NO') . ", RegID={$registrationDetails['iRegId']}, TxnID={$responseData['transaction_id']}");
+    error_log("Production Payment Complete: OrderID={$responseData['order_id']}, PaymentStatus={$responseData['status']}, EmailSent=" . ($emailSent ? 'YES' : 'NO') . ", RegID={$registrationDetails['iRegId']}");
     
     ?>
 <!DOCTYPE html>
@@ -356,7 +179,7 @@ try {
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         padding: 40px;
         width: 100%;
-        max-width: 800px;
+        max-width: 700px;
         text-align: center;
     }
 
@@ -457,35 +280,24 @@ try {
         justify-content: space-between;
         padding: 10px 0;
         border-bottom: 1px solid #eee;
-        align-items: center;
-    }
-
-    .detail-item.full-width {
-        grid-column: 1 / -1;
     }
 
     .detail-label {
         font-weight: 600;
         color: #333;
-        flex: 1;
     }
 
     .detail-value {
         color: #666;
         text-align: right;
-        flex: 1;
-        word-break: break-all;
-        font-family: 'Courier New', monospace;
-        font-size: 14px;
     }
 
     .amount-highlight {
         background: linear-gradient(135deg, rgba(70, 12, 82, 0.99) 0%, rgba(91, 2, 109, 0.99) 100%);
         color: white;
-        padding: 20px;
+        padding: 15px;
         border-radius: 8px;
         margin: 20px 0;
-        text-align: center;
     }
 
     .btn {
@@ -644,36 +456,12 @@ try {
                 </div>
                 <div class="detail-item">
                     <span class="detail-label">Transaction ID:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($responseData['transaction_id'] ?: 'N/A'); ?></span>
+                    <span class="detail-value"><?php echo htmlspecialchars($responseData['transaction_id']); ?></span>
                 </div>
-                <?php if (!empty($responseData['gateway_reference'])): ?>
-                <div class="detail-item">
-                    <span class="detail-label">Gateway Reference:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($responseData['gateway_reference']); ?></span>
-                </div>
-                <?php endif; ?>
                 <div class="detail-item">
                     <span class="detail-label">Payment Method:</span>
                     <span class="detail-value"><?php echo htmlspecialchars($responseData['payment_method']); ?></span>
                 </div>
-                <?php if (!empty($responseData['payment_source'])): ?>
-                <div class="detail-item">
-                    <span class="detail-label">Payment Gateway:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($responseData['payment_source']); ?></span>
-                </div>
-                <?php endif; ?>
-                <?php if (!empty($responseData['bank_name'])): ?>
-                <div class="detail-item">
-                    <span class="detail-label">Bank:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($responseData['bank_name']); ?></span>
-                </div>
-                <?php endif; ?>
-                <?php if (!empty($responseData['payment_date'])): ?>
-                <div class="detail-item">
-                    <span class="detail-label">Payment Date:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($responseData['payment_date']); ?></span>
-                </div>
-                <?php endif; ?>
                 <div class="detail-item">
                     <span class="detail-label">Status:</span>
                     <span class="detail-value">
@@ -685,19 +473,12 @@ try {
                         </span>
                     </span>
                 </div>
-                <?php if (!empty($responseData['error_message']) && $responseData['status'] !== 'SUCCESS'): ?>
-                <div class="detail-item full-width">
-                    <span class="detail-label">Message:</span>
-                    <span class="detail-value" style="color: #721c24;"><?php echo htmlspecialchars($responseData['error_message']); ?></span>
-                </div>
-                <?php endif; ?>
             </div>
 
             <div class="amount-highlight">
                 <div style="font-size: 16px; margin-bottom: 5px;">Registration Fee</div>
                 <div style="font-size: 28px; font-weight: bold;">
-                    ₹<?php echo number_format($responseData['amount'], 2); ?>
-                </div>
+                    ₹<?php echo number_format($responseData['amount'], 2); ?></div>
             </div>
         </div>
 
@@ -705,29 +486,14 @@ try {
         <div style="margin-top: 30px;">
             <?php if ($responseData['status'] === 'SUCCESS'): ?>
             <a href="Default.php" class="btn btn-primary">Return to Home</a>
-            <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Registration Confirmation&body=Registration ID: <?php echo $registrationDetails['iRegId']; ?>%0AOrder ID: <?php echo $responseData['order_id']; ?>%0ATransaction ID: <?php echo $responseData['transaction_id']; ?>"
+            <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Registration Confirmation&body=Registration ID: <?php echo $registrationDetails['iRegId']; ?>%0AOrder ID: <?php echo $responseData['order_id']; ?>"
                 class="btn btn-secondary">Contact Support</a>
             <?php else: ?>
             <a href="registrationform.php" class="btn btn-primary">Try Again</a>
-            <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Payment Issue&body=Order ID: <?php echo $responseData['order_id']; ?>%0ATransaction ID: <?php echo $responseData['transaction_id']; ?>%0AAmount: ₹<?php echo $responseData['amount']; ?>%0AStatus: <?php echo $responseData['status']; ?>"
+            <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Payment Issue&body=Order ID: <?php echo $responseData['order_id']; ?>%0ATransaction ID: <?php echo $responseData['transaction_id']; ?>"
                 class="btn btn-secondary">Contact Support</a>
             <?php endif; ?>
         </div>
-
-        <!-- Debug Info (only in development) -->
-        <?php if (isset($_GET['debug']) && $_GET['debug'] === '1'): ?>
-        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin: 20px 0; text-align: left;">
-            <h4>Debug Information:</h4>
-            <details>
-                <summary>Raw Response</summary>
-                <pre style="font-size: 11px; overflow-x: auto;"><?php echo htmlspecialchars(json_encode($rawResponse, JSON_PRETTY_PRINT)); ?></pre>
-            </details>
-            <details>
-                <summary>Processed Response</summary>
-                <pre style="font-size: 11px; overflow-x: auto;"><?php echo htmlspecialchars(json_encode($responseData, JSON_PRETTY_PRINT)); ?></pre>
-            </details>
-        </div>
-        <?php endif; ?>
     </div>
 </body>
 
@@ -815,7 +581,7 @@ try {
             Reference ID: <?php echo date('YmdHis') . '_' . substr(md5($e->getMessage()), 0, 8); ?>
         </p>
         <a href="registrationform.php" class="btn">Try Again</a>
-        <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Payment Processing Error&body=Reference ID: <?php echo date('YmdHis') . '_' . substr(md5($e->getMessage()), 0, 8); ?>%0AError: <?php echo urlencode($e->getMessage()); ?>"
+        <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Payment Processing Error&body=Reference ID: <?php echo date('YmdHis') . '_' . substr(md5($e->getMessage()), 0, 8); ?>"
             class="btn btn-secondary">Contact Support</a>
     </div>
 </body>
@@ -834,8 +600,7 @@ function sendProductionEmail($registrationDetails, $responseData) {
     $message .= "Registration ID: " . $registrationDetails['iRegId'] . "\n";
     $message .= "Order ID: " . $responseData['order_id'] . "\n";
     $message .= "Transaction ID: " . $responseData['transaction_id'] . "\n";
-    $message .= "Amount: ₹" . number_format($responseData['amount'], 2) . "\n";
-    $message .= "Payment Method: " . $responseData['payment_method'] . "\n\n";
+    $message .= "Amount: ₹" . number_format($responseData['amount'], 2) . "\n\n";
     
     if ($responseData['status'] === 'SUCCESS') {
         $message .= "Your registration for UPWIECON 2025 is confirmed!\n\n";
@@ -847,23 +612,17 @@ function sendProductionEmail($registrationDetails, $responseData) {
             $message .= "- IEEE Member ID: " . $registrationDetails['ieee_id'] . "\n";
         }
         $message .= "\nPlease keep this email for your records.\n\n";
-        $message .= "We look forward to your participation in UPWIECON 2025!\n\n";
     } else {
         $message .= "Your payment could not be processed. Please try again or contact support.\n\n";
-        if (!empty($responseData['error_message'])) {
-            $message .= "Error Details: " . $responseData['error_message'] . "\n\n";
-        }
     }
     
     $message .= "Best regards,\nUPWIECON 2025 Organizing Committee\n";
-    $message .= "Email: support@upwiecon2025.org\n";
-    $message .= "Website: https://upwiecon2025.org";
+    $message .= "Email: support@upwiecon2025.org";
     
     $headers = "From: UPWIECON 2025 <noreply@upwiecon2025.org>\r\n";
     $headers .= "Reply-To: support@upwiecon2025.org\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
     $headers .= "X-Mailer: UPWIECON2025 Production System\r\n";
-    $headers .= "X-Priority: 1\r\n";
     
     return mail($to, $subject, $message, $headers);
 }
@@ -872,71 +631,33 @@ function sendProductionFallbackEmail($registrationDetails, $responseData) {
     $to = $registrationDetails['sEmail'];
     $subject = "UPWIECON 2025 - Payment " . $responseData['status'] . " [Ref: " . $responseData['order_id'] . "]";
     
-    $message = "<html><body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>";
-    $message .= "<div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>";
+    $message = "<html><body style='font-family: Arial, sans-serif;'>";
+    $message .= "<div style='max-width: 600px; margin: 0 auto; padding: 20px;'>";
+    $message .= "<h2 style='color: #460C52; border-bottom: 2px solid #460C52; padding-bottom: 10px;'>UPWIECON 2025</h2>";
+    $message .= "<p>Dear " . htmlspecialchars($registrationDetails['sName']) . ",</p>";
     
-    // Header
-    $message .= "<div style='background: linear-gradient(135deg, #460C52, #5B026D); color: white; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 30px;'>";
-    $message .= "<h1 style='margin: 0; font-size: 24px;'>UPWIECON 2025</h1>";
-    $message .= "<p style='margin: 5px 0 0; font-size: 14px; opacity: 0.9;'>IEEE Uttar Pradesh Women in Engineering Conference</p>";
-    $message .= "</div>";
-    
-    $message .= "<p>Dear <strong>" . htmlspecialchars($registrationDetails['sName']) . "</strong>,</p>";
-    
-    // Status Message
     if ($responseData['status'] === 'SUCCESS') {
         $message .= "<div style='background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0;'>";
         $message .= "<h3 style='margin: 0 0 10px 0;'>✓ Payment Successful!</h3>";
-        $message .= "<p style='margin: 0;'>Your registration for UPWIECON 2025 has been confirmed successfully.</p>";
+        $message .= "<p style='margin: 0;'>Your registration for UPWIECON 2025 has been confirmed.</p>";
         $message .= "</div>";
     } else {
         $message .= "<div style='background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 5px; margin: 20px 0;'>";
-        $message .= "<h3 style='margin: 0 0 10px 0;'>⚠ Payment " . htmlspecialchars($responseData['status']) . "</h3>";
+        $message .= "<h3 style='margin: 0 0 10px 0;'>⚠ Payment " . $responseData['status'] . "</h3>";
         $message .= "<p style='margin: 0;'>Please try again or contact support for assistance.</p>";
         $message .= "</div>";
     }
     
-    // Payment Details Table
-    $message .= "<h3 style='color: #460C52; border-bottom: 2px solid #460C52; padding-bottom: 5px;'>Payment Details</h3>";
-    $message .= "<table style='width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;'>";
-    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Registration ID:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($registrationDetails['iRegId']) . "</td></tr>";
-    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Order ID:</td><td style='border: 1px solid #ddd; padding: 8px; font-family: monospace;'>" . htmlspecialchars($responseData['order_id']) . "</td></tr>";
-    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Transaction ID:</td><td style='border: 1px solid #ddd; padding: 8px; font-family: monospace;'>" . htmlspecialchars($responseData['transaction_id']) . "</td></tr>";
-    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Payment Method:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($responseData['payment_method']) . "</td></tr>";
-    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Amount:</td><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; color: #460C52;'>₹" . number_format($responseData['amount'], 2) . "</td></tr>";
-    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Status:</td><td style='border: 1px solid #ddd; padding: 8px;'><span style='padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; background: " . 
-        ($responseData['status'] === 'SUCCESS' ? '#d4edda; color: #155724' : '#f8d7da; color: #721c24') . ";'>" . 
-        htmlspecialchars($responseData['status']) . "</span></td></tr>";
+    $message .= "<table style='width: 100%; border-collapse: collapse; margin: 20px 0;'>";
+    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold;'>Registration ID:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($registrationDetails['iRegId']) . "</td></tr>";
+    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold;'>Order ID:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($responseData['order_id']) . "</td></tr>";
+    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold;'>Transaction ID:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($responseData['transaction_id']) . "</td></tr>";
+    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold;'>Amount:</td><td style='border: 1px solid #ddd; padding: 8px;'>₹" . number_format($responseData['amount'], 2) . "</td></tr>";
+    $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold;'>Status:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($responseData['status']) . "</td></tr>";
     $message .= "</table>";
     
-    // Registration Details
-    if ($responseData['status'] === 'SUCCESS') {
-        $message .= "<h3 style='color: #460C52; border-bottom: 2px solid #460C52; padding-bottom: 5px;'>Registration Details</h3>";
-        $message .= "<table style='width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;'>";
-        $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Name:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($registrationDetails['sName']) . "</td></tr>";
-        $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Email:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($registrationDetails['sEmail']) . "</td></tr>";
-        $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>Category:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($registrationDetails['sCategory']) . "</td></tr>";
-        $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold; background: #f8f9fa;'>IEEE Member:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($registrationDetails['sIEEEMember']) . "</td></tr>";
-        $message .= "</table>";
-        
-        $message .= "<div style='background: #e8f5e8; border: 1px solid #c3e6cb; padding: 15px; border-radius: 5px; margin: 20px 0;'>";
-        $message .= "<p style='margin: 0; color: #155724;'><strong>Important:</strong> Please save this email for your records. You may need to present this confirmation during the conference.</p>";
-        $message .= "</div>";
-    }
-    
-    // Error Details (if any)
-    if (!empty($responseData['error_message']) && $responseData['status'] !== 'SUCCESS') {
-        $message .= "<div style='background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 20px 0;'>";
-        $message .= "<p style='margin: 0; color: #856404;'><strong>Error Details:</strong> " . htmlspecialchars($responseData['error_message']) . "</p>";
-        $message .= "</div>";
-    }
-    
-    // Footer
-    $message .= "<div style='margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center;'>";
-    $message .= "<p style='margin: 0; color: #666;'>Best regards,<br><strong>UPWIECON 2025 Organizing Committee</strong></p>";
-    $message .= "<p style='font-size: 12px; color: #999; margin: 10px 0 0;'>For support, contact: <a href='mailto:support@upwiecon2025.org' style='color: #460C52;'>support@upwiecon2025.org</a></p>";
-    $message .= "</div>";
-    
+    $message .= "<p style='margin-top: 30px;'>Best regards,<br><strong>UPWIECON 2025 Organizing Committee</strong></p>";
+    $message .= "<p style='font-size: 12px; color: #666; margin-top: 20px;'>For support, contact: support@upwiecon2025.org</p>";
     $message .= "</div></body></html>";
     
     $headers = "MIME-Version: 1.0\r\n";
@@ -944,36 +665,7 @@ function sendProductionFallbackEmail($registrationDetails, $responseData) {
     $headers .= "From: UPWIECON 2025 <noreply@upwiecon2025.org>\r\n";
     $headers .= "Reply-To: support@upwiecon2025.org\r\n";
     $headers .= "X-Mailer: UPWIECON2025 Production System\r\n";
-    $headers .= "X-Priority: 1\r\n";
     
     return mail($to, $subject, $message, $headers);
-}
-
-// Additional utility function for admin notifications
-function sendAdminNotification($registrationDetails, $responseData, $emailSent) {
-    $adminEmail = "admin@upwiecon2025.org"; // Change to your admin email
-    $subject = "UPWIECON 2025 - Payment Notification [" . $responseData['status'] . "]";
-    
-    $message = "Payment processing notification:\n\n";
-    $message .= "Registration ID: " . $registrationDetails['iRegId'] . "\n";
-    $message .= "User: " . $registrationDetails['sName'] . " (" . $registrationDetails['sEmail'] . ")\n";
-    $message .= "Order ID: " . $responseData['order_id'] . "\n";
-    $message .= "Transaction ID: " . $responseData['transaction_id'] . "\n";
-    $message .= "Amount: ₹" . number_format($responseData['amount'], 2) . "\n";
-    $message .= "Status: " . $responseData['status'] . "\n";
-    $message .= "Payment Method: " . $responseData['payment_method'] . "\n";
-    $message .= "Email Sent: " . ($emailSent ? 'YES' : 'NO') . "\n";
-    $message .= "Timestamp: " . date('Y-m-d H:i:s') . "\n\n";
-    
-    if (!$responseData['hash_verified']) {
-        $message .= "⚠ SECURITY ALERT: Hash verification failed!\n\n";
-    }
-    
-    $message .= "Raw Response:\n" . json_encode($responseData, JSON_PRETTY_PRINT);
-    
-    $headers = "From: UPWIECON System <system@upwiecon2025.org>\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    
-    return mail($adminEmail, $subject, $message, $headers);
 }
 ?>
