@@ -1,0 +1,4 @@
+2025-07-09 10:23:33 | {"timestamp":"2025-07-09 10:23:33","to":"samarthdalela@gmail.com","status":"FAILED","method":"All 3 attempts failed. Last error: PHPMailer failed: SMTP Error: Could not authenticate., Basic mail also failed on attempt 3","order_id":null}
+2025-07-09 10:23:33 | {"timestamp":"2025-07-09 10:23:33","to":"samarthdalela@gmail.com","status":"FAILED","method":"Payment confirmation email","order_id":"UPWIECON2025_135_1752036766"}
+2025-07-09 10:33:36 | {"timestamp":"2025-07-09 10:33:36","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-09 10:33:36 | {"timestamp":"2025-07-09 10:33:36","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2025_136_1752037371"}

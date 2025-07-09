@@ -7,10 +7,10 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 class EmailNotification {
-    private $fromEmail = 'samarthdalela@gmail.com';
+    private $fromEmail = 'wieconnielit@gmail.com';
     private $fromName = 'UPWIECON 2025';
-    private $replyToEmail = 'samarthdalela@gmail.com';
-    private $appPassword = 'lsbf kolh niep hlvn'; // Gmail App Password
+    private $replyToEmail = 'wieconnielit@gmail.com';
+    private $appPassword = 'htil fgrm hpwf mgbo'; // Gmail App Password
     private $debugMode = true;
     private $maxRetries = 3;
     private $retryDelay = 2;

@@ -1,6 +1,12 @@
 <?php
 // classes/EasebuzzIntegration.php - Debug Version with Enhanced Logging
+require_once __DIR__ . '/../vendor/autoload.php';
 
+// Load environment variables
+if (class_exists('Dotenv\Dotenv')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../config');
+    $dotenv->load();
+}
 class EasebuzzIntegration {
     private $apiKey;
     private $salt;
@@ -14,13 +20,14 @@ class EasebuzzIntegration {
     }
 
     private function loadConfig() {
-        // Production credentials
-        $this->apiKey = 'KHQEZNXWNW';
-        $this->salt = 'HORAXV54UI';
-        $this->env = 'production';
+            // Production credentials
+            $this->apiKey = $_ENV['API_KEY'];
+            $this->salt = $_ENV['SALT'];
+            $this->env = $_ENV['ENVIRONMENT'];
+
         
         // Production return URL - Update this to your actual domain
-        $this->returnUrl = 'https://bc53643a3e08.ngrok-free.app/abc/payment_response.php';
+        $this->returnUrl = $_ENV['RETURN_URL'];
         
         error_log("EaseBuzz Production Config Loaded - API Key: {$this->apiKey}");
     }
