@@ -577,7 +577,7 @@ class EmailNotification {
                        <div style=\"background-color: #e8f5e8; border: 1px solid #c3e6cb; padding: 20px; border-radius: 8px; margin: 25px 0;\">
                            <h3 style=\"color: #155724; margin: 0 0 10px 0; font-size: 16px;\">What's Next?</h3>
                            <ul style=\"margin: 0; padding-left: 20px; color: #155724;\">
-                               <li style=\"margin-bottom: 8px;\">You will receive event details and schedule via email</li>
+                        
                                <li style=\"margin-bottom: 8px;\">Keep your Order ID for future reference</li>
                                <li>We look forward to your participation!</li>
                            </ul>

@@ -763,7 +763,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown" style="zoom: 80%;">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="https://nielit.ac.in/upwiecon2025/" aria-label="Home">
+                            <a class="nav-link" href="./Default.php" aria-label="Home">
                                 <i class="bi bi-house-door "></i>
                                 HOME
                             </a>

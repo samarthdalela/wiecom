@@ -1201,7 +1201,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown" style="zoom: 80%;">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="https://nielit.ac.in/upwiecon2025/" aria-label="Home">
+                            <a class="nav-link" href="./Default.php" aria-label="Home">
                                 <i class="bi bi-house-door "></i>
                                 HOME
                             </a>
@@ -1995,7 +1995,7 @@
 
                     <div class="row g-2">
                         <div class="col-6">
-                            <a href="https://nielit.ac.in/upwiecon2025/"
+                            <a href="./Default.php"
                                 class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none transition-all"
                                 style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #e2e8f0;"
                                 onmouseover="this.style.background='rgba(59, 130, 246, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(59, 130, 246, 0.3)';"
