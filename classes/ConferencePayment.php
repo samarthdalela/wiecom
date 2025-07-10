@@ -8,7 +8,7 @@ class ConferencePayment {
     }
     
     public function createPaymentRecord($refId, $eventName = 'UPWIECON2025') {
-        $query = "INSERT INTO tblUPWIECON2025Payment (RefId, EventName) VALUES (:RefId, :EventName)";
+        $query = "INSERT INTO tblupwiecon2025payment (RefId, EventName) VALUES (:RefId, :EventName)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':RefId', $refId);
         $stmt->bindParam(':EventName', $eventName);
@@ -16,7 +16,7 @@ class ConferencePayment {
     }
     
     public function updatePaymentStatus($refId, $orderId, $amount, $status, $txnId = null, $response = null) {
-        $query = "UPDATE tblUPWIECON2025Payment 
+        $query = "UPDATE tblupwiecon2025payment 
                   SET order_id = :order_id,
                       amount = :amount,
                       payment_status = :status,
@@ -39,8 +39,8 @@ class ConferencePayment {
     
     public function getPaymentByOrderId($orderId) {
         $query = "SELECT p.*, r.sName, r.sEmail, r.sMobile 
-                  FROM tblUPWIECON2025Payment p 
-                  JOIN tblUPWIECON2025 r ON r.iRegId = p.RefId 
+                  FROM tblupwiecon2025payment p 
+                  JOIN tblupwiecon2025 r ON r.iRegId = p.RefId 
                   WHERE p.order_id = :order_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':order_id', $orderId);
@@ -49,7 +49,7 @@ class ConferencePayment {
     }
     
     public function getPaymentByRefId($refId) {
-        $query = "SELECT * FROM tblUPWIECON2025Payment WHERE RefId = :ref_id";
+        $query = "SELECT * FROM tblupwiecon2025payment WHERE RefId = :ref_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':ref_id', $refId);
         $stmt->execute();
@@ -58,8 +58,8 @@ class ConferencePayment {
     
     public function getAllPayments($limit = 50, $offset = 0) {
         $query = "SELECT p.*, r.sName, r.sEmail, r.sCategory 
-                  FROM tblUPWIECON2025Payment p 
-                  JOIN tblUPWIECON2025 r ON r.iRegId = p.RefId 
+                  FROM tblupwiecon2025payment p 
+                  JOIN tblupwiecon2025 r ON r.iRegId = p.RefId 
                   ORDER BY p.created_at DESC 
                   LIMIT :limit OFFSET :offset";
         $stmt = $this->conn->prepare($query);
@@ -76,7 +76,7 @@ class ConferencePayment {
                     COUNT(CASE WHEN payment_status = 'PENDING' THEN 1 END) as pending_payments,
                     COUNT(CASE WHEN payment_status = 'FAILED' THEN 1 END) as failed_payments,
                     SUM(CASE WHEN payment_status = 'SUCCESS' THEN amount ELSE 0 END) as total_revenue
-                  FROM tblUPWIECON2025Payment";
+                  FROM tblupwiecon2025payment";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);

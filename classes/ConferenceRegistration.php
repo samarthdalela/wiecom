@@ -13,7 +13,7 @@ class ConferenceRegistration {
     
     public function createRegistration($data) {
         // ✅ UPDATED: Include IEEE ID in the insert query
-        $query = "INSERT INTO tblUPWIECON2025 
+        $query = "INSERT INTO tblupwiecon2025 
                   (sEventName, sCampus, sNielit, sIEEEMember, ieee_id, sNationality, sEarlyBird, 
                    sCategory, sPaperId, sPaperTitle, sName, sMobile, sEmail, sPaperUpload, 
                    iAmount, sIP, dtCreated) 
@@ -71,7 +71,7 @@ class ConferenceRegistration {
     }
     
     public function getRegistrationById($id) {
-        $query = "SELECT * FROM tblUPWIECON2025 WHERE iRegId = :id";
+        $query = "SELECT * FROM tblupwiecon2025 WHERE iRegId = :id";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -84,7 +84,7 @@ class ConferenceRegistration {
     }
     
     public function getRegistrationByEmail($email) {
-        $query = "SELECT * FROM tblUPWIECON2025 WHERE sEmail = :email LIMIT 1";
+        $query = "SELECT * FROM tblupwiecon2025 WHERE sEmail = :email LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':email', $email);
@@ -103,7 +103,7 @@ class ConferenceRegistration {
     }
     
     public function getRegistrationByMobile($mobile) {
-        $query = "SELECT * FROM tblUPWIECON2025 WHERE sMobile = :mobile LIMIT 1";
+        $query = "SELECT * FROM tblupwiecon2025 WHERE sMobile = :mobile LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':mobile', $mobile);
@@ -123,7 +123,7 @@ class ConferenceRegistration {
     
     // ✅ NEW: Method to check registration by IEEE ID
     public function getRegistrationByIEEEId($ieeeId) {
-        $query = "SELECT * FROM tblUPWIECON2025 WHERE ieee_id = :ieee_id LIMIT 1";
+        $query = "SELECT * FROM tblupwiecon2025 WHERE ieee_id = :ieee_id LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':ieee_id', $ieeeId);
@@ -142,7 +142,7 @@ class ConferenceRegistration {
     }
     
     public function checkDuplicateRegistration($email, $mobile) {
-        $query = "SELECT iRegId, sEmail, sMobile FROM tblUPWIECON2025 
+        $query = "SELECT iRegId, sEmail, sMobile FROM tblupwiecon2025 
                   WHERE sEmail = :email OR sMobile = :mobile LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
@@ -185,7 +185,7 @@ class ConferenceRegistration {
             $params[':ieee_id'] = $ieeeId;
         }
         
-        $query = "SELECT iRegId, sEmail, sMobile, ieee_id FROM tblUPWIECON2025 
+        $query = "SELECT iRegId, sEmail, sMobile, ieee_id FROM tblupwiecon2025 
                   WHERE " . implode(' OR ', $conditions) . " LIMIT 1";
         
         try {
@@ -299,7 +299,7 @@ class ConferenceRegistration {
             $params[':ieee_id'] = '%' . $filters['ieee_id'] . '%';
         }
         
-        $query = "SELECT * FROM tblUPWIECON2025 $whereClause 
+        $query = "SELECT * FROM tblupwiecon2025 $whereClause 
                   ORDER BY dtCreated DESC 
                   LIMIT :limit OFFSET :offset";
         
@@ -343,7 +343,7 @@ class ConferenceRegistration {
             $params[':ieee_id'] = '%' . $filters['ieee_id'] . '%';
         }
         
-        $query = "SELECT COUNT(*) as total FROM tblUPWIECON2025 $whereClause";
+        $query = "SELECT COUNT(*) as total FROM tblupwiecon2025 $whereClause";
         
         try {
             $stmt = $this->conn->prepare($query);
@@ -375,7 +375,7 @@ class ConferenceRegistration {
                     SUM(CASE WHEN sEarlyBird = 'Yes' THEN 1 ELSE 0 END) as early_bird_registrations,
                     SUM(iAmount) as total_registration_amount,
                     AVG(iAmount) as average_registration_amount
-                  FROM tblUPWIECON2025";
+                  FROM tblupwiecon2025";
         
         try {
             $stmt = $this->conn->prepare($query);
@@ -418,7 +418,7 @@ class ConferenceRegistration {
     
     public function updateRegistration($id, $data) {
         // ✅ UPDATED: Include IEEE ID in update query
-        $query = "UPDATE tblUPWIECON2025 SET 
+        $query = "UPDATE tblupwiecon2025 SET 
                     sName = :sName,
                     sMobile = :sMobile,
                     sCategory = :sCategory,
@@ -455,7 +455,7 @@ class ConferenceRegistration {
     
     public function deleteRegistration($id) {
         // Soft delete - mark as deleted instead of actually deleting
-        $query = "UPDATE tblUPWIECON2025 SET 
+        $query = "UPDATE tblupwiecon2025 SET 
                     sStatus = 'DELETED',
                     dtUpdated = NOW()
                   WHERE iRegId = :id";
@@ -473,7 +473,7 @@ class ConferenceRegistration {
     public function searchRegistrations($searchTerm, $limit = 20) {
         $searchTerm = '%' . $searchTerm . '%';
         // ✅ UPDATED: Include IEEE ID in search
-        $query = "SELECT * FROM tblUPWIECON2025 
+        $query = "SELECT * FROM tblupwiecon2025 
                   WHERE (sName LIKE :searchTerm 
                          OR sEmail LIKE :searchTerm 
                          OR sMobile LIKE :searchTerm 
@@ -496,7 +496,7 @@ class ConferenceRegistration {
     }
     
     public function getRecentRegistrations($limit = 10) {
-        $query = "SELECT * FROM tblUPWIECON2025 
+        $query = "SELECT * FROM tblupwiecon2025 
                   WHERE (sStatus IS NULL OR sStatus != 'DELETED')
                   ORDER BY dtCreated DESC 
                   LIMIT :limit";
@@ -625,7 +625,7 @@ class ConferenceRegistration {
     // ✅ NEW: Get IEEE members with their IDs
     public function getIEEEMembersWithIds($limit = 50, $offset = 0) {
         $query = "SELECT iRegId, sName, sEmail, ieee_id, sCategory, dtCreated 
-                  FROM tblUPWIECON2025 
+                  FROM tblupwiecon2025 
                   WHERE sIEEEMember = 'Yes' 
                     AND ieee_id IS NOT NULL 
                     AND ieee_id != ''
@@ -648,7 +648,7 @@ class ConferenceRegistration {
     // ✅ NEW: Get IEEE members without IDs (for follow-up)
     public function getIEEEMembersWithoutIds($limit = 50, $offset = 0) {
         $query = "SELECT iRegId, sName, sEmail, sCategory, dtCreated 
-                  FROM tblUPWIECON2025 
+                  FROM tblupwiecon2025 
                   WHERE sIEEEMember = 'Yes' 
                     AND (ieee_id IS NULL OR ieee_id = '')
                     AND (sStatus IS NULL OR sStatus != 'DELETED')
@@ -678,7 +678,7 @@ class ConferenceRegistration {
         }
         
         // Uniqueness validation
-        $query = "SELECT iRegId, sName, sEmail FROM tblUPWIECON2025 
+        $query = "SELECT iRegId, sName, sEmail FROM tblupwiecon2025 
                   WHERE ieee_id = :ieee_id";
         
         if ($excludeRegistrationId) {
@@ -712,7 +712,7 @@ class ConferenceRegistration {
     
     // ✅ NEW: Update only IEEE ID for existing registration
     public function updateIEEEId($registrationId, $ieeeId) {
-        $query = "UPDATE tblUPWIECON2025 SET 
+        $query = "UPDATE tblupwiecon2025 SET 
                     ieee_id = :ieee_id,
                     dtUpdated = NOW()
                   WHERE iRegId = :registration_id";
@@ -746,7 +746,7 @@ class ConferenceRegistration {
                     SUM(CASE WHEN sCategory = 'Student' AND sIEEEMember = 'Yes' THEN 1 ELSE 0 END) as ieee_student,
                     SUM(CASE WHEN sNationality = 'Indian' AND sIEEEMember = 'Yes' THEN 1 ELSE 0 END) as ieee_indian,
                     SUM(CASE WHEN sNationality = 'Foreign' AND sIEEEMember = 'Yes' THEN 1 ELSE 0 END) as ieee_foreign
-                  FROM tblUPWIECON2025 
+                  FROM tblupwiecon2025 
                   WHERE sIEEEMember = 'Yes' 
                     AND (sStatus IS NULL OR sStatus != 'DELETED')";
         
@@ -799,7 +799,7 @@ class ConferenceRegistration {
         $this->conn->beginTransaction();
         
         try {
-            $query = "UPDATE tblUPWIECON2025 SET 
+            $query = "UPDATE tblupwiecon2025 SET 
                         ieee_id = :ieee_id,
                         dtUpdated = NOW()
                       WHERE iRegId = :registration_id";
