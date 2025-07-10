@@ -1,7 +1,4 @@
-GNU nano 6.2                               database.php                                        <?php
-// config/database.php
-
-// Prevent multiple inclusions
+<?php
 if (!class_exists('Database')) {
 
 class Database {
