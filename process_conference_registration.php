@@ -82,7 +82,7 @@ try {
             }
         }
         
-        // Check for duplicate email registration
+        /////Check for duplicate email registration
         $existingUser = $registration->getRegistrationByEmail($email);
         if ($existingUser) {
             $errors[] = "A registration with this email address already exists. Registration ID: " . $existingUser['iRegId'];

@@ -1,0 +1,1 @@
+2025-07-16 16:58:13 | {"timestamp":"2025-07-16 16:58:13","type":"PAYMENT_FAILED","to":"samarthdalela@gmail.com","subject":"UPWIECON 2025 - Payment Issue Notification","order_id":"UPWIECON2025_162_1752665274","server":"localhost","ip":"::1"}

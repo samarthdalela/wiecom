@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    // Redirect to login page
+    header("Location: login.php");
+    exit();
+}
+echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +29,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="price_list.php">
                             <i class="fas fa-list-alt me-1"></i>View Price List
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="transaction_log.php">
+                        <a class="nav-link" href="./transaction_log.php">
                             <i class="fas fa-file-invoice-dollar me-1"></i>View Transaction Log
                         </a>
                     </li>
@@ -79,7 +89,7 @@
                 
                 <!-- Quick stats cards -->
                 <div class="row">
-                    <div class="col-lg-3 col-md-6 mb-4">
+                    <!-- <div class="col-lg-3 col-md-6 mb-4">
                         <div class="card border-primary">
                             <div class="card-body text-center">
                                 <i class="fas fa-list-alt fa-2x text-primary mb-2"></i>
@@ -87,13 +97,14 @@
                                 <a href="price_list.php" class="btn btn-outline-primary btn-sm">View</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <center>
                     <div class="col-lg-3 col-md-6 mb-4">
                         <div class="card border-success">
                             <div class="card-body text-center">
                                 <i class="fas fa-file-invoice-dollar fa-2x text-success mb-2"></i>
                                 <h5>Transactions</h5>
-                                <a href="transaction_log.php" class="btn btn-outline-success btn-sm">View</a>
+                                <a href="./transaction_log.php" class="btn btn-outline-success btn-sm">View</a>
                             </div>
                         </div>
                     </div>
@@ -115,6 +126,7 @@
                             </div>
                         </div>
                     </div>
+                    </center>
                 </div>
             </div>
         </div>
@@ -142,3 +154,5 @@
     </script>
 </body>
 </html>
+HTML
+?>

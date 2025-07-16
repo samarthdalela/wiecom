@@ -3,10 +3,10 @@ if (!class_exists('Database')) {
 
 class Database {
     private $host = 'localhost';
-    private $port = '3306'; // ✅ Custom MySQL port
+    private $port = '3308'; // ✅ Custom MySQL port
     private $db_name = 'upwiecon2025_registration';
-    private $username = 'upwieconuser';
-    private $password = 'Nielit@123';
+    private $username = 'root';
+    private $password = '';
     private $conn;
 
     public function connect() {

@@ -84,7 +84,12 @@ class ConferenceRegistration {
     }
     
     public function getRegistrationByEmail($email) {
-        $query = "SELECT * FROM tblupwiecon2025 WHERE sEmail = :email LIMIT 1";
+        $query = "    SELECT u.* 
+        FROM tblupwiecon2025 u
+        JOIN tblupwiecon2025payment p ON u.RefId = p.RefId
+        WHERE u.sEmail = :email AND p.payment_status = 'SUCCESS'
+        LIMIT 1";
+        // $query = "SELECT * FROM tblupwiecon2025 WHERE sEmail = :email  LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':email', $email);

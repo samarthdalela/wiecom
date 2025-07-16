@@ -1,0 +1,2 @@
+2025-07-16 16:58:18 | {"timestamp":"2025-07-16 16:58:18","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-16 16:58:18 | {"timestamp":"2025-07-16 16:58:18","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_162_1752665274"}

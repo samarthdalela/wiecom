@@ -840,14 +840,14 @@ function isOptionSelected($name, $value) {
         "1_1_1_2_1": 10000.00, // Presenter, Early Bird, Indian, Non-IEEE, Academic/Professional
         "2_1_1_1_1": 4000.00,  // Listener, Early Bird, Indian, IEEE Member, Academic/Professional
         "2_1_1_2_1": 5000.00,  // Listener, Early Bird, Indian, Non-IEEE, Academic/Professional
-        "3_1_1_1_1": 3000.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Academic/Professional
-        "3_1_1_2_1": 3500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Academic/Professional
+        "3_1_1_1_1": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Academic/Professional
+        "3_1_1_2_1": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Academic/Professional
         
         // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
         "1_1_1_1_2": 7000.00,  // Presenter, Early Bird, Indian, IEEE Member, Student
         "1_1_1_2_2": 8000.00,  // Presenter, Early Bird, Indian, Non-IEEE, Student
         "2_1_1_1_2": 3000.00,  // Listener, Early Bird, Indian, IEEE Member, Student
-        "2_1_1_2_2": 3500.00,  // Listener, Early Bird, Indian, Non-IEEE, Student
+        "2_1_1_2_2": 4000.00,  // Listener, Early Bird, Indian, Non-IEEE, Student
         "3_1_1_1_2": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Student
         "3_1_1_2_2": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Student
         
@@ -856,8 +856,8 @@ function isOptionSelected($name, $value) {
         "1_2_1_2_1": 11000.00, // Presenter, Regular, Indian, Non-IEEE, Academic/Professional
         "2_2_1_1_1": 5000.00,  // Listener, Regular, Indian, IEEE Member, Academic/Professional
         "2_2_1_2_1": 6000.00,  // Listener, Regular, Indian, Non-IEEE, Academic/Professional
-        "3_2_1_1_1": 3500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Academic/Professional
-        "3_2_1_2_1": 4000.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Academic/Professional
+        "3_2_1_1_1": 2500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Academic/Professional
+        "3_2_1_2_1": 2500.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Academic/Professional
         
         // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
         "1_2_1_1_2": 8000.00,  // Presenter, Regular, Indian, IEEE Member, Student
@@ -867,40 +867,39 @@ function isOptionSelected($name, $value) {
         "3_2_1_1_2": 2500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Student
         "3_2_1_2_2": 2500.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Student
         
-        // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
+         // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
         // Note: Converting USD to INR at approximate rate of USD 1 = INR 86
         "1_1_2_1_1": 25800.00, // Presenter, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 300)
         "1_1_2_2_1": 34400.00, // Presenter, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 400)
         "2_1_2_1_1": 12900.00, // Listener, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 150)
         "2_1_2_2_1": 17200.00, // Listener, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 200)
-        "3_1_2_1_1": 10750.00, // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 125)
-        "3_1_2_2_1": 12900.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 150)
+        "3_1_2_1_1": 8600.00, // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 100)
+        "3_1_2_2_1": 8600.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 100)
         
         // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
-        "1_1_2_1_2": 20640.00, // Presenter, Early Bird, Foreign, IEEE Member, Student (USD 240)
+        "1_1_2_1_2": 17200.00, // Presenter, Early Bird, Foreign, IEEE Member, Student (USD 200)
         "1_1_2_2_2": 25800.00, // Presenter, Early Bird, Foreign, Non-IEEE, Student (USD 300)
-        "2_1_2_1_2": 10320.00, // Listener, Early Bird, Foreign, IEEE Member, Student (USD 120)
+        "2_1_2_1_2": 8600.00, // Listener, Early Bird, Foreign, IEEE Member, Student (USD 100)
         "2_1_2_2_2": 12900.00, // Listener, Early Bird, Foreign, Non-IEEE, Student (USD 150)
         "3_1_2_1_2": 8600.00,  // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Student (USD 100)
-        "3_1_2_2_2": 10320.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Student (USD 120)
+        "3_1_2_2_2": 8600.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Student (USD 100)
         
         // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - ACADEMIC/PROFESSIONAL ==========
         "1_2_2_1_1": 30100.00, // Presenter, Regular, Foreign, IEEE Member, Academic/Professional (USD 350)
         "1_2_2_2_1": 38700.00, // Presenter, Regular, Foreign, Non-IEEE, Academic/Professional (USD 450)
         "2_2_2_1_1": 17200.00, // Listener, Regular, Foreign, IEEE Member, Academic/Professional (USD 200)
         "2_2_2_2_1": 21500.00, // Listener, Regular, Foreign, Non-IEEE, Academic/Professional (USD 250)
-        "3_2_2_1_1": 12900.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Academic/Professional (USD 150)
-        "3_2_2_2_1": 15480.00, // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Academic/Professional (USD 180)
+        "3_2_2_1_1": 8600.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Academic/Professional (USD 100)
+        "3_2_2_2_1": 8600.00, // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Academic/Professional (USD 100)
         
         // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
-        "1_2_2_1_2": 25800.00, // Presenter, Regular, Foreign, IEEE Member, Student (USD 300)
+        "1_2_2_1_2": 21500.00, // Presenter, Regular, Foreign, IEEE Member, Student (USD 250)
         "1_2_2_2_2": 30100.00, // Presenter, Regular, Foreign, Non-IEEE, Student (USD 350)
         "2_2_2_1_2": 12900.00, // Listener, Regular, Foreign, IEEE Member, Student (USD 150)
         "2_2_2_2_2": 17200.00, // Listener, Regular, Foreign, Non-IEEE, Student (USD 200)
-        "3_2_2_1_2": 10320.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Student (USD 120)
-        "3_2_2_2_2": 12900.00  // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Student (USD 150)
+        "3_2_2_1_2": 8600.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Student (USD 100)
+        "3_2_2_2_2": 8600.00  // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Student (USD 100)
     };
-
     function calculateAmount() {
         const category = document.getElementById('ddlCategory').value;
         const earlyBird = document.querySelector('input[name="rdbEarlyBird"]:checked')?.value;
