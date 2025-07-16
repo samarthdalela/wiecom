@@ -1,0 +1,10 @@
+2025-07-16 16:58:18 | {"timestamp":"2025-07-16 16:58:18","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-16 16:58:18 | {"timestamp":"2025-07-16 16:58:18","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_162_1752665274"}
+2025-07-16 22:02:34 | {"timestamp":"2025-07-16 22:02:34","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-16 22:02:34 | {"timestamp":"2025-07-16 22:02:34","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_157_1752683519"}
+2025-07-16 22:07:27 | {"timestamp":"2025-07-16 22:07:27","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-16 22:07:27 | {"timestamp":"2025-07-16 22:07:27","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_158_1752683797"}
+2025-07-16 22:16:53 | {"timestamp":"2025-07-16 22:16:53","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-16 22:16:53 | {"timestamp":"2025-07-16 22:16:53","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_160_1752684358"}
+2025-07-16 22:21:13 | {"timestamp":"2025-07-16 22:21:13","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-16 22:21:13 | {"timestamp":"2025-07-16 22:21:13","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2025_161_1752684606"}
