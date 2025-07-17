@@ -83,6 +83,11 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container mt-5">
 
     <h2>Payment & Registration Details</h2>
+    <div class="d-flex justify-content-between align-items-center my-3">
+    <input type="text" id="searchInput" class="form-control w-50" placeholder="Search...">
+    <button class="btn btn-success" onclick="downloadExcel()">Download Excel</button>
+</div>
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-dark">
@@ -141,6 +146,29 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <!-- SheetJS for Excel Export -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script>
+// Excel download
+function downloadExcel() {
+    const table = document.querySelector("table");
+    const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+    XLSX.writeFile(wb, "payment_registration_data.xlsx");
+}
+
+// Table search
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll("table tbody tr");
+
+    rows.forEach(row => {
+        const cells = Array.from(row.getElementsByTagName("td"));
+        const match = cells.some(cell => cell.textContent.toLowerCase().includes(filter));
+        row.style.display = match ? "" : "none";
+    });
+});
+</script>
+
 </body>
 </html>

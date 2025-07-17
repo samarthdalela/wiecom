@@ -83,30 +83,29 @@ class ConferenceRegistration {
         }
     }
     
+    // ALTER TABLE tblupwiecon2025 DROP INDEX unique_email;
     public function getRegistrationByEmail($email) {
-        $query = "    SELECT u.* 
-        FROM tblupwiecon2025 u
-        JOIN tblupwiecon2025payment p ON u.RefId = p.RefId
-        WHERE u.sEmail = :email AND p.payment_status = 'SUCCESS'
-        LIMIT 1";
-        // $query = "SELECT * FROM tblupwiecon2025 WHERE sEmail = :email  LIMIT 1";
+        $query = "SELECT u.* FROM tblupwiecon2025 u 
+                  JOIN tblupwiecon2025payment p ON u.iRegId = p.RefId 
+                  WHERE u.sEmail = :email AND p.payment_status = 'SUCCESS' 
+                  LIMIT 1;";
+        
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            
+    
             if ($result) {
                 error_log("Found existing registration for email: " . $email . " with ID: " . $result['iRegId']);
             }
-            
+    
             return $result;
         } catch (PDOException $e) {
             error_log("Database error in getRegistrationByEmail: " . $e->getMessage());
             return false;
         }
     }
-    
     public function getRegistrationByMobile($mobile) {
         $query = "SELECT * FROM tblupwiecon2025 WHERE sMobile = :mobile LIMIT 1";
         try {
