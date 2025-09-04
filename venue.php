@@ -884,7 +884,7 @@
 
     <div class="container mt-5 pb-5">
         <!-- Accommodation Section -->
-        <div class="card venue-card">
+        <!-- <div class="card venue-card">
             <div class="card-header card-header-custom accommodation-header">
                 <i class="fas fa-bed me-2"></i>ACCOMMODATION
             </div>
@@ -909,7 +909,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Transportation Section -->
         <div class="card venue-card">
@@ -1085,7 +1085,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 

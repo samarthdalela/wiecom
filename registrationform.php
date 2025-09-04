@@ -599,8 +599,10 @@ function isOptionSelected($name, $value) {
                                 value="<?php echo getFormValue('txtMobile'); ?>" required
                                 placeholder="10-digit mobile number">
                         </div>
+        <!-- Hidden FULL concatenated category field -->
+        <input type="hidden" id="category_combined" name="category_combined" value="">
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="ddlCategory">Participant Category <span class="required">*</span></label>
                             <select id="ddlCategory" name="ddlCategory" required onchange="calculateAmount()">
                                 <option value="0">Select Category</option>
@@ -610,12 +612,23 @@ function isOptionSelected($name, $value) {
                                 </option>
                                 <option value="3" <?php echo isOptionSelected('ddlCategory', '3'); ?>>Ph.D. Colloquium</option>
                             </select>
-                        </div>
+                        </div> -->
+                        <div class="form-group">
+                    <label for="ddlCategory">Participant Category <span class="required">*</span></label>
+                    <select id="ddlCategory" name="ddlCategory" required onchange="calculateAmount(); updateCategoryFull();">
+                        <option value="0">Select Category</option>
+                        <option value="1" <?php echo isOptionSelected('ddlCategory', '1'); ?>>
+                            Presenter</option>
+                        <option value="2" <?php echo isOptionSelected('ddlCategory', '2'); ?>>Listener
+                        </option>
+                        <!-- <option value="3" <?php echo isOptionSelected('ddlCategory', '3'); ?>>Ph.D. Colloquium</option> -->
+                    </select>
+                </div>
                     </div>
                 </div>
 
                 <!-- Professional Classification Section -->
-                <div class="form-section">
+                <!-- <div class="form-section">
                     <h3 class="section-title">
                         <i class="fas fa-graduation-cap"></i>
                         Professional Classification
@@ -644,8 +657,34 @@ function isOptionSelected($name, $value) {
                         </div>
                     </div>
 
-                </div>
-
+                </div> -->
+                <div class="form-section">
+                <div class="form-group">
+    <label>Professional Status <span class="required">*</span></label>
+    <div class="checkbox-group">
+        <div class="checkbox-option">
+            <input type="checkbox" id="academicProfessional" name="chkProfessionalStatus[]" value="academic_professional"
+                <?php echo isCheckboxChecked('chkProfessionalStatus', 'academic_professional'); ?>
+                onchange="handleProfessionalStatusChange(this); calculateAmount(); updateCategoryFull(); validateProfessionalStatus();">
+            <label for="academicProfessional">
+                <i class="fas fa-briefcase"></i> Academic/Professional
+            </label>
+        </div>
+        <div class="checkbox-option">
+            <input type="checkbox" id="student" name="chkProfessionalStatus[]" value="student"
+                <?php echo isCheckboxChecked('chkProfessionalStatus', 'student'); ?>
+                onchange="handleProfessionalStatusChange(this); calculateAmount(); updateCategoryFull(); validateProfessionalStatus();">
+            <label for="student">
+                <i class="fas fa-user-graduate"></i> Student
+            </label>
+        </div>
+    </div>
+    <!-- error message will appear here -->
+    <small id="professionalStatusError" style="color:red; display:none;">
+        Please select at least one Professional Status.
+    </small>
+</div>
+        </div>
                 <!-- Registration Options Section -->
                 <div class="form-section">
                     <h3 class="section-title">
@@ -696,16 +735,16 @@ function isOptionSelected($name, $value) {
                             <label>Early Bird Registration <span class="required">*</span></label>
                             <div class="radio-group">
                                 <div class="radio-option">
-                                    <input type="radio" id="earlyBirdYes" name="rdbEarlyBird" value="1"
+                                    <input type="radio" id="earlyBirdYes" name="rdbEarlyBird" value="1" disabled
                                         <?php echo isRadioSelected('rdbEarlyBird', '1'); ?>
                                         onchange="calculateAmount()">
-                                    <label for="earlyBirdYes">Yes (Before Aug 1, 2025)</label>
+                                    <label for="earlyBirdYes">Yes (Before September 1 , 2025)</label>
                                 </div>
                                 <div class="radio-option">
                                     <input type="radio" id="earlyBirdNo" name="rdbEarlyBird" value="2"
                                         <?php echo isRadioSelected('rdbEarlyBird', '2'); ?>
-                                        onchange="calculateAmount()">
-                                    <label for="earlyBirdNo">Regular (After Aug 1, 2025)</label>
+                                        onchange="calculateAmount()" checked>
+                                    <label for="earlyBirdNo">Regular (After September 1, 2025)</label>
                                 </div>
                             </div>
                         </div>
@@ -732,7 +771,7 @@ function isOptionSelected($name, $value) {
                         <div class="ieee-info">
                             <h4><i class="fas fa-info-circle"></i> IEEE Membership Information</h4>
                             <p><strong>Please enter your IEEE Member ID number.</strong> This helps us verify your membership status and apply the appropriate registration discount.</p>
-                            <p><small><i class="fas fa-lightbulb"></i> <strong>Note:</strong> Your IEEE Member ID is typically 8 digits long and can be found on your IEEE membership card or in your IEEE account profile.</small></p>
+                            <p><small><i class="fas fa-lightbulb"></i> <strong>Note:</strong> Your IEEE Member ID is typically 8 or 9 digits long and can be found on your IEEE membership card or in your IEEE account profile.</small></p>
                         </div>
                         
                         <div class="form-group">
@@ -741,11 +780,11 @@ function isOptionSelected($name, $value) {
                             </label>
                             <input type="text" id="txtIEEEId" name="txtIEEEId"
                                 value="<?php echo getFormValue('txtIEEEId'); ?>"
-                                placeholder="Enter your 8-digit IEEE Member ID"
-                                maxlength="8"
-                                pattern="[0-9]{8}">
+                                placeholder="Enter your 8 or 9 digit IEEE Member ID"
+                                maxlength="9"
+                                pattern="[0-9]{8,9}">
                             <small style="color: #666; font-size: 12px; margin-top: 5px; display: block;">
-                                <i class="fas fa-question-circle"></i> Example: 12345678 (8 digits only)
+                                <i class="fas fa-question-circle"></i> Example: 12345678 (8 or 9 digits only)
                             </small>
                         </div>
                     </div>
@@ -824,7 +863,41 @@ function isOptionSelected($name, $value) {
             </form>
         </div>
     </div>
+    <script>
+function updateCategoryFull() {
+    // Get professional status (only one allowed at a time)
+    const professionalChecked = document.querySelector('input[name="chkProfessionalStatus[]"]:checked');
+    const professionalVal = professionalChecked ? professionalChecked.value : "";
 
+    // Get participant category from dropdown
+    const categoryDropdown = document.getElementById('ddlCategory');
+    let categoryVal = "";
+    if (categoryDropdown.value === "1") {
+        categoryVal = "presenter";
+    } else if (categoryDropdown.value === "2") {
+        categoryVal = "listener";
+    } else if (categoryDropdown.value === "3") {
+        categoryVal = "phd_colloquium";
+    }
+
+    // Combine
+    let fullCategory = "";
+    if (professionalVal && categoryVal) {
+        fullCategory = professionalVal + "_" + categoryVal;
+    }
+    document.getElementById('category_combined').value = fullCategory;
+
+}
+
+// Attach event listeners (ensure up-to-date hidden field on both inputs)
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('ddlCategory').addEventListener('change', updateCategoryFull);
+    document.querySelectorAll('input[name="chkProfessionalStatus[]"]').forEach(function(el) {
+        el.addEventListener('change', updateCategoryFull);
+    });
+    updateCategoryFull();
+});
+</script>
     <script>
     // Updated Pricing Matrix based on UPWIECON 2025 Official Registration Table
     const pricingMatrix = {
@@ -840,14 +913,14 @@ function isOptionSelected($name, $value) {
         "1_1_1_2_1": 10000.00, // Presenter, Early Bird, Indian, Non-IEEE, Academic/Professional
         "2_1_1_1_1": 4000.00,  // Listener, Early Bird, Indian, IEEE Member, Academic/Professional
         "2_1_1_2_1": 5000.00,  // Listener, Early Bird, Indian, Non-IEEE, Academic/Professional
-        "3_1_1_1_1": 3000.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Academic/Professional
-        "3_1_1_2_1": 3500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Academic/Professional
+        "3_1_1_1_1": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Academic/Professional
+        "3_1_1_2_1": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Academic/Professional
         
         // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
         "1_1_1_1_2": 7000.00,  // Presenter, Early Bird, Indian, IEEE Member, Student
         "1_1_1_2_2": 8000.00,  // Presenter, Early Bird, Indian, Non-IEEE, Student
         "2_1_1_1_2": 3000.00,  // Listener, Early Bird, Indian, IEEE Member, Student
-        "2_1_1_2_2": 3500.00,  // Listener, Early Bird, Indian, Non-IEEE, Student
+        "2_1_1_2_2": 4000.00,  // Listener, Early Bird, Indian, Non-IEEE, Student
         "3_1_1_1_2": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Student
         "3_1_1_2_2": 2500.00,  // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Student
         
@@ -856,8 +929,8 @@ function isOptionSelected($name, $value) {
         "1_2_1_2_1": 11000.00, // Presenter, Regular, Indian, Non-IEEE, Academic/Professional
         "2_2_1_1_1": 5000.00,  // Listener, Regular, Indian, IEEE Member, Academic/Professional
         "2_2_1_2_1": 6000.00,  // Listener, Regular, Indian, Non-IEEE, Academic/Professional
-        "3_2_1_1_1": 3500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Academic/Professional
-        "3_2_1_2_1": 4000.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Academic/Professional
+        "3_2_1_1_1": 2500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Academic/Professional
+        "3_2_1_2_1": 2500.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Academic/Professional
         
         // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
         "1_2_1_1_2": 8000.00,  // Presenter, Regular, Indian, IEEE Member, Student
@@ -867,40 +940,39 @@ function isOptionSelected($name, $value) {
         "3_2_1_1_2": 2500.00,  // Ph.D. Colloquium, Regular, Indian, IEEE Member, Student
         "3_2_1_2_2": 2500.00,  // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Student
         
-        // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
+         // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
         // Note: Converting USD to INR at approximate rate of USD 1 = INR 86
         "1_1_2_1_1": 25800.00, // Presenter, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 300)
         "1_1_2_2_1": 34400.00, // Presenter, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 400)
         "2_1_2_1_1": 12900.00, // Listener, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 150)
         "2_1_2_2_1": 17200.00, // Listener, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 200)
-        "3_1_2_1_1": 10750.00, // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 125)
-        "3_1_2_2_1": 12900.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 150)
+        "3_1_2_1_1": 8600.00, // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 100)
+        "3_1_2_2_1": 8600.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 100)
         
         // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
-        "1_1_2_1_2": 20640.00, // Presenter, Early Bird, Foreign, IEEE Member, Student (USD 240)
+        "1_1_2_1_2": 17200.00, // Presenter, Early Bird, Foreign, IEEE Member, Student (USD 200)
         "1_1_2_2_2": 25800.00, // Presenter, Early Bird, Foreign, Non-IEEE, Student (USD 300)
-        "2_1_2_1_2": 10320.00, // Listener, Early Bird, Foreign, IEEE Member, Student (USD 120)
+        "2_1_2_1_2": 8600.00, // Listener, Early Bird, Foreign, IEEE Member, Student (USD 100)
         "2_1_2_2_2": 12900.00, // Listener, Early Bird, Foreign, Non-IEEE, Student (USD 150)
         "3_1_2_1_2": 8600.00,  // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Student (USD 100)
-        "3_1_2_2_2": 10320.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Student (USD 120)
+        "3_1_2_2_2": 8600.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Student (USD 100)
         
         // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - ACADEMIC/PROFESSIONAL ==========
         "1_2_2_1_1": 30100.00, // Presenter, Regular, Foreign, IEEE Member, Academic/Professional (USD 350)
         "1_2_2_2_1": 38700.00, // Presenter, Regular, Foreign, Non-IEEE, Academic/Professional (USD 450)
         "2_2_2_1_1": 17200.00, // Listener, Regular, Foreign, IEEE Member, Academic/Professional (USD 200)
         "2_2_2_2_1": 21500.00, // Listener, Regular, Foreign, Non-IEEE, Academic/Professional (USD 250)
-        "3_2_2_1_1": 12900.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Academic/Professional (USD 150)
-        "3_2_2_2_1": 15480.00, // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Academic/Professional (USD 180)
+        "3_2_2_1_1": 8600.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Academic/Professional (USD 100)
+        "3_2_2_2_1": 8600.00, // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Academic/Professional (USD 100)
         
         // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
-        "1_2_2_1_2": 25800.00, // Presenter, Regular, Foreign, IEEE Member, Student (USD 300)
+        "1_2_2_1_2": 21500.00, // Presenter, Regular, Foreign, IEEE Member, Student (USD 250)
         "1_2_2_2_2": 30100.00, // Presenter, Regular, Foreign, Non-IEEE, Student (USD 350)
         "2_2_2_1_2": 12900.00, // Listener, Regular, Foreign, IEEE Member, Student (USD 150)
         "2_2_2_2_2": 17200.00, // Listener, Regular, Foreign, Non-IEEE, Student (USD 200)
-        "3_2_2_1_2": 10320.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Student (USD 120)
-        "3_2_2_2_2": 12900.00  // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Student (USD 150)
+        "3_2_2_1_2": 8600.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Student (USD 100)
+        "3_2_2_2_2": 8600.00  // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Student (USD 100)
     };
-
     function calculateAmount() {
         const category = document.getElementById('ddlCategory').value;
         const earlyBird = document.querySelector('input[name="rdbEarlyBird"]:checked')?.value;
@@ -1061,13 +1133,13 @@ function isOptionSelected($name, $value) {
     // IEEE ID input validation
     document.getElementById('txtIEEEId').addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 8) {
-            value = value.substring(0, 8);
+        if (value.length > 9) {
+            value = value.substring(0, 9);
         }
         e.target.value = value;
     });
 
-    // IEEE ID real-time validation
+ // IEEE ID real-time validation
     document.getElementById('txtIEEEId').addEventListener('blur', function() {
         const ieeeId = this.value.trim();
         const formGroup = this.closest('.form-group');
@@ -1078,13 +1150,16 @@ function isOptionSelected($name, $value) {
             formGroup.classList.remove('error');
         }
 
-        if (ieeeId.length > 0 && ieeeId.length !== 8) {
-            formGroup.classList.add('error');
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'field-error';
-            errorDiv.textContent = 'IEEE Member ID must be exactly 8 digits';
-            this.parentNode.appendChild(errorDiv);
-        }
+        if (
+  ieeeId.length > 0 &&
+  !((ieeeId.length === 8 || ieeeId.length === 9) )
+) {
+  formGroup.classList.add('error');
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'field-error';
+  errorDiv.textContent = 'IEEE Member ID must be 8 or 9 digits';
+  this.parentNode.appendChild(errorDiv);
+}    
     });
 
     // Form validation

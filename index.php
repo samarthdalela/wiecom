@@ -1198,8 +1198,9 @@
                                     <div class="highlight-card  backdrop-blur rounded-4 p-4 h-100">
                                         <i class="bi bi-award display-6 text-warning mb-3"></i>
                                         <h5 class="fw-bold">IEEE Xplore</h5>
-                                        <p class="mb-0 small">All accepted papers will be submitted to IEEE Xplore
-                                            Digital Library</p>
+                                        <p class="mb-0 small">The presented paper will be published on the IEEE Xplore subject to the IEEE Standards and quality check.</p>
+                                        <!-- <p class="mb-0 small">All accepted papers will be submitted to IEEE Xplore
+                                            Digital Library</p> -->
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -1729,7 +1730,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 
