@@ -1531,6 +1531,12 @@
                         </div>
                         <div class="sparkle10" style="top: 40%; left: 55%; animation-delay: 0.9s;"></div>
                     </div>
+                    <div class="logo-item10">
+                        <div class="logo10">
+                            <img src="./images/academiQ.jpeg" alt="Partner 17">
+                        </div>
+                        <div class="sparkle10" style="top: 40%; left: 55%; animation-delay: 0.9s;"></div>
+                    </div>
 
                     <!-- EXACT DUPLICATE SET for seamless loop -->
                     <div class="logo-item10">
@@ -1641,6 +1647,12 @@
                     <div class="logo-item10">
                         <div class="logo10">
                             <img src="./images/12.jpeg" alt="Partner 16">
+                        </div>
+                        <div class="sparkle10" style="top: 40%; left: 55%; animation-delay: 0.9s;"></div>
+                    </div>
+                    <div class="logo-item10">
+                        <div class="logo10">
+                            <img src="./images/academiQ.jpeg" alt="Partner 17">
                         </div>
                         <div class="sparkle10" style="top: 40%; left: 55%; animation-delay: 0.9s;"></div>
                     </div>
