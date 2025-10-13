@@ -1,0 +1,6 @@
+2025-07-03 13:01:00 | {"timestamp":"2025-07-03 13:01:00","to":"samarthdalela@gmail.com","status":"FAILED","method":"All 3 attempts failed. Last error: All mail methods failed on attempt 3","order_id":null}
+2025-07-03 13:01:00 | {"timestamp":"2025-07-03 13:01:00","to":"samarthdalela@gmail.com","status":"FAILED","method":"Test email (basic)","order_id":null}
+2025-07-03 15:51:02 | {"timestamp":"2025-07-03 15:51:02","to":"SAMARTHcDALELA@GMAIL.COM","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-03 15:51:02 | {"timestamp":"2025-07-03 15:51:02","to":"SAMARTHcDALELA@GMAIL.COM","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_25_1751538055"}
+2025-07-03 15:53:32 | {"timestamp":"2025-07-03 15:53:32","to":"SAMARTHDALELA@GMAIL.COM","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-07-03 15:53:32 | {"timestamp":"2025-07-03 15:53:32","to":"SAMARTHDALELA@GMAIL.COM","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_26_1751538204"}
