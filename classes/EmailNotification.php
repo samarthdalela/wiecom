@@ -309,10 +309,10 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 class EmailNotification {
-    private $fromEmail = 'wieconnielit@gmail.com';
+    private $fromEmail = 'ieeeconference@nielit.ac.in';
     private $fromName = 'UPWIECON 2025';
-    private $replyToEmail = 'wieconnielit@gmail.com';
-    private $appPassword = 'htil fgrm hpwf mgbo'; // Gmail App Password
+    private $replyToEmail = 'ieeeconference@nielit.ac.in';
+    private $appPassword = 'kvyw myci rdfd tuja'; // Gmail App Password
     private $debugMode = true;
     private $maxRetries = 3;
     private $retryDelay = 2;
@@ -586,6 +586,14 @@ class EmailNotification {
                        <p style=\"font-size: 16px; margin-top: 30px; text-align: center; color: #7f8c8d;\">
                            Thank you for being part of <strong>UPWIECON 2025</strong>
                        </p>
+<p style=\"font-size: 14px; margin: 15px 0 0 0; text-align: center; color: #2c3e50;\">
+                         Need help? Write to us at
+                         <a href=\"mailto:ieeeconference@nielit.ac.in\" style=\"color: #2980b9; text-decoration: none;\">
+                           ieeeconference@nielit.ac.in
+                         </a>
+                     
+
+
                    </div>
                    
                    <!-- Footer -->
@@ -703,7 +711,13 @@ EOT;
                        <p style=\"font-size: 16px; margin-top: 30px; text-align: center; color: #7f8c8d;\">
                            We appreciate your interest in <strong>UPWIECON 2025</strong>
                        </p>
-                   </div>
+<p style=\"font-size: 14px; margin: 15px 0 0 0; text-align: center; color: #2c3e50;\">
+                         Need help? Write to us at
+                         <a href=\"mailto:ieeeconference@nielit.ac.in\" style=\"color: #2980b9; text-decoration: none;\">
+                           ieeeconference@nielit.ac.in
+                         </a>
+                       </p>                  
+ </div>
                    
                    <!-- Footer -->
                    <div style=\"background-color: #34495e; padding: 25px; text-align: center;\">

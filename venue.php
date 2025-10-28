@@ -879,12 +879,13 @@
         <div class="container">
             <h1 class="display-4 mb-3"><i class="fas fa-map-marker-alt me-3"></i>VENUE INFORMATION</h1>
             <h2 class="h3 mb-0">Jaypee Residency Manor</h2>
+            <p style='padding:3px'>Road Barlow Ganj, Mussoorie, Uttarakhand 248122, India</p>
         </div>
     </div>
 
     <div class="container mt-5 pb-5">
         <!-- Accommodation Section -->
-        <div class="card venue-card">
+        <!-- <div class="card venue-card">
             <div class="card-header card-header-custom accommodation-header">
                 <i class="fas fa-bed me-2"></i>ACCOMMODATION
             </div>
@@ -909,7 +910,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Transportation Section -->
         <div class="card venue-card">
@@ -1085,7 +1086,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 

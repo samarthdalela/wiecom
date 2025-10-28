@@ -741,7 +741,7 @@
         }
 
         th:first-child {
-            text-align: left;
+            /* text-align: left; */
             padding-left: 1.5rem;
         }
 
@@ -766,7 +766,7 @@
         }
 
         td:first-child {
-            text-align: left;
+            /* text-align: left; */
             font-weight: 600;
             color: var(--text-dark);
             padding-left: 1.5rem;
@@ -1038,8 +1038,7 @@
 
             <div class="content50">
                 <div class="notice50">
-                    <strong>Important:</strong> Registration Category must be selected based on affiliation & membership
-                    of First Author.
+                    <strong>Important:</strong> Paper Registration Category must be  selected as per the affiliation of First Author only.<br> Authors must provide copy of IEEE MEMBERSHIP CARD if selecting IEEE Member category.
                 </div>
 
                 <div class="table-container50">
@@ -1047,21 +1046,21 @@
                         <thead>
                             <tr>
                                 <th rowspan="3">Category</th>
-                                <th colspan="4" class="category-header50 early-bird50">Early Bird
-                                    Registration<br>(Before 1 Aug 2025)</th>
-                                <th colspan="4" class="category-header50">After 1-Aug-2025</th>
+                                <!-- <th colspan="4" class="category-header50 early-bird50">Early Bird
+                                    Registration<br>(Before 1 September 2025)</th> -->
+                                <th colspan="4" class="category-header50">Registration Fees</th>
                             </tr>
                             <tr>
-                                <th colspan="2" class="sub-header50">Academia/Professionals</th>
-                                <th colspan="2" class="sub-header50">Students (UG/PG)</th>
+                                <!-- <th colspan="2" class="sub-header50">Academia/Professionals</th>
+                                <th colspan="2" class="sub-header50">Students (UG/PG)</th> -->
                                 <th colspan="2" class="sub-header50">Academia/Professionals</th>
                                 <th colspan="2" class="sub-header50">Students (UG/PG)</th>
                             </tr>
                             <tr>
-                                <th class="sub-header50">IEEE Member</th>
+                                <!-- <th class="sub-header50">IEEE Member</th>
                                 <th class="sub-header50">Non-Member</th>
                                 <th class="sub-header50">IEEE Member</th>
-                                <th class="sub-header50">Non-Member</th>
+                                <th class="sub-header50">Non-Member</th> -->
                                 <th class="sub-header50">IEEE Member</th>
                                 <th class="sub-header50">Non-Member</th>
                                 <th class="sub-header50">IEEE Member</th>
@@ -1074,10 +1073,10 @@
                             </tr>
                             <tr>
                                 <td><strong>Presenter</strong></td>
-                                <td class="price50">INR 9,000</td>
+                                <!-- <td class="price50">INR 9,000</td>
                                 <td class="price50">INR 10,000</td>
                                 <td class="price50">INR 7,000</td>
-                                <td class="price50">INR 8,000</td>
+                                <td class="price50">INR 8,000</td> -->
                                 <td class="price50">INR 10,000</td>
                                 <td class="price50">INR 11,000</td>
                                 <td class="price50">INR 8,000</td>
@@ -1085,68 +1084,68 @@
                             </tr>
                             <tr>
                                 <td><strong>Listener</strong></td>
-                                <td class="price50">INR 4,000</td>
+                                <!-- <td class="price50">INR 4,000</td>
                                 <td class="price50">INR 5,000</td>
                                 <td class="price50">INR 3,000</td>
-                                <td class="price50">INR 4,000</td>
+                                <td class="price50">INR 4,000</td> -->
                                 <td class="price50">INR 5,000</td>
                                 <td class="price50">INR 6,000</td>
                                 <td class="price50">INR 4,000</td>
                                 <td class="price50">INR 5,000</td>
                             </tr>
-                            <tr>
-                                <td><strong>Ph.D. Colloquium</strong></td>
+                            <!-- <tr> -->
+                                <!-- <td><strong>Ph.D. Colloquium</strong></td> -->
+                                <!-- <td class="price50">INR 2,500</td>
                                 <td class="price50">INR 2,500</td>
                                 <td class="price50">INR 2,500</td>
+                                <td class="price50">INR 2,500</td> -->
+                                <!-- <td class="price50">INR 2,500</td>
                                 <td class="price50">INR 2,500</td>
                                 <td class="price50">INR 2,500</td>
-                                <td class="price50">INR 2,500</td>
-                                <td class="price50">INR 2,500</td>
-                                <td class="price50">INR 2,500</td>
-                                <td class="price50">INR 2,500</td>
-                            </tr>
+                                <td class="price50">INR 2,500</td> -->
+                            <!-- </tr> -->
                             <tr>
                                 <td class="section-divider50" colspan="9"><strong>Foreign Delegates</strong></td>
                             </tr>
                             <tr>
                                 <td><strong>Presenter</strong></td>
                                 <td class="price50">USD 300</td>
-                                <td class="price50">USD 400</td>
+                                <!-- <td class="price50">USD 400</td>
                                 <td class="price50">USD 200</td>
                                 <td class="price50">USD 300</td>
-                                <td class="price50">USD 350</td>
+                                <td class="price50">USD 350</td> -->
                                 <td class="price50">USD 450</td>
                                 <td class="price50">USD 250</td>
                                 <td class="price50">USD 350</td>
                             </tr>
                             <tr>
                                 <td><strong>Listener</strong></td>
-                                <td class="price50">USD 150</td>
+                                <!-- <td class="price50">USD 150</td>
                                 <td class="price50">USD 200</td>
                                 <td class="price50">USD 100</td>
-                                <td class="price50">USD 150</td>
+                                <td class="price50">USD 150</td> -->
                                 <td class="price50">USD 200</td>
                                 <td class="price50">USD 250</td>
                                 <td class="price50">USD 150</td>
                                 <td class="price50">USD 200</td>
                             </tr>
-                            <tr>
-                                <td><strong>Ph.D. Colloquium</strong></td>
+                            <!-- <tr> -->
+                                <!-- <td><strong>Ph.D. Colloquium</strong></td> -->
+                                <!-- <td class="price50">USD 100</td>
                                 <td class="price50">USD 100</td>
                                 <td class="price50">USD 100</td>
+                                <td class="price50">USD 100</td> -->
+                                <!-- <td class="price50">USD 100</td>
                                 <td class="price50">USD 100</td>
                                 <td class="price50">USD 100</td>
-                                <td class="price50">USD 100</td>
-                                <td class="price50">USD 100</td>
-                                <td class="price50">USD 100</td>
-                                <td class="price50">USD 100</td>
-                            </tr>
+                                <td class="price50">USD 100</td> -->
+                            <!-- </tr> -->
                         </tbody>
                     </table>
                 </div>
 
                 <div style="text-align: center; margin-top: 3rem;">
-                    <a href="./registrationform.php" class="register-btn50 highlight-animation50">REGISTER NOW</a>
+                    <a href="./close.php" class="register-btn50 highlight-animation50">REGISTER NOW</a>
                 </div>
             </div>
         </div>
@@ -1235,7 +1234,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 

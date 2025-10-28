@@ -468,7 +468,7 @@
                         Rolling Acceptance (Round 4): 31<sup>st</sup> July 2025<br>
                         Final Paper Submission Deadline: 30<sup>th</sup> August 2025<br>
                         Rolling Acceptance (Round 5): 15 <sup>th</sup> September 2025<br>
-                        Early Bird Registration Deadline*: 1 <sup>st</sup> August 2025<br>
+                        Early Bird Registration Deadline*: 1 <sup>st</sup> September 2025<br>
                         Camera Ready Submission: 1<sup>st</sup> October 2025<br>
                         Late Registration (with extra fee) Deadline: 15 <sup>th</sup> October 2025<br><br>
                         <strong>Conference Date: 30<sup>th</sup>-31<sup>st</sup> October 2025</strong><br>

@@ -1,94 +1,93 @@
 <?php
-// test_email.php - Email testing script
-session_start();
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-// Include required files
-require_once 'config/database.php';
-require_once 'classes/EmailNotification.php';
+// Autoload PHPMailer (make sure it's installed via Composer or included manually)
+require 'vendor/autoload.php'; // If using Composer
+// require_once 'classes/PHPMailer/PHPMailer.php'; // Manual alternative
+// require_once 'classes/PHPMailer/SMTP.php';
+// require_once 'classes/PHPMailer/Exception.php';
 
-// Set headers for JSON response
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+
+// Email details
+$to = 'samarthdalela@gmail.com';
+$subject = 'Test Email from UPWIECON';
+$body = 'This is a test email from the registration form.';
+
+// Create PHPMailer instance
+$mail = new PHPMailer(true);
 
 try {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Only POST method allowed');
-    }
+    // SMTP configuration
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com'; // Or smtp.nielit.ac.in if using Google Workspace
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'ieeeconference@nielit.ac.in';      // Your Gmail or Workspace email
+    $mail->Password   = 'kvyw myci rdfd tuja';      // App password (not your main email password)
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
 
-    $action = $_POST['action'] ?? '';
-    
-    if ($action === 'send_test') {
-        // Initialize email notification
-        $emailNotification = new EmailNotification();
-        
-        // Send test email
-        $result = $emailNotification->sendTestEmail();
-        
-        if ($result) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Test email sent successfully'
-            ]);
-        } else {
-            echo json_encode([
-                'success' => false,
-                'error' => 'Failed to send test email'
-            ]);
-        }
-        
-    } elseif ($action === 'check_config') {
-        $emailNotification = new EmailNotification();
-        $config = $emailNotification->checkEmailConfig();
-        
-        echo json_encode([
-            'success' => true,
-            'config' => $config
-        ]);
-        
-    } elseif ($action === 'test_payment_email') {
-        // Test payment confirmation email with mock data
-        $mockRegistration = [
-            'iRegId' => 'TEST_001',
-            'sName' => 'Test User',
-            'sEmail' => 'samarthdalela@gmail.com',
-            'sMobile' => '9876543210',
-            'sCategory' => 'Student',
-            'sIEEEMember' => 'Yes',
-            'sNationality' => 'Indian'
-        ];
-        
-        $mockPayment = [
-            'order_id' => 'UPWIECON2025_TEST_' . time(),
-            'txn_id' => 'TXN_TEST_' . time(),
-            'amount' => 5.00,
-            'status' => 'SUCCESS'
-        ];
-        
-        $emailNotification = new EmailNotification();
-        $result = $emailNotification->sendPaymentConfirmation($mockRegistration, $mockPayment);
-        
-        if ($result) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Test payment confirmation email sent successfully'
-            ]);
-        } else {
-            echo json_encode([
-                'success' => false,
-                'error' => 'Failed to send test payment confirmation email'
-            ]);
-        }
-        
-    } else {
-        throw new Exception('Invalid action specified');
-    }
-    
+    // Sender and recipient
+    $mail->setFrom('ieeeconference@nielit.ac.in', 'UPWIECON 2025');
+    $mail->addAddress($to);
+    $mail->addReplyTo('ieeeconference@nielit.ac.in');
+
+    // Content
+    $mail->isHTML(false); // Change to true for HTML
+    $mail->Subject = $subject;
+    $mail->Body    = $body;
+
+    $mail->send();
+    echo json_encode(['success' => true]);
+
 } catch (Exception $e) {
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-    ]);
+    echo json_encode(['success' => false, 'error' => $mail->ErrorInfo]);
 }
-?>
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Autoload PHPMailer (make sure it's installed via Composer or included manually)
+require 'vendor/autoload.php'; // If using Composer
+// require_once 'classes/PHPMailer/PHPMailer.php'; // Manual alternative
+// require_once 'classes/PHPMailer/SMTP.php';
+// require_once 'classes/PHPMailer/Exception.php';
+
+header('Content-Type: application/json');
+
+// Email details
+$to = 'samarthdalela@gmail.com';
+$subject = 'Test Email from UPWIECON';
+$body = 'This is a test email from the registration form.';
+
+// Create PHPMailer instance
+$mail = new PHPMailer(true);
+
+try {
+    // SMTP configuration
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com'; // Or smtp.nielit.ac.in if using Google Workspace
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'ieeeconference@nielit.ac.in';      // Your Gmail or Workspace email
+    $mail->Password   = 'kvyw myci rdfd tuja';      // App password (not your main email password)
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+
+    // Sender and recipient
+    $mail->setFrom('ieeeconference@nielit.ac.in', 'UPWIECON 2025');
+    $mail->addAddress($to);
+    $mail->addReplyTo('ieeeconference@nielit.ac.in');
+
+    // Content
+    $mail->isHTML(false); // Change to true for HTML
+    $mail->Subject = $subject;
+    $mail->Body    = $body;
+
+    $mail->send();
+    echo json_encode(['success' => true]);
+
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'error' => $mail->ErrorInfo]);
+}
+

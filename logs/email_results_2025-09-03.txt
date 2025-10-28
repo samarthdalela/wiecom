@@ -1,0 +1,6 @@
+2025-09-03 14:23:43 | {"timestamp":"2025-09-03 14:23:43","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-09-03 14:23:43 | {"timestamp":"2025-09-03 14:23:43","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2025_206_1756889572"}
+2025-09-03 14:31:01 | {"timestamp":"2025-09-03 14:31:01","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-09-03 14:31:01 | {"timestamp":"2025-09-03 14:31:01","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment failure email","order_id":"UPWIECON2025_209_1756890038"}
+2025-09-03 14:44:09 | {"timestamp":"2025-09-03 14:44:09","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2025-09-03 14:44:09 | {"timestamp":"2025-09-03 14:44:09","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2025_212_1756890806"}

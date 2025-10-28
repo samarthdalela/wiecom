@@ -20,6 +20,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
         rel="stylesheet">
     <style>
+          :root {
+            --primary-blue: rgba(70, 12, 82, 0.99);
+            --accent-blue: rgba(91, 2, 109, 0.99);
+            --light-blue: rgba(225, 181, 234, 0.99);
+            --gold: #f39c12;
+            --text-dark: #2c3e50;
+        }
         .venue-section {
             background-image: url("images/mountains-dehradun.jpg");
             background-repeat: no-repeat;
@@ -27,6 +34,27 @@
             z-index: 10;
         }
 
+    .pdf-fallback {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .pdf-fallback a {
+      text-decoration: none;
+      color: var(--primary-blue);
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid var(--primary-blue);
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: 0.3s;
+      display: inline-block;
+    }
+
+    .pdf-fallback a:hover {
+      background: var(--primary-blue);
+      color: white;
+    }
         .img-fluid {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(247, 243, 247, 0.99));
 
@@ -526,7 +554,9 @@
             transform: translateY(-3px);
             background: rgba(255, 255, 255, 0.2) !important;
         }
-
+.content-wrapper{
+    width:100vw
+}
         /* IEEE section card */
         .ieee-badge {
             transition: transform 0.3s ease;
@@ -609,11 +639,12 @@
 
         /* new style for content start herer  */
         .speakers-section {
-            background: linear-gradient(135deg, rgba(171, 103, 186, 0.78), rgba(91, 2, 109, 0.99));
-            min-height: 40vh;
+            /* background: linear-gradient(135deg, rgba(171, 103, 186, 0.78), rgba(91, 2, 109, 0.99)); */
+            background:linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            min-height: 30vh;
             position: relative;
             overflow: hidden;
-            margin-top: 30px;
+            /* margin-top: 30px; */
         }
 
         .speakers-section::before {
@@ -629,6 +660,7 @@
         .content-wrapper {
             position: relative;
             z-index: 2;
+
         }
 
         .pulse-animation {
@@ -685,6 +717,55 @@
             animation-delay: 4s;
         }
 
+        .pdf-viewer-section {
+    background: linear-gradient(135deg, var(--light-blue), #fff);
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pdf-container {
+    background: #fff;
+    border: 2px solid var(--gold);
+    border-radius: 15px;
+    max-width: 80vw;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(70, 12, 82, 0.3);
+    padding: 30px;
+    text-align: center;
+  }
+
+  .pdf-title {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .pdf-description {
+    color: var(--text-dark);
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .pdf-frame-wrapper {
+    border: 3px solid var(--accent-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(91, 2, 109, 0.2);
+  }
+
+  .pdf-frame-wrapper iframe {
+    border: none;
+  }
+
+  @media (max-width: 768px) {
+    .pdf-frame-wrapper iframe {
+      height: 400px;
+    }
+  }
 
 
 
@@ -838,22 +919,38 @@
                         <h2 class="display-4 fw-bold text-white mb-3">
                             Conference Schedule
                         </h2>
-                        <p class="lead text-white-50 mb-4 fs-3">
+                      <p class="lead text-white-50 mb-4 fs-3">
 
-                            Will be declared 10 days prior to conference.
+                      Sessions and Timings
                         </p>
+                          <!-- 
                         <div class="d-flex justify-content-center align-items-center">
                             <div class="spinner-grow text-light me-3" role="status" style="width: 1rem; height: 1rem;">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
-                            <span class="text-white-50 fs-6">Stay tuned for exciting announcements</span>
+                            <span class="text-white-50 fs-6">Stay tuned for exciting announcements</span> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <section class="pdf-viewer-section">
+  <div class="pdf-container">
+    <!-- <h2 class="pdf-title">📄 Conference Schedule</h2> -->
+    <p class="pdf-description">
+      View or download the detailed conference schedule below.
+    </p>
 
+    <div class="pdf-frame-wrapper">
+      <iframe src="./Schedule.pdf" width="100%" height="600px"></iframe>
+    </div>
+ <div class="pdf-fallback">
+      <a href="./Schedule.pdf" target="_blank">View / Download PDF</a>
+    </div>
+
+  </div>
+</section>
 
 
     <!-- content end  -->
@@ -939,7 +1036,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 

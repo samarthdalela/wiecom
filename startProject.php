@@ -1438,6 +1438,65 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .sponsor-compact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    padding-top:20px;
+    margin-top: 100px;
+    max-width: 600px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.sponsor-compact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sponsor-label {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.sponsor-logo-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 0.1rem 0.1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sponsor-img {
+    height: 150px;
+    width: auto;
+    max-width: 350px;
+    object-fit: contain;
+    padding:5px;
+}
+
+@media (max-width: 480px) {
+    .sponsor-compact {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+        border-radius: 20px;
+    }
+    
+    .sponsor-img {
+        height: 95px;
+        max-width: 400px;
+    }
+}
+
     </style>
 
 
@@ -1591,6 +1650,13 @@
                         <i class="bi bi-calendar-event me-2"></i>
                         Hosted during UPWIECON 2025 | October 30–31, 2025 | Dehradun, India
                     </div>
+                    <div class="sponsor-compact mt-4">
+    <span class="sponsor-label ">Sponsored By</span>
+    <div class="sponsor-logo-wrapper">
+        <img src="./images/academiQ.jpeg" alt="AcademiQ Logo" class="sponsor-img">
+    </div>
+</div>
+
                 </div>
             </div>
         </section>
@@ -1763,7 +1829,7 @@
                             </ul>
 
                             <div class="alert alert-warning">
-                                <strong><i class="bi bi-calendar-x me-2"></i>Submission Deadline:</strong> August 15,
+                                <strong><i class="bi bi-calendar-x me-2"></i>Submission Deadline:</strong> October 10<sup>th</sup>,
                                 2025
                             </div>
                         </div>
@@ -1826,28 +1892,28 @@
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">15th August 2025</div>
+                            <div class="timeline-date100">10th October 2025</div>
                             <h5>Video Submissions Deadline</h5>
                             <p>Final deadline for Stage 1 submissions</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">30th September 2025</div>
+                            <div class="timeline-date100">19th October 2025</div>
                             <h5>Jury Evaluation & Selection</h5>
                             <p>Expert panel evaluates and selects finalists</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">10th October 2025</div>
+                            <div class="timeline-date100">20th October 2025</div>
                             <h5>Finalist Announcement</h5>
                             <p>Selected teams are notified and announced</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">October 30–31, 2025</div>
+                            <div class="timeline-date100">31st October 2025</div>
                             <h5>Project Display at UPWIECON2025</h5>
                             <p>Final presentations and winner selection</p>
                         </div>
@@ -1863,7 +1929,7 @@
                 <div class="awards-section100 animate-on-scroll100">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="award-item100">
+                            <!-- <div class="award-item100">
                                 <h5><i class="bi bi-trophy-fill me-2" style="color: var(--gold);"></i>Finalist Teams
                                 </h5>
                                 <ul>
@@ -1872,7 +1938,51 @@
                                     <li>Trophy</li>
                                     <li>Interaction with Women Engineers & IEEE Professionals</li>
                                 </ul>
-                            </div>
+                            </div> -->
+                            <div class="award-item100">
+    <h5><i class="bi bi-trophy-fill me-2" style="color: var(--gold);"></i>Finalist Teams</h5>
+<!-- Winning Rewards Section - Compact -->
+<!-- <div class="award-item100"> -->
+    
+    
+    <!-- </div> -->
+    
+
+<ul>
+        <li>Certificates of Excellence</li>
+        <li>IEEE-branded merchandise</li>
+        <li>Trophy</li>
+        <li>Interaction with Women Engineers & IEEE Professionals</li>
+    </ul>
+    <h5><i class="bi bi-trophy-fill me-2" style="color: var(--gold);"></i>Winning Rewards</h5>
+    <div class="row g-2 mb-3">
+        <div class="col-4">
+            <div class="badge bg-warning text-dark p-3 w-100">
+                <div class="fw-bold">1st</div>
+                <div>₹20,000</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="badge bg-secondary p-3 w-100">
+                <div class="fw-bold">2nd</div>
+                <div>₹15,000</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="badge p-3 w-100" style="background-color: #cd7f32; color: white;">
+                <div class="fw-bold">3rd</div>
+                <div>₹10,000</div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info text-center mb-0">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Both Categories:</strong> 
+    </div>
+</div>
+
+
+                            
                         </div>
                         <div class="col-md-4">
                             <div class="award-item100">
@@ -2121,7 +2231,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 

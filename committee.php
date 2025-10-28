@@ -1320,13 +1320,13 @@
                                 <div class="member-affiliation">MMMUT, Gorakhpur</div>
                             </div>
                         </div>
-                        <div class="member-item">
+                        <!-- <div class="member-item">
                             <div class="member-icon">GB</div>
                             <div class="member-info">
                                 <div class="member-name">Dr. Garima Bhardwaj</div>
                                 <div class="member-affiliation">Amity University, Greater Noida Campus (Allied)</div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="member-item">
                             <div class="member-icon">VV</div>
                             <div class="member-info">
@@ -1733,21 +1733,28 @@
                             </div>
                         </div>
                     
-                        <div class="member-item">
+                        <!-- <div class="member-item">
                             <div class="member-icon">DY</div>
                             <div class="member-info">
                                 <div class="member-name">Prof. Divakar Yadav</div>
                                 <div class="member-affiliation">IGNOU, Delhi</div>
                             </div>
-                        </div>
+                        </div> -->
                     
-                        <div class="member-item">
+                        <!-- <div class="member-item">
                             <div class="member-icon">DV</div>
                             <div class="member-info">
                                 <div class="member-name">Prof. Deo Prakash Vidyarthi</div>
                                 <div class="member-affiliation">JNU, Delhi</div>
                             </div>
-                        </div>
+                        </div> -->
+                        <div class="member-item">
+                            <div class="member-icon">NG</div>
+                            <div class="member-info">
+                                <div class="member-name">Dr. Neha Gupta</div>
+                                <div class="member-affiliation">GNIOT Group of Institutions</div>
+                            </div>
+    </div>
                     </div>
                     <div class="col-md-4">
                         <div class="member-item">
@@ -1835,6 +1842,9 @@
                                 <div class="member-affiliation">IET, Lucknow</div>
                             </div>
                         </div>
+                        
+
+
                     </div>
                     <div class="col-md-4">
                         <div class="member-item">
@@ -1921,7 +1931,11 @@
                                 <div class="member-name">Dr. Avinash Kumar Pandey</div>
                                 <div class="member-affiliation">IIIT, Lucknow</div>
                             </div>
+         
                         </div>
+
+
+               
                     </div>
                 </div>
             </div>
@@ -2664,13 +2678,13 @@
                                 <div class="member-affiliation">Principal Private Secretary, NIELIT</div>
                             </div>
                         </div>
-                        <div class="member-item">
+                        <!-- <div class="member-item">
                             <div class="member-icon">PC</div>
                             <div class="member-info">
                                 <div class="member-name">Dr. Prateek Chaturvedi</div>
                                 <div class="member-affiliation">Amity University</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="col-md-6">
                         <div class="member-item">
@@ -3465,7 +3479,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 
