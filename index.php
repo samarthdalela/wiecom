@@ -1016,6 +1016,299 @@
             margin-bottom: 60px;
             font-size: 1.2rem;
         }
+        
+        /* Sponsor Section Styles */
+.sponsor-section {
+    width: 100%;
+    max-width: 100vw;
+    background: rgba(100, 61, 108, 0.56);
+    border-radius: 20px;
+        margin-left: 6px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    z-index: 100;
+    border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.sponsor-text-section {
+    width: 25%;
+    background: linear-gradient(135deg, rgba(39, 5, 46, 0.53) 0%, rgba(91, 2, 109, 0.8) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sponsor-text-section::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    background: rgba(131, 75, 144, 0.53);
+    opacity: 0.1;
+    border-radius: 50%;
+    top: -50px;
+    right: -50px;
+    animation: sponsor-float 6s ease-in-out infinite;
+}
+
+@keyframes sponsor-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
+}
+
+.sponsor-text-section h2 {
+    color: white;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+    line-height: 1.2;
+}
+
+.sponsor-subtitle {
+    color: rgba(232, 217, 235, 0.99);
+    font-size: 1em;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.sponsor-decorative-line {
+    width: 80px;
+    height: 4px;
+    background: rgba(171, 103, 186, 0.5);
+    margin: 5px 0;
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.sponsor-logo-section {
+    width: 100%;
+    background: rgba(202, 175, 209, 0.14);
+    padding: 30px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.sponsor-logo-slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.sponsor-logo-track {
+    display: flex;
+    animation: sponsor-scroll 20s linear infinite;
+    gap: 80px;
+}
+
+.sponsor-logo-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes sponsor-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.sponsor-logo-item {
+    flex-shrink: 0;
+    width: 220px;
+    height: 140px;
+    background: white;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0 5px 20px rgba(70, 12, 82, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.sponsor-logo-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(171, 103, 186, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.sponsor-logo-item:hover::before {
+    left: 100%;
+}
+
+.sponsor-logo-item:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(70, 12, 82, 0.2);
+    border: 2px solid rgba(171, 103, 186, 0.78);
+}
+
+.sponsor-logo-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* filter: grayscale(100%); */
+    transition: filter 0.3s ease;
+}
+
+.sponsor-logo-item:hover img {
+    filter: grayscale(0%);
+}
+
+/* Placeholder for logos */
+.sponsor-logo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: rgba(70, 12, 82, 0.99);
+    text-align: center;
+}
+
+/* Gradient fade effects on sides */
+.sponsor-logo-slider::before,
+.sponsor-logo-slider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.sponsor-logo-slider::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(232, 217, 235, 0.99), transparent);
+}
+
+.sponsor-logo-slider::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(232, 217, 235, 0.99), transparent);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sponsor-section {
+        flex-direction: column;
+    }
+
+    .sponsor-text-section,
+    .sponsor-logo-section {
+        width: 100%;
+    }
+
+    .sponsor-text-section {
+        padding: 10px 5px;
+    }
+
+    .sponsor-text-section h2 {
+        font-size: 2em;
+    }
+
+    .sponsor-logo-section {
+        padding: 50px 30px;
+    }
+
+    .sponsor-logo-track {
+        gap: 60px;
+    }
+
+    .sponsor-logo-item {
+        width: 180px;
+        height: 110px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sponsor-text-section h2 {
+        font-size: 1.8em;
+    }
+    .responsive{
+        margin-left: 12px;
+    }
+    .sponsor-subtitle {
+        font-size: 0.9em;
+    }
+
+    .sponsor-logo-section {
+        padding: 40px 20px;
+    }
+
+    .sponsor-logo-track {
+        gap: 40px;
+    }
+
+    .sponsor-logo-item {
+        width: 150px;
+        height: 100px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsor-section {
+        border-radius: 15px;
+    }
+
+    .sponsor-text-section {
+        padding: 10px 5px;
+    }
+
+    .sponsor-text-section h2 {
+        font-size: 1.5em;
+    }
+
+    .sponsor-decorative-line {
+        width: 60px;
+    }
+
+    .sponsor-logo-section {
+        padding: 30px 15px;
+    }
+
+    .sponsor-logo-track {
+        gap: 30px;
+    }
+
+    .sponsor-logo-item {
+        width: 120px;
+        height: 80px;
+        padding: 10px;
+    }
+
+    .sponsor-logo-placeholder {
+        font-size: 0.9em;
+    }
+}
     </style>
 
 
@@ -1166,9 +1459,9 @@
             </div>
         </div>
 
-        <div class="container-fluid position-relative"
-            style="z-index: 2; min-height: 100vh; display: flex; align-items: center;">
-            <div class="row w-100 justify-content-center text-center textColour">
+        <div class="container-fluid position-relative responsive"
+            style="z-index: 2; min-height: 100vh; display: flex; align-items: center; ">
+            <div class="row w-100 justify-content-center text-center textColour ">
                 <div class="col-lg-10 col-xl-8">
                     <div class="hero-content animate__animated animate__fadeInUp">
                         <div class="conference-badge mb-4">
@@ -1233,6 +1526,63 @@
                         </div>
                     </div>
                 </div>
+                      
+                <center>
+                            <div class="sponsor-section">
+            <!-- Text Section (1/4) -->
+            <div class="sponsor-text-section">
+                <h2>Our Sponsors</h2>
+                <div class="sponsor-decorative-line"></div>
+                <!-- <p class="sponsor-subtitle">Trusted Partners Supporting Our Vision</p> -->
+            </div>
+        
+            <!-- Logo Section (3/4) -->
+            <div class="sponsor-logo-section">
+                <div class="sponsor-logo-slider">
+                    <div class="sponsor-logo-track">
+                        <!-- First set of logos -->
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder"><img src="./images/Msbte.png" alt="Sponsor 1"></div>
+                            <!-- Replace with: <img src="logo1.png" alt="Sponsor 1"> -->
+                        </div>
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder"><img src="./images/2.png" alt="Sponsor 2"></div>
+                            <!-- Replace with: <img src="logo2.png" alt="Sponsor 2"> -->
+                        </div>
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder"><img src="./images/anrf.png" alt="Sponsor 3" width='200px' height='200px'></div>
+                            <!-- Replace with: <img src="logo3.png" alt="Sponsor 3"> -->
+                        </div>
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder"><img src="./images/powergrid.png" alt="Sponsor 4"></div>
+                            <!-- Replace with: <img src="logo3.png" alt="Sponsor 3"> -->
+                        </div>
+                        
+                        <!-- Duplicate set for seamless loop -->
+                              <!-- First set of logos -->
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder"><img src="./images/Msbte.png" alt="Sponsor 1"></div>
+                            <!-- Replace with: <img src="logo1.png" alt="Sponsor 1"> -->
+                        </div>
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder"><img src="./images/2.png" alt="Sponsor 2"></div>
+                            <!-- Replace with: <img src="logo2.png" alt="Sponsor 2"> -->
+                        </div>
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder" style='margin:0px;'><img src="./images/anrf.png" alt="Sponsor 3" width='200px' height='200px'></div>
+                            <!-- Replace with: <img src="logo3.png" alt="Sponsor 3"> -->
+                        </div>
+                        <div class="sponsor-logo-item">
+                            <div class="sponsor-logo-placeholder"><img src="./images/powergrid.png" alt="Sponsor 4"></div>
+                            <!-- Replace with: <img src="logo3.png" alt="Sponsor 3"> -->
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                </center>
             </div>
         </div>
 

@@ -1320,13 +1320,13 @@
                                 <div class="member-affiliation">MMMUT, Gorakhpur</div>
                             </div>
                         </div>
-                        <div class="member-item">
+                        <!-- <div class="member-item">
                             <div class="member-icon">GB</div>
                             <div class="member-info">
                                 <div class="member-name">Dr. Garima Bhardwaj</div>
                                 <div class="member-affiliation">Amity University, Greater Noida Campus (Allied)</div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="member-item">
                             <div class="member-icon">VV</div>
                             <div class="member-info">
@@ -2678,13 +2678,13 @@
                                 <div class="member-affiliation">Principal Private Secretary, NIELIT</div>
                             </div>
                         </div>
-                        <div class="member-item">
+                        <!-- <div class="member-item">
                             <div class="member-icon">PC</div>
                             <div class="member-info">
                                 <div class="member-name">Dr. Prateek Chaturvedi</div>
                                 <div class="member-affiliation">Amity University</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="col-md-6">
                         <div class="member-item">

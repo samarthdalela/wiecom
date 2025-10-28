@@ -879,6 +879,7 @@
         <div class="container">
             <h1 class="display-4 mb-3"><i class="fas fa-map-marker-alt me-3"></i>VENUE INFORMATION</h1>
             <h2 class="h3 mb-0">Jaypee Residency Manor</h2>
+            <p style='padding:3px'>Road Barlow Ganj, Mussoorie, Uttarakhand 248122, India</p>
         </div>
     </div>
 
