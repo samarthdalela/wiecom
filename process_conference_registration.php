@@ -36,6 +36,8 @@ try {
         $email = ValidationHelper::sanitizeInput($_POST['txtEmail']);
         $mobile = ValidationHelper::sanitizeInput($_POST['txtMobile']);
         $category = ValidationHelper::sanitizeInput($_POST['ddlCategory']);
+        $category_combined = isset($_POST['category_combined']) ? ValidationHelper::sanitizeInput($_POST['category_combined']) : '';
+
         $ieeeeMember = ValidationHelper::sanitizeInput($_POST['rdbIEEEMember']);
         $nationality = ValidationHelper::sanitizeInput($_POST['rdbNationality']);
         $earlyBird = ValidationHelper::sanitizeInput($_POST['rdbEarlyBird']);
@@ -74,18 +76,20 @@ try {
         }
         
         // Validate IEEE ID if IEEE member is selected
-        if ($ieeeeMember == '1') {
-            if (empty($ieeeId)) {
-                $errors[] = "IEEE Member ID is required for IEEE members";
-            } elseif (!preg_match('/^[0-9]{8}$/', $ieeeId)) {
-                $errors[] = "IEEE Member ID must be exactly 8 digits";
-            }
-        }
+        //if ($ieeeeMember == '1') {
+        //    if (empty($ieeeId)) {
+        //        $errors[] = "IEEE Member ID is required for IEEE members";
+        //    } elseif (!preg_match('/^[0-9]{8}$/', $ieeeId)) {
+        //        $errors[] = "IEEE Member ID must be exactly 8 digits";
+        //    }
+        //}
         
-        // Check for duplicate email registration
+        /////Check for duplicate email registration
         $existingUser = $registration->getRegistrationByEmail($email);
         if ($existingUser) {
-            $errors[] = "A registration with this email address already exists. Registration ID: " . $existingUser['iRegId'];
+            // $errors[] = "Successful registration with this email address already exists. Registration ID: " . $existingUser['iRegId'];
+            $errors[] = "You have already registered successfully with this email. Your Registration ID is: " . $existingUser['iRegId'];
+
         }
         
         if (!empty($errors)) {
@@ -97,12 +101,12 @@ try {
         
         // Prepare data for registration
         $cleanMobile = ValidationHelper::cleanMobileNumber($mobile);
-        $categoryText = '';
-        switch($category) {
-            case '1': $categoryText = 'Professional/Industry'; break;
-            case '2': $categoryText = 'Academic/Faculty'; break;
-            case '3': $categoryText = 'Student'; break;
-        }
+        $categoryText = $category_combined;
+        // switch($category) {
+        //     case '1': $categoryText = 'Professional/Industry'; break;
+        //     case '2': $categoryText = 'Academic/Faculty'; break;
+        //     case '3': $categoryText = 'Student'; break;
+        // }
         
         $ieeeeMemberText = ($ieeeeMember == '1') ? 'Yes' : 'No';
         $nationalityText = ($nationality == '1') ? 'Indian' : 'Foreign';

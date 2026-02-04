@@ -1,5 +1,6 @@
 <?php
-  echo <<<HTML
+include 'header.php';
+echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +26,8 @@
         }
 
         .venue-section {
-            background-image: url("images/mountains-dehradun.jpg");
+            background-image: url("images/caption.jpg");
+            /* background-image: url("images/nd.jpg"); */
             background-repeat: no-repeat;
             background-size: cover;
             z-index: 10;
@@ -532,7 +534,7 @@
         /* IEEE section card */
         .ieee-badge {
             transition: transform 0.3s ease;
-
+/* display:none */
         }
 
         .badge {
@@ -1165,131 +1167,7 @@
 </head>
 
 <body>
-    <header id="header" class="header">
-        <div class=" ">
-            <!-- Top Row: Three Logos -->
-            <div class="logos-row py-3">
-                <div class="logos-section">
-                    <div class="logo-container">
-                        <a class="navbar-brand" href="Default.php">
-                            <img src="images/logo1.png" alt="NIELIT Logo" class="logo-img img-fluid">
-                        </a>
-                    </div>
-                    <div class="logo-container">
-                        <a class="navbar-brand" href="Default.php">
-                            <img src="images/ieee_up.jpg" alt="UPWIECON 2025 Logo" class="logo-img img-fluid">
-                        </a>
-                    </div>
-                    <div class="logo-container">
-                        <a class="navbar-brand" href="Default.php">
-                            <img src="images/ieee_logo.jpg" alt="Conference Logo" class="logo-img img-fluid">
-                        </a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Bottom Row: Navigation Menu -->
-            <nav class="navbar navbar-expand-lg navbar-light py-2 border-top border-light border-opacity-25">
-                <!-- Mobile menu button -->
-                <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Navigation menu -->
-                <div class="collapse navbar-collapse" id="navbarNavDropdown" style="zoom: 80%;">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./Default.php" aria-label="Home">
-                                <i class="bi bi-house-door "></i>
-                                HOME
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./papersub.php" aria-label="Paper Submission">
-                                <i class="bi bi-file-earmark-text "></i>
-                                SUBMISSION
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./call-for-special-session.php"
-                                aria-label="Call for Special Session">
-                                <i class="bi bi-megaphone "></i>
-                                SPECIAL SESSION
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./speakers.php" aria-label="Speakers">
-                                <i class="bi bi-person-badge "></i>
-                                SPEAKERS
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./committee.php" aria-label="Committees">
-                                <i class="bi bi-people "></i>
-                                COMMITTEES
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./venue.php" aria-label="Venue">
-                                <i class="bi bi-geo-alt "></i>
-                                VENUE
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./conference-schedule.php" aria-label="Schedule">
-                                <i class="bi bi-calendar-event "></i>
-                                SCHEDULE
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./registration.php" aria-label="Registration">
-                                <i class="bi bi-person-plus "></i>
-                                REGISTRATION
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./callforpaper.php" aria-label="Call for Papers">
-                                <i class="bi bi-journal-text"></i>
-                                CALL FOR PAPER
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="https://www.nielit.ac.in/upwiecon2025/proceedings.php"
-                                aria-label="Proceedings">
-                                <i class="bi bi-book me-1"></i>PROCEEDINGS
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.nielit.ac.in/upwiecon2025/gallery.php"
-                                aria-label="Gallery">
-                                <i class="bi bi-images me-1"></i>GALLERY
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.nielit.ac.in/upwiecon2025/awards.php"
-                                aria-label="Awards">
-                                <i class="bi bi-award me-1"></i>AWARDS
-                            </a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="./contact.php" aria-label="Contact">
-                                <i class="bi bi-envelope"></i>
-                                CONTACT
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./startProject.php" aria-label="Call for Papers">
-                                <i class="bi bi-star-fill"></i>
-                                STAR Project Competition
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
 
     <!-- body start  -->
 
@@ -1448,7 +1326,22 @@
         <i class="bi bi-envelope me-2"></i>For any queries regarding submission, please contact the organizing team
     </p>
 </div> -->
-        <div class="body5">
+
+<div class="text-center py-5">
+        <i class="bi bi-calendar-event fa-4x mb-4" style="color: var(--primary-blue);"></i>
+        <!-- <h3 class="pdf-title mb-3">Conference Schedule</h3> -->
+        <p class="pdf-description fs-5">
+            <i class="bi bi-clock-history me-2"></i>
+            <strong>Will be available soon</strong>
+        </p>
+        <div class="d-flex justify-content-center align-items-center mt-4">
+            <div class="spinner-grow me-3" style="color: var(--accent-blue);" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <span style="color: var(--text-dark);">Stay tuned for updates</span>
+        </div>
+    </div>
+        <div class="body5" style="display:none">
             <div class="container5">
                 <div class="header5">
                     <!-- <h1 class="main-title5">Special Sessions</h1> -->
@@ -1851,9 +1744,9 @@
 </div>
 <!-- body end -->
 <!-- Venue & Important Dates Section -->
-<section class="venue-section py-5">
+<!-- <section class="venue-section py-5">
     <section class="py-5"
-        style="background: linear-gradient(135deg, rgba(171, 103, 186, 0.418), rgba(91, 2, 109, 0.39)); color: white;">
+        style="background: linear-gradient(135deg, rgba(171, 103, 186, 0.518), rgba(91, 2, 109, 0.49)); color: white;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
@@ -1932,7 +1825,7 @@
                                 <div class="col-md-6">
                                     <div class="date-card highlight-cardf rounded-3 p-4">
                                         <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                        <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                        <p class="mb-0">1<sup>st</sup> September 2025</p>
                                     </div>
                                 </div>
 
@@ -1967,160 +1860,10 @@
             </div>
         </div>
     </section>
-</section>
+</section> -->
 
 <!-- Footer -->
-<footer class="footer position-relative overflow-hidden">
-    <div class="position-absolute w-100 h-80" style="opacity: 0.1;">
-        <div class="position-absolute rounded-circle"
-            style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%); top: -150px; right: -150px; animation: float 6s ease-in-out infinite;">
-        </div>
-        <div class="position-absolute rounded-circle"
-            style="width: 200px; height: 200px; background: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, transparent 70%); bottom: -100px; left: -100px; animation: float 8s ease-in-out infinite reverse;">
-        </div>
-    </div>
 
-    <div class="container position-relative py-3">
-        <div class="row g-2">
-            <!-- Navigation Menu Section -->
-            <div class="col-lg-6">
-                <div class="h-100 p-3 rounded-4 position-relative"
-                    style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="p-3 rounded-3 me-3" style="background: linear-gradient(45deg, #3b82f6, #8b5cf6);">
-                            <i class="bi bi-grid-3x3-gap text-white fs-5"></i>
-                        </div>
-                        <h4 class="mb-0 text-white fw-bold">Quick Navigation</h4>
-                    </div>
-
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <a href="./Default.php"
-                                class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none transition-all"
-                                style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #e2e8f0;"
-                                onmouseover="this.style.background='rgba(59, 130, 246, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(59, 130, 246, 0.3)';"
-                                onmouseout="this.style.background='rgba(59, 130, 246, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                <i class="bi bi-house-door me-2 fs-5" style="color: #3b82f6;"></i>
-                                <span class="fw-medium">Home</span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="callforpaper.php"
-                                class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none"
-                                style="background: rgba(147, 51, 234, 0.1); border: 1px solid rgba(147, 51, 234, 0.2); color: #e2e8f0;"
-                                onmouseover="this.style.background='rgba(147, 51, 234, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(147, 51, 234, 0.3)';"
-                                onmouseout="this.style.background='rgba(147, 51, 234, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                <i class="bi bi-file-earmark-text me-2 fs-5" style="color: #9333ea;"></i>
-                                <span class="fw-medium">Call for Paper</span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="registration.php"
-                                class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none"
-                                style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #e2e8f0;"
-                                onmouseover="this.style.background='rgba(16, 185, 129, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(16, 185, 129, 0.3)';"
-                                onmouseout="this.style.background='rgba(16, 185, 129, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                <i class="bi bi-person-plus me-2 fs-5" style="color: #10b981;"></i>
-                                <span class="fw-medium">Registration</span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="contact.php"
-                                class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none"
-                                style="background: rgba(245, 101, 101, 0.1); border: 1px solid rgba(245, 101, 101, 0.2); color: #e2e8f0;"
-                                onmouseover="this.style.background='rgba(245, 101, 101, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(245, 101, 101, 0.3)';"
-                                onmouseout="this.style.background='rgba(245, 101, 101, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                <i class="bi bi-envelope me-2 fs-5" style="color: #f56565;"></i>
-                                <span class="fw-medium">Contact</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Map Section -->
-            <div class="col-lg-6">
-                <div class="h-100 p-3 rounded-4 position-relative"
-                    style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="p-3 rounded-3 me-3" style="background: linear-gradient(45deg, #f56565, #ff8a65);">
-                            <i class="bi bi-geo-alt text-white fs-5"></i>
-                        </div>
-                        <h4 class="mb-0 text-white fw-bold">Find Us Here</h4>
-                    </div>
-
-                    <div class="map-container position-relative rounded-4 overflow-hidden mb-2"
-                        style="box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
-                        <!-- <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3443.997890382516!2d78.03416731512442!3d30.316495481798926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092919f2b00001%3A0x1234567890abcdef!2sNIELIT%20Dehradun!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
-                                width="100%" height="200" style="border:0; filter: grayscale(0.2) contrast(1.1);"
-                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                            </iframe> -->
-                        <iframe width="100%" height="300" frameborder="0"
-                            style="border:0; filter: grayscale(0.2) contrast(1.1);"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6879.814712315349!2d78.08024279927668!3d30.43872809885764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3908d0c4b72e7cb7%3A0xa5142eb25ce3c0f4!2sJaypee%20Residency%20Manor!5e0!3m2!1sen!2sin!4v1748511027150!5m2!1sen!2sin"
-                            allowfullscreen>
-
-                        </iframe>
-                        <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.2482095580162!2d77.99284937556311!3d30.286994774802288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092b87b417273f%3A0xfb79cf6738499266!2sNIELIT%20Dehradun!5e0!3m2!1sen!2sin!4v1748493195158!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
-
-                        <div class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none"
-                            style="background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));">
-                        </div>
-                    </div>
-
-                    <div class="location-info p-2 rounded-3" style="background: rgba(255, 255, 255, 0.08);">
-                        <div class="d-flex align-items-start mb-1">
-                            <i class="bi bi-building me-2 mt-1" style="color: #3b82f6;"></i>
-                            <div>
-                                <p class="mb-1 text-white fw-medium">Jaypee Residency Manor</p>
-                                <p class="mb-0 small" style="color: #cbd5e1;">
-                                    <i class="bi bi-pin-map me-1" style="color: #f56565;"></i>
-                                    Road, Barlow Ganj, Mussoorie, Uttarakhand 248122
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Copyright -->
-        <div class="row mt-3">
-            <div class="col-12">
-                <div class="text-center pt-3" style="border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div class="d-inline-flex align-items-center px-4 py-2 rounded-pill"
-                        style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);">
-                        <i class="bi bi-c-circle me-2" style="color: #3b82f6;"></i>
-                        <span style="color: #cbd5e1;">Copyright 2025 NIELIT. All Rights Reserved</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        .nav-link-modern:hover {
-            transform: translateY(-2px);
-        }
-
-        .transition-all {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-    </style>
-</footer>
 
 <!-- Back to Top Button -->
 <button class="btn btn-warning position-fixed bottom-0 end-0 m-4 rounded-circle p-3 shadow-lg" id="backToTop"
@@ -2221,4 +1964,6 @@
 
 HTML
 
-?>
+    ?>
+<?php include 'subFooter.php'; ?>
+<?php include 'footer.php'; ?>

@@ -1,0 +1,6 @@
+       .venue-section {
+           background-image: url("images/caption.jpg");
+           background-repeat: no-repeat;
+           background-size: cover;
+           z-index: 10;
+       }

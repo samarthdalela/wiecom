@@ -1,5 +1,6 @@
 <?php
-  echo <<<HTML
+include "header.php";
+echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,8 +21,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
         rel="stylesheet">
     <style>
-        .venue-section {
-            background-image: url("images/mountains-dehradun.jpg");
+       .venue-section {
+            background-image: url("images/caption.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             z-index: 10;
@@ -727,131 +728,7 @@
 </head>
 
 <body>
-    <header id="header" class="header">
-        <div class=" ">
-            <!-- Top Row: Three Logos -->
-            <div class="logos-row py-3">
-                <div class="logos-section">
-                    <div class="logo-container">
-                        <a class="navbar-brand" href="Default.php">
-                            <img src="images/logo1.png" alt="NIELIT Logo" class="logo-img img-fluid">
-                        </a>
-                    </div>
-                    <div class="logo-container">
-                        <a class="navbar-brand" href="Default.php">
-                            <img src="images/ieee_up.jpg" alt="UPWIECON 2025 Logo" class="logo-img img-fluid">
-                        </a>
-                    </div>
-                    <div class="logo-container">
-                        <a class="navbar-brand" href="Default.php">
-                            <img src="images/ieee_logo.jpg" alt="Conference Logo" class="logo-img img-fluid">
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Row: Navigation Menu -->
-            <nav class="navbar navbar-expand-lg navbar-light py-2 border-top border-light border-opacity-25">
-                <!-- Mobile menu button -->
-                <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Navigation menu -->
-                <div class="collapse navbar-collapse" id="navbarNavDropdown" style="zoom: 80%;">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./Default.php" aria-label="Home">
-                                <i class="bi bi-house-door "></i>
-                                HOME
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./papersub.php" aria-label="Paper Submission">
-                                <i class="bi bi-file-earmark-text "></i>
-                                SUBMISSION
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./call-for-special-session.php"
-                                aria-label="Call for Special Session">
-                                <i class="bi bi-megaphone "></i>
-                                SPECIAL SESSION
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./speakers.php" aria-label="Speakers">
-                                <i class="bi bi-person-badge "></i>
-                                SPEAKERS
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./committee.php" aria-label="Committees">
-                                <i class="bi bi-people "></i>
-                                COMMITTEES
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./venue.php" aria-label="Venue">
-                                <i class="bi bi-geo-alt "></i>
-                                VENUE
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./conference-schedule.php" aria-label="Schedule">
-                                <i class="bi bi-calendar-event "></i>
-                                SCHEDULE
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./registration.php" aria-label="Registration">
-                                <i class="bi bi-person-plus "></i>
-                                REGISTRATION
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./callforpaper.php" aria-label="Call for Papers">
-                                <i class="bi bi-journal-text"></i>
-                                CALL FOR PAPER
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="https://www.nielit.ac.in/upwiecon2025/proceedings.php"
-                                aria-label="Proceedings">
-                                <i class="bi bi-book me-1"></i>PROCEEDINGS
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.nielit.ac.in/upwiecon2025/gallery.php"
-                                aria-label="Gallery">
-                                <i class="bi bi-images me-1"></i>GALLERY
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.nielit.ac.in/upwiecon2025/awards.php"
-                                aria-label="Awards">
-                                <i class="bi bi-award me-1"></i>AWARDS
-                            </a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="./contact.php" aria-label="Contact">
-                                <i class="bi bi-envelope"></i>
-                                CONTACT
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./startProject.php" aria-label="Call for Papers">
-                                <i class="bi bi-star-fill"></i>
-                                STAR Project Competition
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
+   
     <!-- body   -->
     <section class="committee-hero">
         <div class="container">
@@ -859,7 +736,7 @@
                 <div class="col-12 text-center">
                     <h1 class="display-4 fw-bold mb-3">
                         <i class="fas fa-users me-3"></i>
-                        UPWIECON-2025
+                        UPWIECON 2026
                     </h1>
                     <!-- <p class="lead mb-4">Instructions to Authors</p> -->
                     <!-- <div class="d-flex justify-content-center gap-4 flex-wrap">
@@ -899,7 +776,7 @@
                     <span class="bg-warning bg-opacity-25 px-2 py-1 rounded fw-semibold">Manuscripts</span>,
                     which are here referred to as submissions/articles/papers are substantial pieces of academic
                     writing.
-                    Manuscripts for UPWIECON-2025 will ONLY be accepted in electronic format through Microsoft CMT
+                    Manuscripts for UPWiECon 2026 will ONLY be accepted in electronic format through Microsoft CMT
                     online submission system.
                 </p>
 
@@ -925,18 +802,18 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex align-items-start">
                         <i class="bi bi-check-circle-fill text-primary me-3 mt-1"></i>
-                        <span>Authors should only submit originally written, unpublished work to UPWIECON 2025.</span>
+                        <span>Authors should only submit originally written, unpublished work to UPWIECON 2026.</span>
                     </li>
                     <li class="list-group-item d-flex align-items-start">
                         <i class="bi bi-check-circle-fill text-primary me-3 mt-1"></i>
                         <span>Submissions should strictly follow the recommended
                             <a href="https://www.ieee.org/content/dam/ieee-org/ieee/web/org/conferences/conference-template-a4.docx"
-                                target="_blank" class="text-decoration-none">IEEE Conference Template</a>.
+                                target="_blank" class="text-decoration-none">Conference Template</a><span style="display:none;"> IEEE</span>.
                         </span>
                     </li>
                     <li class="list-group-item d-flex align-items-start">
                         <i class="bi bi-check-circle-fill text-primary me-3 mt-1"></i>
-                        <span>All references must follow the IEEE format of citation.</span>
+                        <span>All references must follow the <span style="display:none;">IEEE </span>format of citation.</span>
                     </li>
                     <li class="list-group-item d-flex align-items-start">
                         <i class="bi bi-check-circle-fill text-primary me-3 mt-1"></i>
@@ -979,7 +856,7 @@
         <!-- Note to Authors -->
         <div class="alert alert-info borderNW" role="alert">
             <h4 class="alert-heading"><i class="bi bi-info-circle me-2"></i>Note to Authors</h4>
-            <p class="mb-0">Papers submitted to UPWIECON 2025 need to include a <strong>quantitative discussion</strong>
+            <p class="mb-0">Papers submitted to UPWiECon 2026 need to include a <strong>quantitative discussion</strong>
                 related to why and how the proposed/analysed/discussed technology, concept, process etc. is a
                 significant technical improvement in its area.</p>
         </div>
@@ -990,7 +867,7 @@
             <p class="mb-0">Papers that are principally cataloguing qualitative or managerial aspects like impact,
                 effect, case-study, rise, journey, study etc. will be insufficient to be accepted and are outside our
                 scope. Next to this, submissions focusing only on policy/decision making or economic aspects are
-                unsuitable to be accepted in UPWIECON 2025.</p>
+                unsuitable to be accepted in UPWiECon 2026.</p>
         </div>
 
         <!-- Types of Articles -->
@@ -999,8 +876,8 @@
                 <h2 class="h4 mb-0"><i class="bi bi-journal-text me-2"></i>Types of Articles</h2>
             </div>
             <div class="card-body">
-                <p class="mb-4">UPWIECON 2025 authors can select from a variety of approaches for articles that fall
-                    within the scope of this conference and IEEE. These article types include, but are not limited to:
+                <p class="mb-4">UPWiECon 2026 authors can select from a variety of approaches for articles that fall
+                    within the scope of this conference<span style="display:none;"> and IEEE</span>. These article types include, but are not limited to:
                 </p>
 
                 <div class="row g-4">
@@ -1016,7 +893,7 @@
                                     questions, limitations, definition of terms, referred or related work, methodology,
                                     technically in-depth investigation, details of experimental analysis, result and/or
                                     conclusion, further scope of work, references on the topic within the scope of
-                                    UPWIECON 2025 and IEEE. This may include additional materials, including figures,
+                                    UPWiECon 2026<span style="display:none;"> and IEEE</span>. This may include additional materials, including figures,
                                     tables, datasets, pictorial/graphical representations, and videos links.</p>
                             </div>
                         </div>
@@ -1029,7 +906,7 @@
                             </div>
                             <div class="card-body ">
                                 <p class="card-text text-justify">A thorough compilation and succinct summary of
-                                    research performed on the topic within the scope of UPWIECON 2025 and IEEE, in the
+                                    research performed on the topic within the scope of UPWiECon 2026<span style="display:none;"> and IEEE</span>, in the
                                     form of an electronic manuscript, which may include abstract, key words,
                                     introduction, problem statement or justification, objective, approach, significance,
                                     research questions, limitations, definition of terms, referred or related work,
@@ -1059,7 +936,7 @@
                     that have been published or accepted for publication. Personal communications and unpublished works
                     should only be mentioned in the text. Do not use footnotes or endnotes as a substitute for a
                     reference list. The entries in the list should be numbered consecutively and cited in numerical
-                    order, and citations in the text should be identified in IEEE referencing format.</p>
+                    order, and citations in the text should be identified in <span style="display:none;">IEEE </span>referencing format.</p>
             </div>
         </div>
 
@@ -1080,8 +957,8 @@
                         <div id="finalManuscript" class="accordion-collapse collapse show"
                             data-bs-parent="#acceptanceAccordion">
                             <div class="accordion-body text-justify">
-                                After the confirmation of the acceptance of the manuscript from the end of UPWIECON
-                                2025, author(s) will have to submit the final version of the manuscript which must
+                                After the confirmation of the acceptance of the manuscript from the end of UPWiECon
+                                2026, author(s) will have to submit the final version of the manuscript which must
                                 include the suggestions/changes as per instructions/improvement mentioned by the
                                 Technical Program Committee/Program Committee Members/Reviewers in the comments, if any,
                                 in the acceptance notification via email.
@@ -1099,7 +976,7 @@
                         <div id="copyrightTransfer" class="accordion-collapse collapse"
                             data-bs-parent="#acceptanceAccordion">
                             <div class="accordion-body text-justify">
-                                Authors will be asked to transfer copyright of the manuscript to IEEE. This is a
+                                Authors will be asked to transfer copyright of the manuscript<span style="display:none;"> to IEEE</span>. This is a
                                 mandatory requirement and will be an electronic process. Author(s) will be notified via
                                 email for e-copyright transfer process. This will ensure the widest possible protection
                                 and dissemination of information under copyright laws. In case of any difficulty in the
@@ -1118,8 +995,8 @@
                         <div id="preprint" class="accordion-collapse collapse" data-bs-parent="#acceptanceAccordion">
                             <div class="accordion-body text-justify">
                                 The camera-ready-paper is here referred to as Preprint, which will be the final version
-                                of the manuscript at the end of the UPWIECON 2025. The preprint version of the eligible
-                                manuscripts will be sent to IEEE for inclusion in IEEE Digital Library. UPWIECON 2025
+                                of the manuscript at the end of the UPWiECon 2026. The preprint version of the eligible
+                                manuscripts will be sent<span style="display:none;"> to IEEE for inclusion in IEEE Digital Library</span>. UPWiECon 2026
                                 organizing team will notify the corresponding author/author(s) with preprint copy of the
                                 manuscript via email for their consent on the final version.
                             </div>
@@ -1176,7 +1053,7 @@
                         <h5 class="text-primary"><i class="bi bi-person-check me-2"></i>Corresponding Author Guidelines
                         </h5>
                         <p class="text-justify">The Corresponding Author is here referred to the author who will be
-                            doing the e-mail correspondence with UPWIECON 2025, irrespective of the author position in
+                            doing the e-mail correspondence with UPWiECon 2026, irrespective of the author position in
                             author sequence. In addition to the content of manuscript, Corresponding Author will solely
                             be responsible for putting the name and details of other authors/co-authors in the
                             submission manuscript.</p>
@@ -1197,8 +1074,8 @@
 
                     <div class="col-md-6">
                         <h5 class="text-primary"><i class="bi bi-envelope me-2"></i>E-mailing and Notifications</h5>
-                        <p class="text-justify">After the submission of the manuscripts in UPWIECON 2025 authors will be
-                            notified by e-mail(s) only. UPWIECON 2025 will not be held liable for any lapses in e-mail
+                        <p class="text-justify">After the submission of the manuscripts in UPWiECon 2026 authors will be
+                            notified by e-mail(s) only. UPWiECon 2026 will not be held liable for any lapses in e-mail
                             communication, like non-receipt of mail, mail going junk/spam folder and similar glitches
                             alike.</p>
                     </div>
@@ -1228,7 +1105,7 @@
 
     <!--bodu closed  -->
     <!-- Venue & Important Dates Section -->
-    <section class="venue-section py-5">
+    <!-- <section class="venue-section py-5">
         <section class="py-5"
             style="background: linear-gradient(135deg, rgba(171, 103, 186, 0.418), rgba(91, 2, 109, 0.39)); color: white;">
             <div class="container">
@@ -1309,7 +1186,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> August 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
                                         </div>
                                     </div>
 
@@ -1345,162 +1222,10 @@
                 </div>
             </div>
         </section>
-    </section>
+    </section> -->
 
     <!-- Footer -->
-    <footer class="footer position-relative overflow-hidden">
-        <div class="position-absolute w-100 h-80" style="opacity: 0.1;">
-            <div class="position-absolute rounded-circle"
-                style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%); top: -150px; right: -150px; animation: float 6s ease-in-out infinite;">
-            </div>
-            <div class="position-absolute rounded-circle"
-                style="width: 200px; height: 200px; background: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, transparent 70%); bottom: -100px; left: -100px; animation: float 8s ease-in-out infinite reverse;">
-            </div>
-        </div>
-
-        <div class="container position-relative py-3">
-            <div class="row g-2">
-                <!-- Navigation Menu Section -->
-                <div class="col-lg-6">
-                    <div class="h-100 p-3 rounded-4 position-relative"
-                        style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="p-3 rounded-3 me-3"
-                                style="background: linear-gradient(45deg, #3b82f6, #8b5cf6);">
-                                <i class="bi bi-grid-3x3-gap text-white fs-5"></i>
-                            </div>
-                            <h4 class="mb-0 text-white fw-bold">Quick Navigation</h4>
-                        </div>
-
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <a href="https://nielit.ac.in/upwiecon2025/"
-                                    class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none transition-all"
-                                    style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #e2e8f0;"
-                                    onmouseover="this.style.background='rgba(59, 130, 246, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(59, 130, 246, 0.3)';"
-                                    onmouseout="this.style.background='rgba(59, 130, 246, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                    <i class="bi bi-house-door me-2 fs-5" style="color: #3b82f6;"></i>
-                                    <span class="fw-medium">Home</span>
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a href="callforpaper.php"
-                                    class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none"
-                                    style="background: rgba(147, 51, 234, 0.1); border: 1px solid rgba(147, 51, 234, 0.2); color: #e2e8f0;"
-                                    onmouseover="this.style.background='rgba(147, 51, 234, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(147, 51, 234, 0.3)';"
-                                    onmouseout="this.style.background='rgba(147, 51, 234, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                    <i class="bi bi-file-earmark-text me-2 fs-5" style="color: #9333ea;"></i>
-                                    <span class="fw-medium">Call for Paper</span>
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a href="registration.php"
-                                    class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none"
-                                    style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #e2e8f0;"
-                                    onmouseover="this.style.background='rgba(16, 185, 129, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(16, 185, 129, 0.3)';"
-                                    onmouseout="this.style.background='rgba(16, 185, 129, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                    <i class="bi bi-person-plus me-2 fs-5" style="color: #10b981;"></i>
-                                    <span class="fw-medium">Registration</span>
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a href="contact.php"
-                                    class="nav-link-modern d-flex align-items-center p-2 rounded-3 text-decoration-none"
-                                    style="background: rgba(245, 101, 101, 0.1); border: 1px solid rgba(245, 101, 101, 0.2); color: #e2e8f0;"
-                                    onmouseover="this.style.background='rgba(245, 101, 101, 0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(245, 101, 101, 0.3)';"
-                                    onmouseout="this.style.background='rgba(245, 101, 101, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                    <i class="bi bi-envelope me-2 fs-5" style="color: #f56565;"></i>
-                                    <span class="fw-medium">Contact</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Map Section -->
-                <div class="col-lg-6">
-                    <div class="h-100 p-3 rounded-4 position-relative"
-                        style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="p-3 rounded-3 me-3"
-                                style="background: linear-gradient(45deg, #f56565, #ff8a65);">
-                                <i class="bi bi-geo-alt text-white fs-5"></i>
-                            </div>
-                            <h4 class="mb-0 text-white fw-bold">Find Us Here</h4>
-                        </div>
-
-                        <div class="map-container position-relative rounded-4 overflow-hidden mb-2"
-                            style="box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
-                            <!-- <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3443.997890382516!2d78.03416731512442!3d30.316495481798926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092919f2b00001%3A0x1234567890abcdef!2sNIELIT%20Dehradun!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
-                                width="100%" height="200" style="border:0; filter: grayscale(0.2) contrast(1.1);"
-                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                            </iframe> -->
-                            <iframe width="100%" height="300" frameborder="0"
-                                style="border:0; filter: grayscale(0.2) contrast(1.1);"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6879.814712315349!2d78.08024279927668!3d30.43872809885764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3908d0c4b72e7cb7%3A0xa5142eb25ce3c0f4!2sJaypee%20Residency%20Manor!5e0!3m2!1sen!2sin!4v1748511027150!5m2!1sen!2sin"
-                                allowfullscreen>
-
-                            </iframe>
-                            <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.2482095580162!2d77.99284937556311!3d30.286994774802288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092b87b417273f%3A0xfb79cf6738499266!2sNIELIT%20Dehradun!5e0!3m2!1sen!2sin!4v1748493195158!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
-
-                            <div class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none"
-                                style="background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));">
-                            </div>
-                        </div>
-
-                        <div class="location-info p-2 rounded-3" style="background: rgba(255, 255, 255, 0.08);">
-                            <div class="d-flex align-items-start mb-1">
-                                <i class="bi bi-building me-2 mt-1" style="color: #3b82f6;"></i>
-                                <div>
-                                    <p class="mb-1 text-white fw-medium">Jaypee Residency Manor</p>
-                                    <p class="mb-0 small" style="color: #cbd5e1;">
-                                        <i class="bi bi-pin-map me-1" style="color: #f56565;"></i>
-                                        Road, Barlow Ganj, Mussoorie, Uttarakhand 248122
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Copyright -->
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="text-center pt-3" style="border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div class="d-inline-flex align-items-center px-4 py-2 rounded-pill"
-                            style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);">
-                            <i class="bi bi-c-circle me-2" style="color: #3b82f6;"></i>
-                            <span style="color: #cbd5e1;">Copyright 2025 NIELIT. All Rights Reserved</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <style>
-            @keyframes float {
-
-                0%,
-                100% {
-                    transform: translateY(0px);
-                }
-
-                50% {
-                    transform: translateY(-20px);
-                }
-            }
-
-            .nav-link-modern:hover {
-                transform: translateY(-2px);
-            }
-
-            .transition-all {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-        </style>
-    </footer>
+    
 
     <!-- Back to Top Button -->
     <button class="btn btn-warning position-fixed bottom-0 end-0 m-4 rounded-circle p-3 shadow-lg" id="backToTop"
@@ -1601,4 +1326,6 @@
 
 HTML
 
-?>
+    ?>
+<?php include "subfooter.php" ?>
+<?php include 'footer.php'; ?>
