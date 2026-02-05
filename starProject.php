@@ -476,11 +476,11 @@ echo <<<HTML
         }
 
         /* Date cards hover effect */
-        .date-card {
+        /* .date-card {
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.1) !important;
-        }
+        } */
 
         .date-card:hover {
             transform: translateY(-3px);
