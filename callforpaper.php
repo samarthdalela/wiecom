@@ -16,34 +16,6 @@
         padding: 0 20px;
     }
 
-    .header52 {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(255, 45, 149, 0.1);
-        padding: 2rem 0;
-        text-align: center;
-        margin-bottom: 2rem;
-        border-radius: 0 0 20px 20px;
-    }
-
-    .title52 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        background: var(--gradient-pink-blue);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .subtitle52 {
-        font-size: 1.5rem;
-        color: var(--primary-pink);
-        font-weight: 300;
-        margin-bottom: 1rem;
-    }
-
     .welcome52 {
         font-size: 1.2rem;
         color: var(--primary-pink);
@@ -306,30 +278,6 @@
             padding: 1.5rem;
         }
     }
-
-    .committee-hero {
-        background: var(--gradient-pink-blue);
-        color: white;
-        padding: 4rem 0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .committee-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
-        opacity: 0.3;
-    }
-
-    .committee-hero .container {
-        position: relative;
-        z-index: 1;
-    }
 </style>
 
 
@@ -343,29 +291,10 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="fas fa-users me-3"></i>
-                        UPWIECON 2026
+                        <i class="fas fa-file-signature me-3"></i>
+                        CALL FOR PAPERS
                     </h1>
-                    <p class="lead mb-4">International Conference on Emerging Technologies <br>Welcome to
-                        UPWIECON 2026!!!</p>
-                    <!-- <div class="d-flex justify-content-center gap-4 flex-wrap">
-                    <div class="text-center">
-                        <i class="fas fa-crown fa-2x mb-2"></i>
-                        <div>Chief Patrons</div>
-                    </div>
-                    <div class="text-center">
-                        <i class="fas fa-award fa-2x mb-2"></i>
-                        <div>Patrons</div>
-                    </div>
-                    <div class="text-center">
-                        <i class="fas fa-cogs fa-2x mb-2"></i>
-                        <div>Organizing Committee</div>
-                    </div>
-                    <div class="text-center">
-                        <i class="fas fa-globe fa-2x mb-2"></i>
-                        <div>International Advisory</div>
-                    </div>
-                </div> -->
+                    <p class="lead mb-0">UPWIECON 2026 | International Conference on Emerging Technologies</p>
                 </div>
             </div>
         </div>

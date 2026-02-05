@@ -30,82 +30,6 @@
 
     /* Conference Schedule page specific styles */
 
-    .speakers-section {
-        background: var(--gradient-pink-blue);
-        min-height: 30vh;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .speakers-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.1);
-    }
-
-    .content-wrapper {
-        position: relative;
-        z-index: 2;
-    }
-
-    .pulse-animation {
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(1.05);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
-    .floating-icons {
-        position: absolute;
-        opacity: 0.1;
-        animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-
-        0%,
-        100% {
-            transform: translateY(0px);
-        }
-
-        50% {
-            transform: translateY(-20px);
-        }
-    }
-
-    .icon-1 {
-        top: 20%;
-        left: 10%;
-        animation-delay: 0s;
-    }
-
-    .icon-2 {
-        top: 60%;
-        right: 15%;
-        animation-delay: 2s;
-    }
-
-    .icon-3 {
-        bottom: 30%;
-        left: 20%;
-        animation-delay: 4s;
-    }
-
     .pdf-viewer-section {
         background: linear-gradient(135deg, var(--light-blue), #fff);
         padding: 60px 20px;
@@ -204,38 +128,19 @@
 <body>
 
     <!-- content start -->
-    <div class="speakers-section d-flex align-items-center justify-content-center position-relative">
-        <!-- Floating background icons -->
-        <i class="fas fa-microphone fa-3x text-white floating-icons icon-1"></i>
-        <i class="fas fa-users fa-3x text-white floating-icons icon-2"></i>
-        <i class="fas fa-star fa-3x text-white floating-icons icon-3"></i>
-
-        <div class="content-wrapper text-center">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-md-10">
-                        <div class="pulse-animation">
-                            <i class="fas fa-microphone-alt fa-4x text-white mb-4 opacity-75"></i>
-                        </div>
-                        <h2 class="display-4 fw-bold text-white mb-3">
-                            Conference Schedule
-                        </h2>
-                        <p class="lead text-white-50 mb-4 fs-3">
-
-                            Sessions and Timings
-                        </p>
-                        <!-- 
-                        <div class="d-flex justify-content-center align-items-center">
-                            <div class="spinner-grow text-light me-3" role="status" style="width: 1rem; height: 1rem;">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <span class="text-white-50 fs-6">Stay tuned for exciting announcements</span> -->
-                    </div>
+    <section class="committee-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="fas fa-calendar-check me-3"></i>
+                        CONFERENCE SCHEDULE
+                    </h1>
+                    <p class="lead mb-0">Sessions and Timings</p>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    </section>
 
     <!-- Coming Soon Message Section -->
     <!-- <section class="pdf-viewer-section">

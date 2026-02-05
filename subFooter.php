@@ -1,6 +1,6 @@
 <section class="venue-section py-5">
     <section class="py-5"
-        style="background: linear-gradient(135deg, rgba(255, 45, 149, 0.25), rgba(0, 210, 255, 0.3)); color: white; backdrop-filter: blur(10px);">
+        style="background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px), linear-gradient(135deg, rgba(255, 45, 149, 0.35), rgba(0, 210, 255, 0.35)); background-size: 20px 20px, 100% 100%; color: white; backdrop-filter: blur(4px);">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">

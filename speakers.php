@@ -146,30 +146,6 @@
         color: rgba(255, 255, 255, 0.9);
     }
 
-    .committee-hero {
-        background: var(--gradient-pink-blue);
-        color: white;
-        padding: 4rem 0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .committee-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
-        opacity: 0.3;
-    }
-
-    .committee-hero .container {
-        position: relative;
-        z-index: 1;
-    }
-
     /* Accent elements */
     .speaker-card::before {
         content: '';
@@ -523,9 +499,10 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="fas fa-users me-3"></i>
+                        <i class="fas fa-microphone-alt me-3"></i>
                         SPEAKERS
                     </h1>
+                    <p class="lead mb-0">UPWIECON 2026 | International Conference on Emerging Technologies</p>
                 </div>
             </div>
         </div>
@@ -596,7 +573,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Dr. Preeti Banzal</div>
                                         <div class="speaker-title">Adviser/Scientist 'G'</div>
-                                        <div class="speaker-organization">Principal Scientific Adviser to the Government
+                                        <div class="speaker-organization">Principal Scientific Adviser to
+                                            the Government
                                             of India</div>
                                     </div>
                                 </div>
@@ -622,8 +600,10 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Dr. Neena Phuja</div>
                                         <div class="speaker-title">Executive Member</div>
-                                        <div class="speaker-organization">National Council for Vocational Education and
-                                            Training (NCVET), Ministry of Skill Development, Government of India</div>
+                                        <div class="speaker-organization">National Council for Vocational
+                                            Education and
+                                            Training (NCVET), Ministry of Skill Development, Government of
+                                            India</div>
                                     </div>
                                 </div>
                             </div>
@@ -647,7 +627,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Dr. Tripta Thakur</div>
                                         <div class="speaker-title">Director General</div>
-                                        <div class="speaker-organization">National Power Training Institute (NPTI)</div>
+                                        <div class="speaker-organization">National Power Training Institute
+                                            (NPTI)</div>
                                     </div>
                                 </div>
                             </div>
@@ -670,8 +651,10 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Professor S N Singh</div>
                                         <div class="speaker-title">IEEE Fellow, Director</div>
-                                        <div class="speaker-organization">Atal Bihari Vajpayee- Indian Institute of
-                                            Information Technology and Management (ABV-IIITM), Gwalior, India</div>
+                                        <div class="speaker-organization">Atal Bihari Vajpayee- Indian
+                                            Institute of
+                                            Information Technology and Management (ABV-IIITM), Gwalior,
+                                            India</div>
                                     </div>
                                 </div>
                             </div>
@@ -696,7 +679,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Professor Mohammad Rihan </div>
                                         <div class="speaker-title">Director General,</div>
-                                        <div class="speaker-organization">National Institute of Solar Energy (NISE),
+                                        <div class="speaker-organization">National Institute of Solar Energy
+                                            (NISE),
                                             Ministry of New and Renewable Energy</div>
                                     </div>
                                 </div>
@@ -747,7 +731,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Ms. Shweta Khurana</div>
                                         <div class="speaker-title">Senior Director, </div>
-                                        <div class="speaker-organization">Asia Pacific & Japan - Government Partnerships
+                                        <div class="speaker-organization">Asia Pacific & Japan - Government
+                                            Partnerships
                                             & Initiatives,
                                             International Government Affairs Group, Intel
                                         </div>
@@ -773,7 +758,8 @@
                                     </div>
                                     <div class="speaker-details">
                                         <div class="speaker-name">Dr. Mamta Pant Abichandani </div>
-                                        <div class="speaker-title">Director & Head Policy Affairs & Communications at
+                                        <div class="speaker-title">Director & Head Policy Affairs &
+                                            Communications at
                                             Infineon Technologies</div>
                                         <div class="speaker-organization">Infineon Technologies</div>
                                     </div>
@@ -825,7 +811,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Professor Asheesh Kumar Singh </div>
                                         <div class="speaker-title">Professor</div>
-                                        <div class="speaker-organization">Motilal Nehru National Institute of Technology
+                                        <div class="speaker-organization">Motilal Nehru National Institute
+                                            of Technology
                                             Allahabad, Prayagraj, India</div>
                                     </div>
                                 </div>
@@ -872,7 +859,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Mr. Abhijeet Sinha</div>
                                         <div class="speaker-title">National Program Director</div>
-                                        <div class="speaker-organization">Ease of Doing Business, (EoDB)</div>
+                                        <div class="speaker-organization">Ease of Doing Business, (EoDB)
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -895,7 +883,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Ms. Astha Kukreti</div>
                                         <div class="speaker-title">Executive Director</div>
-                                        <div class="speaker-organization">Ease of Doing Business (EoDB)</div>
+                                        <div class="speaker-organization">Ease of Doing Business (EoDB)
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -918,7 +907,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Ms. Shaweta Berry</div>
                                         <div class="speaker-title">Founder & CEO</div>
-                                        <div class="speaker-organization">Mahanadaya Universal Consultancy Private
+                                        <div class="speaker-organization">Mahanadaya Universal Consultancy
+                                            Private
                                             Limited</div>
                                     </div>
                                 </div>
@@ -1007,8 +997,10 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Dr. Celia Shahnaz</div>
                                         <div class="speaker-title">Professor</div>
-                                        <div class="speaker-organization">Bangladesh University of Engineering and
-                                            Technology, Chair IEEE Women in Engineering, Nominations and Appointments
+                                        <div class="speaker-organization">Bangladesh University of
+                                            Engineering and
+                                            Technology, Chair IEEE Women in Engineering, Nominations and
+                                            Appointments
                                         </div>
                                     </div>
                                 </div>
@@ -1032,7 +1024,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Professor Valentina Emilia Balas</div>
                                         <div class="speaker-title">Professor</div>
-                                        <div class="speaker-organization">Aurel Vlaicu University of Arad, Romania</div>
+                                        <div class="speaker-organization">Aurel Vlaicu University of Arad,
+                                            Romania</div>
                                     </div>
                                 </div>
                             </div>
@@ -1055,7 +1048,8 @@
                                     </div>
                                     <div class="speaker-details">
                                         <div class="speaker-name">Professor Mohammad S. Obaidat</div>
-                                        <div class="speaker-title">Life Fellow, IEEE, Distinguished Professor</div>
+                                        <div class="speaker-title">Life Fellow, IEEE, Distinguished
+                                            Professor</div>
                                         <div class="speaker-organization">University of Jordan</div>
                                     </div>
                                 </div>
@@ -1079,8 +1073,10 @@
                                     </div>
                                     <div class="speaker-details">
                                         <div class="speaker-name">Professor Akshay Kumar Rathore</div>
-                                        <div class="speaker-title">IEEE Fellow, Professor and Program Leader</div>
-                                        <div class="speaker-organization">Electrical Power Engineering at Singapore
+                                        <div class="speaker-title">IEEE Fellow, Professor and Program Leader
+                                        </div>
+                                        <div class="speaker-organization">Electrical Power Engineering at
+                                            Singapore
                                             Institute of Technology (SIT)</div>
                                     </div>
                                 </div>
@@ -1105,7 +1101,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Professor Sweta Sneha</div>
                                         <div class="speaker-title">Professor</div>
-                                        <div class="speaker-organization">Kennesaw State University, Georgia</div>
+                                        <div class="speaker-organization">Kennesaw State University, Georgia
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1152,7 +1149,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Ms. Thilini De Silva</div>
                                         <div class="speaker-title">Dean of the Faculty of Business</div>
-                                        <div class="speaker-organization">NSBM Green University, Sri Lanka</div>
+                                        <div class="speaker-organization">NSBM Green University, Sri Lanka
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1176,7 +1174,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Prof. Jean-Pierre Fontaine</div>
                                         <div class="speaker-title">Professor</div>
-                                        <div class="speaker-organization">University of Clermont-Auvergne, France</div>
+                                        <div class="speaker-organization">University of Clermont-Auvergne,
+                                            France</div>
                                     </div>
                                 </div>
                             </div>
@@ -1222,7 +1221,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Mr. Ang Wee Seng</div>
                                         <div class="speaker-title">Executive Director</div>
-                                        <div class="speaker-organization">Singapore Semiconductor Industry Association
+                                        <div class="speaker-organization">Singapore Semiconductor Industry
+                                            Association
                                             (SSIA)</div>
                                     </div>
                                 </div>
@@ -1247,7 +1247,8 @@
                                     <div class="speaker-details">
                                         <div class="speaker-name">Preeti Ohri Khemani</div>
                                         <div class="speaker-title">Senior Director</div>
-                                        <div class="speaker-organization">Infineon Technologies, Austria</div>
+                                        <div class="speaker-organization">Infineon Technologies, Austria
+                                        </div>
                                     </div>
                                 </div>
                             </div>
