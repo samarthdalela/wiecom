@@ -29,7 +29,7 @@ try {
     $mail->Port       = 587;
 
     // Sender and recipient
-    $mail->setFrom('ieeeconference@nielit.ac.in', 'UPWIECON 2025');
+    $mail->setFrom('ieeeconference@nielit.ac.in', 'UPWIECON 2026');
     $mail->addAddress($to);
     $mail->addReplyTo('ieeeconference@nielit.ac.in');
 
@@ -75,7 +75,7 @@ try {
     $mail->Port       = 587;
 
     // Sender and recipient
-    $mail->setFrom('ieeeconference@nielit.ac.in', 'UPWIECON 2025');
+    $mail->setFrom('ieeeconference@nielit.ac.in', 'UPWIECON 2026');
     $mail->addAddress($to);
     $mail->addReplyTo('ieeeconference@nielit.ac.in');
 

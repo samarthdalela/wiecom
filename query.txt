@@ -1,11 +1,11 @@
 -- Conference Registration Database Schema
-CREATE DATABASE upwiecon2025_registration;
-USE upwiecon2025_registration;
+CREATE DATABASE upwiecon2026_registration;
+USE upwiecon2026_registration;
 
 -- Main registration table
-CREATE TABLE tblUPWIECON2025 (
+CREATE TABLE tblUPWIECON2026 (
     iRegId INT PRIMARY KEY AUTO_INCREMENT,
-    sEventName VARCHAR(50) DEFAULT 'UPWIECON2025',
+    sEventName VARCHAR(50) DEFAULT 'UPWIECON2026',
     sCampus VARCHAR(100) DEFAULT 'Uttarakhand',
     sNielit VARCHAR(10),
     sIEEEMember VARCHAR(20),
@@ -26,10 +26,10 @@ CREATE TABLE tblUPWIECON2025 (
 );
 
 -- Payment tracking table
-CREATE TABLE tblUPWIECON2025Payment (
+CREATE TABLE tblUPWIECON2026Payment (
     iPaymentId INT PRIMARY KEY AUTO_INCREMENT,
     RefId INT NOT NULL,
-    EventName VARCHAR(50) DEFAULT 'UPWIECON2025',
+    EventName VARCHAR(50) DEFAULT 'UPWIECON2026',
     order_id VARCHAR(50) UNIQUE,
     amount DECIMAL(10,2),
     payment_status ENUM('PENDING', 'SUCCESS', 'FAILED', 'CANCELLED') DEFAULT 'PENDING',
@@ -38,7 +38,7 @@ CREATE TABLE tblUPWIECON2025Payment (
     payment_date DATETIME,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (RefId) REFERENCES tblUPWIECON2025(iRegId) ON DELETE CASCADE
+    FOREIGN KEY (RefId) REFERENCES tblUPWIECON2026(iRegId) ON DELETE CASCADE
 );
 
 -- BillDesk configuration

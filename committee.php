@@ -1,23 +1,9 @@
 <?php include 'header.php'; ?>
 <style>
-    :root {
-        --primary-blue: rgba(70, 12, 82, 0.99);
-        --accent-blue: rgba(91, 2, 109, 0.99);
-        --light-blue: rgba(225, 181, 234, 0.99);
-        --gold: #f39c12;
-        --text-dark: #2c3e50;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: var(--text-dark);
-        background: linear-gradient(135deg, rgba(234, 229, 235, 0.99) 0%, #ffffff 50%, #f8f9fa 100%);
-
-    }
+    /* Committee page specific styles */
 
     .committee-hero {
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        background: var(--gradient-pink-blue);
         color: white;
         padding: 4rem 0;
         position: relative;
@@ -42,7 +28,7 @@
 
     .section-title {
         color: var(--primary-blue);
-        border-bottom: 3px solid var(--gold);
+        border-bottom: 3px solid var(--primary-pink);
         padding-bottom: 0.5rem;
         margin-bottom: 2rem;
         display: inline-block;
@@ -55,7 +41,7 @@
         margin-bottom: 2rem;
         overflow: hidden;
         transition: all 0.3s ease;
-        border-left: 5px solid var(--accent-blue);
+        border-left: 5px solid var(--primary-pink);
     }
 
     .committee-card:hover {
@@ -66,7 +52,7 @@
     .committee-header {
         background: linear-gradient(135deg, var(--light-blue) 0%, #f8f9fa 100%);
         padding: 1.5rem;
-        border-bottom: 2px solid var(--accent-blue);
+        border-bottom: 2px solid var(--primary-pink);
         position: relative;
     }
 
@@ -82,7 +68,7 @@
         right: 1.5rem;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--accent-blue);
+        color: var(--primary-pink);
         font-size: 1.5rem;
     }
 
@@ -104,7 +90,7 @@
     .member-icon {
         width: 40px;
         height: 40px;
-        background: linear-gradient(135deg, var(--accent-blue), var(--primary-blue));
+        background: var(--gradient-pink-blue);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -157,7 +143,7 @@
     }
 
     .patron-badge {
-        background: linear-gradient(135deg, var(--gold), #e67e22);
+        background: var(--gradient-blue-pink);
         color: white;
         padding: 0.25rem 0.5rem;
         border-radius: 15px;
@@ -191,7 +177,11 @@
         }
     }
 
-    /* section syle ends  */
+    /* Add some body padding to account for fixed header */
+    body {
+        /* padding-top: 50px; */
+        background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 50%, #f8f9fa 100%);
+    }
 </style>
 
 
@@ -2400,56 +2390,56 @@
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Paper Submission Opens</h6>
-                                            <p class="mb-0">1<sup>st</sup> February 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 1)</h6>
-                                            <p class="mb-0">28<sup>th</sup> February 2025</p>
+                                            <p class="mb-0">28<sup>th</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 2)</h6>
-                                            <p class="mb-0">31<sup>st</sup> March 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> March 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card   rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 3)</h6>
-                                            <p class="mb-0">31<sup>st</sup> May 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> May 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 4)</h6>
-                                            <p class="mb-0">31<sup>st</sup> July 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> July 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Final Submission Deadline</h6>
-                                            <p class="mb-0">30<sup>th</sup> August 2025</p>
+                                            <p class="mb-0">30<sup>th</sup> August 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Camera Ready Submission</h6>
-                                            <p class="mb-0">1<sup>st</sup> October 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> October 2026</p>
                                         </div>
                                     </div>
                                 </div>
@@ -2460,7 +2450,7 @@
                                             <i class="bi bi-star-fill me-2"></i>Conference Date
                                         </h4>
                                         <h3 class="display-6 fw-bold mb-0">30<sup>th</sup> - 31<sup>st</sup> October
-                                            2025
+                                            2026
                                         </h3>
                                     </div>
                                 </div>

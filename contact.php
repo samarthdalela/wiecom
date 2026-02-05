@@ -1,26 +1,13 @@
 <?php include 'header.php'; ?>
 <style>
-    /* new style start here  */
-    :root {
-        --primary-blue: rgba(70, 12, 82, 0.99);
-        --accent-blue: rgba(91, 2, 109, 0.99);
-        --light-blue: rgba(232, 217, 235, 0.99);
-        --gold: rgba(171, 103, 186, 0.78);
-        --text-dark: #2c3e50;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    /* Contact page specific styles */
 
     .contact-container51 {
         max-width: 1200px;
         margin: 0 auto;
         background: white;
         border-radius: 25px;
-        box-shadow: 0 25px 80px rgba(70, 12, 82, 0.15);
+        box-shadow: 0 25px 80px rgba(255, 45, 149, 0.1);
         overflow: hidden;
         position: relative;
         margin-top: 50px;
@@ -33,7 +20,7 @@
         left: 0;
         right: 0;
         height: 8px;
-        background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue), var(--gold), var(--primary-blue));
+        background: var(--gradient-pink-blue);
         background-size: 200% 100%;
         animation: gradientShift 3s ease-in-out infinite;
     }
@@ -51,7 +38,7 @@
     }
 
     .header51 {
-        background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        background: var(--gradient-pink-blue);
         color: white;
         text-align: center;
         padding: 4rem 2rem;
@@ -89,7 +76,7 @@
         font-size: 3rem;
         font-weight: 800;
         margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .header51 h2 {
@@ -104,31 +91,14 @@
     }
 
     .important-notice51 {
-        background: linear-gradient(135deg, var(--light-blue), rgba(232, 217, 235, 0.5));
-        border: 2px solid var(--gold);
+        background: var(--light-blue);
+        border: 2px solid var(--primary-pink);
         border-radius: 15px;
         padding: 2rem;
         margin-bottom: 3rem;
         text-align: center;
         position: relative;
         overflow: hidden;
-
-    }
-
-    .important-notice51::before {
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--gold);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        border: 3px solid white;
     }
 
     .important-notice51 h3 {
@@ -150,11 +120,11 @@
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), var(--light-blue));
         border-radius: 20px;
         padding: 2.5rem;
-        box-shadow: 0 15px 40px rgba(70, 12, 82, 0.1);
+        box-shadow: 0 15px 40px rgba(0, 150, 199, 0.1);
         position: relative;
         overflow: hidden;
         transition: all 0.4s ease;
-        border: 1px solid rgba(171, 103, 186, 0.2);
+        border: 1px solid rgba(255, 45, 149, 0.1);
     }
 
     .contact-card51::before {
@@ -164,7 +134,7 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, var(--gold), var(--accent-blue));
+        background: var(--gradient-pink-blue);
         transform: scaleX(0);
         transition: transform 0.3s ease;
     }
@@ -175,7 +145,7 @@
 
     .contact-card51:hover {
         transform: translateY(-10px);
-        box-shadow: 0 25px 60px rgba(70, 12, 82, 0.2);
+        box-shadow: 0 25px 60px rgba(255, 45, 149, 0.2);
     }
 
     .card-header51 {
@@ -187,7 +157,7 @@
     .card-icon51 {
         width: 70px;
         height: 70px;
-        background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        background: var(--gradient-pink-blue);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -228,7 +198,7 @@
         padding: 1.5rem;
         background: rgba(255, 255, 255, 0.7);
         border-radius: 15px;
-        border-left: 4px solid var(--gold);
+        border-left: 4px solid var(--primary-pink);
         transition: all 0.3s ease;
     }
 
@@ -250,11 +220,10 @@
         content: '';
         width: 20px;
         height: 20px;
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>');
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="%23FF2D95" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>');
         background-size: contain;
         background-repeat: no-repeat;
         margin-right: 0.5rem;
-        color: inherit;
     }
 
     .contact-info51 {
@@ -272,14 +241,15 @@
     }
 
     .contact-item51:hover {
-        color: var(--primary-blue);
+        color: var(--primary-pink);
         transform: translateX(5px);
     }
 
     .contact-item51 .icon51 {
         width: 35px;
         height: 35px;
-        background: var(--gold);
+        background: var(--primary-pink);
+        color: white;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -301,7 +271,7 @@
     }
 
     .contact-item51 a:hover {
-        color: var(--accent-blue);
+        color: var(--primary-blue);
         text-decoration: underline;
     }
 
@@ -344,9 +314,9 @@
 
     .floating-element51 {
         position: absolute;
-        background: var(--gold);
+        background: var(--primary-pink);
         border-radius: 50%;
-        opacity: 0.1;
+        opacity: 0.05;
         animation: float 6s ease-in-out infinite;
     }
 
@@ -386,9 +356,8 @@
         }
     }
 
-    /* new style end here */
     .committee-hero {
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        background: var(--gradient-pink-blue);
         color: white;
         padding: 4rem 0;
         position: relative;
@@ -409,6 +378,10 @@
     .committee-hero .container {
         position: relative;
         z-index: 1;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 50%, #f8f9fa 100%);
     }
 </style>
 
@@ -588,7 +561,7 @@
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Paper Submission Opens</h6>
-                                            <p class="mb-0">1<sup>st</sup> February 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> February 2026</p>
                                         </div>
                                     </div>
 
@@ -596,7 +569,7 @@
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 1)
                                             </h6>
-                                            <p class="mb-0">28<sup>th</sup> February 2025</p>
+                                            <p class="mb-0">28<sup>th</sup> February 2026</p>
                                         </div>
                                     </div>
 
@@ -604,7 +577,7 @@
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 2)
                                             </h6>
-                                            <p class="mb-0">31<sup>st</sup> March 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> March 2026</p>
                                         </div>
                                     </div>
 
@@ -612,7 +585,7 @@
                                         <div class="date-card   rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 3)
                                             </h6>
-                                            <p class="mb-0">31<sup>st</sup> May 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> May 2026</p>
                                         </div>
                                     </div>
 
@@ -620,28 +593,28 @@
                                         <div class="date-card  rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 4)
                                             </h6>
-                                            <p class="mb-0">31<sup>st</sup> July 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> July 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Final Submission Deadline</h6>
-                                            <p class="mb-0">30<sup>th</sup> August 2025</p>
+                                            <p class="mb-0">30<sup>th</sup> August 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Camera Ready Submission</h6>
-                                            <p class="mb-0">1<sup>st</sup> October 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> October 2026</p>
                                         </div>
                                     </div>
                                 </div>
@@ -652,7 +625,7 @@
                                             <i class="bi bi-star-fill me-2"></i>Conference Date
                                         </h4>
                                         <h3 class="display-6 fw-bold mb-0">30<sup>th</sup> - 31<sup>st</sup>
-                                            October 2025
+                                            October 2026
                                         </h3>
                                     </div>
                                 </div>

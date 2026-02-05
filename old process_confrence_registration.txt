@@ -179,7 +179,7 @@ try {
         
         // Prepare registration data
         $registrationData = [
-            'event_name' => 'UPWIECON2025',
+            'event_name' => 'UPWIECON2026',
             'campus' => 'Uttarakhand',
             'nielit' => $nielitText,
             'ieee_member' => $ieeeeMemberText,
@@ -229,7 +229,7 @@ try {
             }
             
             // Generate unique order ID
-            $orderId = 'UPWIECON2025_' . $registrationId . '_' . time();
+            $orderId = 'UPWIECON2026_' . $registrationId . '_' . time();
             
             // Prepare customer info for payment
             $customerInfo = [

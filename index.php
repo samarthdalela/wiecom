@@ -1,12 +1,161 @@
 <?php include 'header.php'; ?>
 
 <!-- Hero Banner Section -->
+<style>
+    :root {
+        --primary-pink: #FF2D95;
+        --primary-blue: #00B4D8;
+        --secondary-blue: #0096C7;
+        --accent-pink: #FF6FB5;
+        --deep-blue: #003459;
+        --light-pink: #FFB3D9;
+        --light-blue: #90E0EF;
+        --accent-yellow: #FFC107;
+        --dark-yellow: #FF9800;
+        --glass-white: rgba(255, 255, 255, 0.7);
+        --text-dark: #1a1a1a;
+        --gradient-pink-blue: linear-gradient(135deg, #FF2D95 0%, #00B4D8 100%);
+        --gradient-blue-pink: linear-gradient(135deg, #00B4D8 0%, #FF2D95 100%);
+        --gradient-light: linear-gradient(135deg, #FFB3D9 0%, #90E0EF 100%);
+    }
+
+    .hero-area {
+        /* background: #fff; */
+    }
+
+    .hero-overlay {
+        /* background: linear-gradient(135deg, rgba(255, 45, 150, 0.36), rgba(0, 208, 255, 0.38)) !important; */
+        backdrop-filter: blur(4px);
+        background-color: transparent !important;
+        background-image:
+            radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px),
+            linear-gradient(135deg, rgba(255, 45, 150, 0.42), rgba(0, 208, 255, 0.44)) !important;
+        background-size: 20px 20px, 100% 100%;
+        backdrop-filter: blur(5px);
+    }
+
+
+    .conference-badge .badge {
+        background: var(--gradient-pink-blue) !important;
+        border: none;
+        box-shadow: 0 4px 15px rgba(255, 45, 149, 0.3);
+    }
+
+    .bgNew {
+        background: linear-gradient(135deg, rgba(255, 45, 149, 0.95), rgba(0, 180, 216, 0.95)) !important;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        padding: 25px 30px;
+        color: #fff !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .bgNew h1 {
+        color: #fff !important;
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        font-weight: 800;
+    }
+
+    .highlight-card {
+        background: rgba(255, 255, 255, 0.85) !important;
+        border: 1px solid rgba(0, 210, 255, 0.2) !important;
+        color: var(--text-dark) !important;
+        backdrop-filter: blur(10px);
+    }
+
+    .highlight-card i {
+        background: var(--gradient-pink-blue);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .highlight-card h5 {
+        color: var(--deep-blue) !important;
+    }
+
+    .btn-warning {
+        background: var(--primary-pink) !important;
+        border: none !important;
+        color: white !important;
+        box-shadow: 0 8px 20px rgba(255, 45, 149, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-warning:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(255, 45, 149, 0.5);
+        background: var(--accent-pink) !important;
+    }
+
+    .btn-light {
+        background: white !important;
+        color: var(--primary-blue) !important;
+        border: 2px solid var(--primary-blue) !important;
+        transition: all 0.3s ease;
+    }
+
+    .btn-light:hover {
+        background: var(--primary-blue) !important;
+        color: white !important;
+        transform: translateY(-3px);
+    }
+
+    .newText {
+        color: white !important;
+    }
+
+    .section-divider {
+        background: var(--gradient-pink-blue) !important;
+    }
+
+    .objective-card i {
+        color: var(--primary-blue) !important;
+    }
+
+    .objective-card h5 {
+        color: var(--deep-blue) !important;
+    }
+
+    .yellow-accent {
+        background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(50, 50, 50, 0.95)) !important;
+        color: #FFC107 !important;
+        padding: 15px 30px;
+        border-radius: 15px;
+        display: inline-block;
+        box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+        text-shadow: 0 2px 10px rgba(255, 193, 7, 0.5);
+        border: 2px solid #FFC107;
+        animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+
+        0%,
+        100% {
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+        }
+
+        50% {
+            box-shadow: 0 8px 35px rgba(255, 193, 7, 0.6), 0 0 20px rgba(255, 193, 7, 0.3);
+        }
+    }
+
+    .stat-yellow {
+        color: #FFC107 !important;
+        text-shadow: 0 2px 8px rgba(255, 193, 7, 0.5);
+        font-weight: 900 !important;
+    }
+
+    .about-section {
+        background: linear-gradient(180deg, #FFFFFF 0%, #E3F2FD 50%, #F8BBD0 100%) !important;
+    }
+</style>
+
 <section class="hero-area position-relative overflow-hidden">
-    <div class="hero-background">
+    <div class="hero-background position-absolute top-0 start-0 w-100 h-100" style="z-index: 0;">
         <img src="images/banner1.jpg" class="img-fluid w-100 h-100 position-absolute top-0 start-0"
-            style="object-fit: cover; z-index: -1;" alt="Conference Banner">
-        <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"
-            style="background: linear-gradient(185deg, rgba(209, 176, 218, 0.685), rgba(27, 7, 29, 0.692)); z-index: 1;">
+            style="object-fit: cover; z-index: 0;" alt="Conference Banner">
+        <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100" style="z-index: 1;">
         </div>
     </div>
 
@@ -49,7 +198,7 @@
                                 </div> -->
                             <div class="col-md-4">
                                 <div class="highlight-card  backdrop-blur rounded-4 p-4 h-100">
-                                    <i class="bi bi-people display-6 text-success mb-3"></i>
+                                    <i class="bi bi-people display-6 mb-3"></i>
                                     <h5 class="fw-bold">Women in Engineering</h5>
                                     <p class="mb-0 small">Empowering women in STEM through networking and
                                         collaboration</p>
@@ -57,7 +206,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="highlight-card  backdrop-blur rounded-4 p-4 h-100">
-                                    <i class="bi bi-globe display-6 text-info mb-3"></i>
+                                    <i class="bi bi-globe display-6 mb-3"></i>
                                     <h5 class="fw-bold">Global Platform</h5>
                                     <p class="mb-0 small">International conference bringing together researchers
                                         worldwide</p>
@@ -78,7 +227,7 @@
             </div>
 
             <center>
-                <div class="sponsor-section">
+                <div class="sponsor-section" style="display: none;">
                     <!-- Text Section (1/4) -->
                     <div class="sponsor-text-section">
                         <h2>Our Sponsors</h2>
@@ -163,20 +312,40 @@
         <div class="row mb-5">
             <div class="col-lg-12">
                 <div class="section-header text-center mb-5">
-                    <h2 class="display-5 fw-bold newText mb-3">About UPWIECON 2025</h2>
-                    <div class="section-divider mx-auto mb-4"
-                        style="width: 100px; height: 4px; background: linear-gradient(45deg, #007bff, #0056b3); border-radius: 2px;">
+                    <h2 class="display-5 fw-bold mb-3" style="color: #FF2D95 !important;">About UPWIECON 2026</h2>
+                    <div class="section-divider mx-auto mb-4" style="width: 100px; height: 4px; border-radius: 2px;">
                     </div>
                 </div>
 
                 <div class="about-card bg-white rounded-4 shadow-lg p-5 mb-5">
                     <div class="row align-items-center">
-                        <div class="col-lg-8">
+                        <div class="col-lg-9">
+                            <p class="lead text-muted mb-4" style="text-align: justify; text-justify: inter-word;">
+                                <strong class="newText" style="color: #FF2D95 !important;">UPWIECON 2026</strong> brings
+                                together women technologists,
+                                researchers, industry leaders, policymakers, and students on a common platform to
+                                celebrate innovation, leadership, and inclusion in engineering and technology.
+                            </p>
+
+                            <p class="text-muted mb-4" style="text-align: justify; text-justify: inter-word;">
+                                Designed to foster knowledge exchange and mentorship, <strong>UPWIECON</strong>
+                                focuses on emerging technologies, entrepreneurship, skilling, and societal impact,
+                                while amplifying women’s voices and contributions in STEM.
+                            </p>
+
+                            <p class="text-muted mb-4" style="text-align: justify; text-justify: inter-word;">
+                                Through keynotes, technical sessions, panel discussions, and networking
+                                opportunities, the conference aims to inspire collaboration, build capacity,
+                                and create sustainable pathways for women to lead and shape the future of
+                                technology globally.
+                            </p>
+
                             <p class="lead text-muted mb-4" style="text-align: justify; text-justify: inter-word;">
                                 <!-- <span>The IEEE Uttar Pradesh Section Women in Engineering </span> -->
                                 International Conference on
                                 Electrical Electronics and Computer Engineering
-                                <strong class="newText">(UPWIECON 2026)</strong> is a top-level International
+                                <strong class="newText" style="color: #FF2D95 !important;">(UPWIECON 2026)</strong> is a
+                                top-level International
                                 Conference covering broad topics in the areas of Electrical, Computer and
                                 Electronics Engineering.
                             </p>
@@ -189,17 +358,18 @@
                                 community.
                             </p>
                         </div>
-                        <div class="col-lg-4 text-center">
+                        <div class="col-lg-3 text-center">
                             <div class="about-stats">
                                 <div class="stat-item mb-3">
-                                    <h3 class="display-6 fw-bold newText">2<sup>nd</sup></h3>
+                                    <h3 class="display-5 fw-bold stat-yellow">2<sup class="stat-yellow">nd</sup></h3>
                                     <p class="text-muted mb-0">
                                         <!-- <span>IEEE UP Section </span> -->
                                         WIE Conference
                                     </p>
                                 </div>
+                                <br>
                                 <div class="stat-item">
-                                    <h3 class="display-6 fw-bold text-success">Global</h3>
+                                    <h3 class="display-5 fw-bold text-success">Global</h3>
                                     <p class="text-muted mb-0">Research Platform</p>
                                 </div>
                             </div>
@@ -247,16 +417,16 @@
         <!-- Objectives -->
         <div class="row">
             <div class="col-lg-12">
-                <div class="section-header mb-4">
-                    <h3 class="h2 fw-bold newText mb-3">Conference Objectives</h3>
+                <div class="section-header mb-4 text-center">
+                    <h3 class="h2 fw-bold mb-3" style="color: #FF2D95 !important;">Conference Objectives</h3>
                 </div>
 
-                <div class="objectives-intro bg-white rounded-4 shadow-lg p-5 mb-4">
+                <div class="objective-card bg-white rounded-4 shadow-lg p-4 mb-4">
                     <p class="lead text-muted text-center">
                         <!-- <span>IEEE Uttar Pradesh Section Women in Engineering</span> -->
-                        International Conference aims to bring
-                        together research scholars, practicing scientists, and industrialists from across the world,
-                        especially empowering women in engineering domains.
+                        <b>International Conference aims to bring
+                            together research scholars, practicing scientists, and industrialists from across the world,
+                            especially empowering women in engineering domains.</b>
                     </p>
                 </div>
 
@@ -275,10 +445,10 @@
 
                     <div class="col-lg-6">
                         <div class="objective-card bg-white rounded-4 shadow-lg p-4 h-100">
-                            <div class="objective-icon text-success mb-3">
+                            <div class="objective-icon newText mb-3">
                                 <i class="bi bi-lightbulb-fill display-5"></i>
                             </div>
-                            <h5 class="fw-bold text-success mb-3">Knowledge Sharing</h5>
+                            <h5 class="fw-bold mb-3">Knowledge Sharing</h5>
                             <p class="text-muted mb-0">Invited talks from eminent personalities across the globe
                                 offering valuable insights into the latest advancements in engineering fields.</p>
                         </div>
@@ -286,10 +456,10 @@
 
                     <div class="col-lg-6">
                         <div class="objective-card bg-white rounded-4 shadow-lg p-4 h-100">
-                            <div class="objective-icon text-warning mb-3">
+                            <div class="objective-icon newText mb-3">
                                 <i class="bi bi-trophy-fill display-5"></i>
                             </div>
-                            <h5 class="fw-bold text-warning mb-3">Professional Development</h5>
+                            <h5 class="fw-bold mb-3">Professional Development</h5>
                             <p class="text-muted mb-0">Pre-conference tutorials and workshops providing attendees
                                 with opportunities to enhance their skills and knowledge in cutting-edge
                                 technologies.</p>
@@ -298,10 +468,10 @@
 
                     <div class="col-lg-6">
                         <div class="objective-card bg-white rounded-4 shadow-lg p-4 h-100">
-                            <div class="objective-icon text-info mb-3">
-                                <i class="bi bi-presentation display-5"></i>
+                            <div class="objective-icon newText mb-3">
+                                <i class="bi bi-easel2-fill"></i>
                             </div>
-                            <h5 class="fw-bold text-info mb-3">Research Presentation</h5>
+                            <h5 class="fw-bold mb-3">Research Presentation</h5>
                             <p class="text-muted mb-0">Featured referred paper presentations by female presenters,
                                 allowing participants to share research findings with a global audience of experts.
                             </p>
@@ -309,12 +479,12 @@
                     </div>
 
                     <div class="col-lg-12">
-                        <div class="objective-card bg-gradient text-white rounded-4 shadow-lg p-4"
-                            style="background: linear-gradient(135deg, #6f42c1, #5a2d8f) !important;">
-                            <div class="objective-icon text-warning mb-3">
-                                <i class="bi bi-heart-fill display-5"></i>
+                        <div class="objective-card text-white rounded-4 shadow-lg p-4"
+                            style="background: var(--gradient-pink-blue) !important; border: none;">
+                            <div class="objective-icon text-white mb-3">
+                                <i class="bi bi-heart-fill display-5" style="color: white !important;"></i>
                             </div>
-                            <h5 class="fw-bold text-warning mb-3">Empowerment in Social and Personal Roles</h5>
+                            <h5 class="fw-bold text-white mb-3">Empowerment in Social and Personal Roles</h5>
                             <p class="mb-0">The conference inspires women to embrace their independence,
                                 assertiveness, and leadership in both their personal lives and within their
                                 communities, fostering a culture of empowerment and inclusion.</p>
@@ -330,7 +500,7 @@
         <!-- <h2 class="title10">Our Partners & Sponsors</h2> -->
         <p class="subtitle10">Trusted by leading organizations worldwide</p>
 
-        <div class="logo-scroller10">
+        <div class="logo-scroller10" style="display: none;">
             <div class="logo-track10">
                 <!-- First set of logos -->
                 <div class="logo-item10">

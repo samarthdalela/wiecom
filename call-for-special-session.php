@@ -1,1167 +1,569 @@
-<?php
-include 'header.php';
-echo <<<HTML
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPWIECON 2025</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-        rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="images/logo-1.jpg">
-
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-        rel="stylesheet">
-    <style>
-        .textCenter {
-            text-align: justify;
-        }
-
-        .venue-section {
-            background-image: url("images/caption.jpg");
-            /* background-image: url("images/nd.jpg"); */
-            background-repeat: no-repeat;
-            background-size: cover;
-            z-index: 10;
-        }
-
-        .img-fluid {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(247, 243, 247, 0.99));
-
-            backdrop-filter: blur(15px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-
-        }
-
-        .footer {
-            background: linear-gradient(135deg, rgba(171, 103, 186, 0.78), rgba(91, 2, 109, 0.99));
-            backdrop-filter: blur(15px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .header {
-            background: linear-gradient(135deg, rgba(228, 200, 234, 0.78), rgba(91, 2, 109, 0.99));
-            backdrop-filter: blur(15px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .newText {
-            color: rgba(91, 2, 109, 0.99);
-        }
-
-        .newBg {
-            background-color: rgba(91, 2, 109, 0.99);
-
-        }
-
-        .btnNew {
-            background: rgba(91, 2, 109, 0.99);
-        }
-
-
-        .header.scrolled {
-            background: rgba(255, 255, 255, 0.99);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
-            backdrop-filter: blur(20px);
-        }
-
-        /* Logo Section - Centered */
-        .logos-row {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .logos-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .logo-container {
-            padding: 0.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container:hover {
-            transform: translateY(-5px);
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            max-height: 80px;
-            width: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: brightness(1.02) contrast(1.05);
-        }
-
-        .logo-img:hover {
-            transform: scale(1.08);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            filter: brightness(1.1) contrast(1.1);
-        }
-
-        /* Navigation - Centered */
-        .navbar {
-            padding: 1rem 0;
-            background: #d0a8d3;
-        }
-
-        .navbar-nav {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            /* flex-wrap: wrap; */
-            gap: 0.1rem;
-            width: 100%;
-        }
-
-        .nav-item {
-            margin: 0 0.1rem;
-        }
-
-        .nav-link {
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #2c3e50 !important;
-            padding: 0.2rem 0.3rem !important;
-            position: relative;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            border-radius: 8px;
-            display: flex;
-            align-items: start;
-            gap: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-link:hover {
-            color: #ffffff !important;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            border-color: transparent;
-        }
-
-        .nav-link i {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-link:hover i {
-            transform: scale(1.2);
-        }
-
-        /* Modern underline effect */
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -2px;
-            left: 50%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-
-        .nav-link:hover::after {
-            width: 90%;
-        }
-
-        /* Mobile Menu Button */
-        .navbar-toggler {
-            border: none;
-            padding: 0.75rem 1rem;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .navbar-toggler:hover {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-toggler:focus {
-            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
-            outline: none;
-        }
-
-        /* .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath
-            stroke='rgba%2844, 62, 80, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4
-            23h22'/%3e%3c/svg%3e");
-            transition: transform 0.3s ease;
-            } */
-
-        .navbar-toggler:hover .navbar-toggler-icon {
-            transform: rotate(90deg);
-        }
-
-        .logo-container {
-            padding: 0.5rem 0;
-        }
-
-        .logo-img {
-            max-height: 70px;
-            width: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo-slider {
-            width: 100%;
-            overflow: hidden;
-            padding: 60px 0;
-        }
-
-        .logo-track {
-            display: flex;
-            animation: slide 20s linear infinite;
-            gap: 80px;
-            width: fit-content;
-        }
-
-        .logo-slide {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 200px;
-            height: 80px;
-            transition: all 0.3s ease;
-        }
-
-        .logo-slide:hover {
-            transform: translateY(-5px);
-        }
-
-        .textColour {
-            color: #ffffff;
-        }
-
-        .logo {
-            width: 160px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 600;
-            color: #1a1a1a;
-            border: 2px solid #f0f0f0;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo:hover {
-            border-color: #e0e0e0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transform: scale(1.05);
-        }
-
-        .logo:nth-child(1) {
-            color: #6366f1;
-            border-color: #e0e7ff;
-        }
-
-        .logo:nth-child(2) {
-            color: #8b5cf6;
-            border-color: #ede9fe;
-        }
-
-        .logo:nth-child(3) {
-            color: #06b6d4;
-            border-color: #cffafe;
-        }
-
-        .logo:nth-child(4) {
-            color: #10b981;
-            border-color: #d1fae5;
-        }
-
-        .logo:nth-child(5) {
-            color: #f59e0b;
-            border-color: #fef3c7;
-        }
-
-        .logo:nth-child(6) {
-            color: #ef4444;
-            border-color: #fee2e2;
-        }
-
-        @keyframes slide {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .logo-slider:hover .logo-track {
-            animation-play-state: paused;
-        }
-
-        @media (max-width: 768px) {
-            .logo-slider {
-                padding: 40px 0;
-            }
-
-            .logo-track {
-                gap: 40px;
-                animation-duration: 15s;
-            }
-
-            .logo-slide {
-                min-width: 150px;
-                height: 60px;
-            }
-
-            .logo {
-                width: 120px;
-                height: 50px;
-                font-size: 14px;
-            }
-
-            .logo-img {
-                width: 80px;
-            }
-        }
-
-        /* Fade edges for infinite effect */
-        .logo-slider::before,
-        .logo-slider::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 100px;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .logo-slider::before {
-            left: 0;
-            background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        }
-
-        .logo-slider::after {
-            right: 0;
-            background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        }
-
-        .logo-slider {
-            position: relative;
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 991.98px) {
-            .navbar-collapse {
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(10px);
-                border-radius: 12px;
-                padding: 1rem;
-                margin-top: 1rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            }
-
-            .navbar-nav .nav-link {
-                text-align: center;
-                margin: 0.25rem 0;
-                border-radius: 6px;
-                background: rgba(0, 123, 255, 0.05);
-            }
-
-            .navbar-nav .nav-link:hover {
-                background: rgba(0, 123, 255, 0.1);
-                transform: none;
-            }
-
-            .logo-img {
-                max-height: 60px;
-            }
-        }
-
-        /* Add some body padding to account for fixed header */
-        body {
-            /* padding-top: 50px; */
-        }
-
-        /* Hero section styles */
-        .hero-area {
-            min-height: 100vh;
-            position: relative;
-        }
-
-        .text-shadow {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .bgNew {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid hwb(0 100% 0% / 0.651);
-            background-color: #4b164cc1;
-            color: rgb(239, 235, 235);
-            border-radius: 20px;
-        }
-
-        .highlight-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid hwb(0 100% 0% / 0.651);
-            background-color: #4b164cc1;
-            color: rgb(239, 235, 235);
-        }
-
-        .highlight-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .highlight-cardf {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid hwb(0 100% 0% / 0.651);
-            background-color: #4b164c54;
-            color: rgb(239, 235, 235);
-        }
-
-        .highlight-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .animate-bounce {
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-10px);
-            }
-
-            60% {
-                transform: translateY(-5px);
-            }
-        }
-
-        /* About section styles */
-        .about-card,
-        .objective-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .about-card:hover,
-        .objective-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-divider {
-            transition: transform 0.3s ease;
-        }
-
-        .section-header:hover .section-divider {
-            transform: scaleX(1.2);
-        }
-
-        /* Date cards hover effect */
-        .date-card {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .date-card:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.2) !important;
-        }
-
-        /* IEEE section card */
-        .ieee-badge {
-            transition: transform 0.3s ease;
-/* display:none */
-        }
-
-        .badge {
-            background: rgba(91, 2, 109, 0.99);
-        }
-
-        .ieee-section-card:hover .ieee-badge {
-            transform: rotate(5deg) scale(1.1);
-        }
-
-        /* Back to top button */
-        #backToTop {
-            transition: all 0.3s ease;
-        }
-
-        #backToTop:hover {
-            transform: scale(1.1);
-        }
-
-        /* Conference date highlight animation */
-        .conference-date-highlight {
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .hero-area {
-                min-height: 90vh;
-            }
-
-            .display-3 {
-                font-size: 2.5rem;
-            }
-
-            .hero-actions .btn {
-                display: block;
-                margin: 0.5rem auto;
-                width: 80%;
-            }
-        }
-
-        /* Smooth link hover animations */
-        .nav-link {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-link:hover::before {
-            left: 100%;
-        }
-
-        /* new style starts here  */
-        :root {
-            --primary-blue: rgba(70, 12, 82, 0.99);
-            --accent-blue: rgba(91, 2, 109, 0.99);
-            --light-blue: rgba(232, 217, 235, 0.99);
-            --gold: #f39c12;
-            --text-dark: #2c3e50;
-            --primarySecond: rgba(91, 2, 109, 0.99);
-        }
-
-        .committee-hero {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
-            color: white;
-            padding: 4rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .committee-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
-            opacity: 0.3;
-        }
-
-        .committee-hero .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* new stayle end here */
-        /* :root {
-            --primary-blue: rgba(70, 12, 82, 0.99);
-            --accent-blue: rgba(91, 2, 109, 0.99);
-            --light-blue: rgba(232, 217, 235, 0.99);
-            --gold: rgba(91, 2, 109, 0.99);
-            --text-dark: #2c3e50;
-        } */
-
-        body {
-            background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 50%, #f8f9fa 100%);
-
-            color: var(--text-dark);
-
-        }
-
-        .text-primary {
-            color: var(--primary-blue) !important;
-        }
-
-        .text-success {
-            color: var(--accent-blue) !important;
-        }
-
-        .text-info {
-            color: var(--primary-blue) !important;
-        }
-
-        .text-warning {
-            color: var(--gold) !important;
-        }
-
-        .bg-success {
-            background-color: var(--accent-blue) !important;
-        }
-
-        .bg-success.bg-opacity-10 {
-            background-color: var(--light-blue) !important;
-        }
-
-        .bg-primary {
-            background-color: var(--primary-blue) !important;
-        }
-
-        .bg-light {
-            background-color: var(--light-blue) !important;
-        }
-
-        .border-success {
-            border-color: var(--accent-blue) !important;
-        }
-
-        .border-primary {
-            border-color: var(--primary-blue) !important;
-        }
-
-        .border-info {
-            border-color: var(--primary-blue) !important;
-        }
-
-        .border-warning {
-            border-color: var(--gold) !important;
-        }
-
-        .border-start.border-success {
-            border-left-color: var(--accent-blue) !important;
-        }
-
-        .border-start.border-info {
-            border-left-color: var(--primary-blue) !important;
-        }
-
-        .badge.bg-success {
-            background-color: var(--accent-blue) !important;
-        }
-
-        .badge.bg-primary {
-            background-color: var(--primary-blue) !important;
-        }
-
-        .btn-outline-primary {
-            color: var(--primary-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .btn-outline-primary:hover {
-            background-color: var(--primary-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .alert-info {
-            background-color: var(--light-blue);
-            border-color: var(--primary-blue);
-            color: var(--text-dark);
-        }
-
-        .alert-light {
-            background-color: #f8f9fa;
-            border-color: var(--light-blue);
-            color: var(--text-dark);
-        }
-
-        a {
-            color: var(--accent-blue);
-        }
-
-        a:hover {
-            color: var(--primary-blue);
-        }
-
-        .card-header {
-            border-bottom: 1px solid var(--light-blue);
-        }
-
-
-        body5 {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
-
-        .container5 {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .header5 {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
+<?php include 'header.php'; ?>
+
+<style>
+    .textCenter {
+        text-align: justify;
+    }
+
+    .venue-section {
+        background-image: url("images/caption.jpg");
+        /* background-image: url("images/nd.jpg"); */
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: 10;
+    }
+
+    .img-fluid {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(247, 243, 247, 0.99));
+
+        backdrop-filter: blur(15px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    }
+
+    /* Removed local header/footer/navbar overrides to match global style.css */
+
+
+    .committee-hero {
+        background: var(--gradient-pink-blue);
+        color: white;
+        padding: 4rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .committee-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+        opacity: 0.3;
+    }
+
+    .committee-hero .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* new stayle end here */
+
+    body {
+        background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 50%, #f8f9fa 100%);
+        color: var(--text-dark);
+    }
+
+    .text-primary {
+        color: var(--primary-blue) !important;
+    }
+
+    .text-success {
+        color: var(--accent-blue) !important;
+    }
+
+    .text-info {
+        color: var(--primary-blue) !important;
+    }
+
+    .text-warning {
+        color: var(--gold) !important;
+    }
+
+    /* Restored :root variables for page content */
+    .bg-success {
+        background-color: var(--accent-blue) !important;
+    }
+
+    .bg-success.bg-opacity-10 {
+        background-color: var(--light-blue) !important;
+    }
+
+    .bg-primary {
+        background-color: var(--primary-blue) !important;
+    }
+
+    .bg-light {
+        background-color: var(--light-blue) !important;
+    }
+
+    .border-success {
+        border-color: var(--accent-blue) !important;
+    }
+
+    .border-primary {
+        border-color: var(--primary-blue) !important;
+    }
+
+    .border-info {
+        border-color: var(--primary-blue) !important;
+    }
+
+    .border-warning {
+        border-color: var(--gold) !important;
+    }
+
+    .border-start.border-success {
+        border-left-color: var(--accent-blue) !important;
+    }
+
+    .border-start.border-info {
+        border-left-color: var(--primary-blue) !important;
+    }
+
+    .badge.bg-success {
+        background-color: var(--accent-blue) !important;
+    }
+
+    .badge.bg-primary {
+        background-color: var(--primary-blue) !important;
+    }
+
+    .btn-outline-primary {
+        color: var(--primary-blue);
+        border-color: var(--primary-blue);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary-blue);
+        border-color: var(--primary-blue);
+    }
+
+    .alert-info {
+        background-color: var(--light-blue);
+        border-color: var(--primary-blue);
+        color: var(--text-dark);
+    }
+
+    .alert-light {
+        background-color: #f8f9fa;
+        border-color: var(--light-blue);
+        color: var(--text-dark);
+    }
+
+    a {
+        color: var(--accent-blue);
+    }
+
+    a:hover {
+        color: var(--primary-blue);
+    }
+
+    .card-header {
+        border-bottom: 1px solid var(--light-blue);
+    }
+
+
+    body5 {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .container5 {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .header5 {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .main-title5 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: var(--primary-blue);
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle5 {
+        font-size: 1.3rem;
+        color: var(--text-dark);
+        opacity: 0.8;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .sessions-grid5 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .session-card5 {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        border: 3px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .session-card5::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue), var(--primarySecond));
+    }
+
+    .session-card5:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        border-color: var(--primarySecond);
+    }
+
+    .session-header5 {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .session-number5 {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(70, 12, 82, 0.3);
+    }
+
+    .session-title5 {
+        font-size: 2rem;
+        color: var(--text-dark);
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .session-description5 {
+        color: var(--text-dark);
+        opacity: 0.7;
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+
+    .speakers-grid5 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .speaker-card5 {
+        background: var(--light-blue);
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .speaker-card5:hover {
+        background: white;
+        border-color: var(--primarySecond);
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .speaker-image5 {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2.5rem;
+        font-weight: bold;
+        border: 4px solid var(--primarySecond);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .speaker-name5 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--primary-blue);
+        margin-bottom: 8px;
+    }
+
+    .speaker-title5 {
+        color: var(--text-dark);
+        opacity: 0.8;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .session-card5:nth-child(1) .session-number5 {
+        /* background: linear-gradient(135deg, #e74c3c, #c0392b); */
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .session-card5:nth-child(2) .session-number5 {
+        /* background: linear-gradient(135deg, #27ae60, #229954); */
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .session-card5:nth-child(3) .session-number5 {
+        /* background: linear-gradient(135deg, #3498db, #2980b9); */
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .session-card5:nth-child(4) .session-number5 {
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .time-badge5 {
+        display: inline-block;
+        background: var(--primarySecond);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
         .main-title5 {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .subtitle5 {
-            font-size: 1.3rem;
-            color: var(--text-dark);
-            opacity: 0.8;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .sessions-grid5 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .session-card5 {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
-            border: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .session-card5::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue), var(--primarySecond));
-        }
-
-        .session-card5:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            border-color: var(--primarySecond);
-        }
-
-        .session-header5 {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .session-number5 {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(70, 12, 82, 0.3);
-        }
-
-        .session-title5 {
-            font-size: 2rem;
-            color: var(--text-dark);
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .session-description5 {
-            color: var(--text-dark);
-            opacity: 0.7;
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-
-        .speakers-grid5 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .speaker-card5 {
-            background: var(--light-blue);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .speaker-card5:hover {
-            background: white;
-            border-color: var(--primarySecond);
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .speaker-image5 {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
             font-size: 2.5rem;
-            font-weight: bold;
-            border: 4px solid var(--primarySecond);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .speaker-name5 {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-bottom: 8px;
-        }
-
-        .speaker-title5 {
-            color: var(--text-dark);
-            opacity: 0.8;
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-
-        .session-card5:nth-child(1) .session-number5 {
-            /* background: linear-gradient(135deg, #e74c3c, #c0392b); */
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .session-card5:nth-child(2) .session-number5 {
-            /* background: linear-gradient(135deg, #27ae60, #229954); */
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .session-card5:nth-child(3) .session-number5 {
-            /* background: linear-gradient(135deg, #3498db, #2980b9); */
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .session-card5:nth-child(4) .session-number5 {
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .time-badge5 {
-            display: inline-block;
-            background: var(--primarySecond);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .main-title5 {
-                font-size: 2.5rem;
-            }
-
-            .sessions-grid5 {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .session-card5 {
-                padding: 25px;
-            }
-
-            .speakers-grid5 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* new styles for the section start */
-        body5 {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
-
-        .container5 {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .header5 {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .main-title5 {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .subtitle5 {
-            font-size: 1.3rem;
-            color: var(--text-dark);
-            opacity: 0.8;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
         }
 
         .sessions-grid5 {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: 1fr;
+            gap: 30px;
         }
 
         .session-card5 {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
-            border: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .session-card5::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary-blue), #e67e22, var(--primarySecond));
-        }
-
-        .session-card5:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            border-color: var(--primarySecond);
-        }
-
-        .session-header5 {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .session-number5 {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(70, 12, 82, 0.3);
-        }
-
-        .session-title5 {
-            font-size: 2rem;
-            color: var(--text-dark);
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .session-description5 {
-            color: var(--text-dark);
-            opacity: 0.7;
-            font-size: 1.1rem;
-            line-height: 1.5;
+            padding: 25px;
         }
 
         .speakers-grid5 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            grid-template-columns: 1fr;
         }
+    }
 
-        .speaker-card5 {
-            /* background: var(--light-blue); */
-            /* background: linear-gradient(135deg,   rgba(91, 2, 109, 0.301)
+    /* new styles for the section start */
+    body5 {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .container5 {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .header5 {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .main-title5 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: var(--primary-blue);
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle5 {
+        font-size: 1.3rem;
+        color: var(--text-dark);
+        opacity: 0.8;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .sessions-grid5 {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .session-card5 {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        border: 3px solid transparent;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .session-card5::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: var(--gradient-pink-blue);
+    }
+
+    .session-card5:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        border-color: var(--primary-pink);
+    }
+
+    .session-header5 {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .session-number5 {
+        display: inline-block;
+        background: var(--gradient-pink-blue);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(255, 45, 149, 0.3);
+    }
+
+    .session-title5 {
+        font-size: 2rem;
+        color: var(--text-dark);
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .session-description5 {
+        color: var(--text-dark);
+        opacity: 0.7;
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+
+    .speakers-grid5 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .speaker-card5 {
+        /* background: var(--light-blue); */
+        /* background: linear-gradient(135deg,   rgba(91, 2, 109, 0.301)
             ,  rgba(228, 205, 233, 0.301)); */
-            background: linear-gradient(90deg, rgba(218, 150, 231, 0.605), rgb(250, 250, 250), rgba(218, 150, 231, 0.605));
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 2px solid var(--primary-blue);
-        }
+        background: linear-gradient(90deg, rgba(255, 179, 217, 0.3), rgb(250, 250, 250), rgba(144, 224, 239, 0.3));
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-blue);
+    }
 
-        .speaker-card5:hover {
-            background: linear-gradient(90deg, rgba(218, 150, 231, 0.605), #e67d229a, rgba(218, 150, 231, 0.605));
-            border-color: var(--primarySecond);
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
+    .speaker-card5:hover {
+        background: linear-gradient(90deg, rgba(255, 179, 217, 0.5), rgba(144, 224, 239, 0.5));
+        border-color: var(--primary-pink);
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
 
-        .speaker-image5 {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+    .speaker-image5 {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2.5rem;
+        font-weight: bold;
+        border: 4px solid var(--primarySecond);
+
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .speaker-name5 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--primary-blue);
+        margin-bottom: 8px;
+    }
+
+    .speaker-title5 {
+        color: var(--text-dark);
+        opacity: 0.8;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .session-card5:nth-child(1) .session-number5 {
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .session-card5:nth-child(2) .session-number5 {
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .session-card5:nth-child(3) .session-number5 {
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .session-card5:nth-child(4) .session-number5 {
+        background: linear-gradient(135deg, var(--primarySecond), #e67e22);
+    }
+
+    .time-badge5 {
+        display: inline-block;
+        background: var(--primarySecond);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .main-title5 {
             font-size: 2.5rem;
-            font-weight: bold;
-            border: 4px solid var(--primarySecond);
-
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .speaker-name5 {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-bottom: 8px;
+        .session-card5 {
+            padding: 25px;
         }
 
-        .speaker-title5 {
-            color: var(--text-dark);
-            opacity: 0.8;
-            font-size: 1rem;
-            line-height: 1.4;
+        .speakers-grid5 {
+            grid-template-columns: 1fr;
         }
+    }
 
-        .session-card5:nth-child(1) .session-number5 {
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .session-card5:nth-child(2) .session-number5 {
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .session-card5:nth-child(3) .session-number5 {
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .session-card5:nth-child(4) .session-number5 {
-            background: linear-gradient(135deg, var(--primarySecond), #e67e22);
-        }
-
-        .time-badge5 {
-            display: inline-block;
-            background: var(--primarySecond);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .main-title5 {
-                font-size: 2.5rem;
-            }
-
-            .session-card5 {
-                padding: 25px;
-            }
-
-            .speakers-grid5 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* new styles for the section ends */
-    </style>
+    /* new styles for the section ends */
+</style>
 
 
 </head>
@@ -1208,11 +610,11 @@ echo <<<HTML
         <h2 class="h4 mb-0 text-success"><i class="bi bi-megaphone me-2"></i>Call for Special Sessions</h2>
     </div>
     <div class="card-body textCenter">
-        <p class="lead">We are soliciting proposals for special sessions from female academicians and Researchers within the general scope of UPWIECON 2025.</p>
+        <p class="lead">We are soliciting proposals for special sessions from female academicians and Researchers within the general scope of UPWIECON 2026.</p>
         
         <div class="row mb-4 textCenter">
             <div class="col-md-8">
-                <p>The special sessions will take place from <span class="badge bg-success">30-31 October 2025</span> at the same venue as the main conference. It should complement the main technical program and serve to broaden the technical scope of the conference in emerging areas.</p>
+                <p>The special sessions will take place from <span class="badge bg-success">30-31 October 2026</span> at the same venue as the main conference. It should complement the main technical program and serve to broaden the technical scope of the conference in emerging areas.</p>
                 
                 <p>The special session topic should be of sufficient significance and importance to attract interest from the researchers and practitioners from both academia and industry. We encourage the prospective special session organizers to submit well-planned proposals that are specific and detailed in justifying relevance and viability.</p>
             </div>
@@ -1221,7 +623,7 @@ echo <<<HTML
                     <div class="card-body text-center">
                         <i class="bi bi-calendar-event display-4 text-success mb-2"></i>
                         <h5 class="card-title">Special Sessions</h5>
-                        <p class="card-text"><strong>30-31 October 2025</strong></p>
+                        <p class="card-text"><strong>30-31 October 2026</strong></p>
                     </div>
                 </div>
             </div>
@@ -1229,7 +631,7 @@ echo <<<HTML
 
         <div class="alert alert-info border-start border-info border-4" role="alert">
             <h5 class="alert-heading"><i class="bi bi-info-circle me-2"></i>Submission Instructions</h5>
-            <p class="mb-0">Please submit your proposals (with no more than <strong>3 pages</strong>) in PDF format on or before <strong>31st January 2025</strong> by email in the attached format to the Conference Chair: <a href="mailto:upwiecon@gmail.com" class="text-decoration-none">upwiecon@gmail.com</a>.</p>
+            <p class="mb-0">Please submit your proposals (with no more than <strong>3 pages</strong>) in PDF format on or before <strong>31st January 2026</strong> by email in the attached format to the Conference Chair: <a href="mailto:upwiecon@gmail.com" class="text-decoration-none">upwiecon@gmail.com</a>.</p>
         </div>
 
         <h5 class="text-primary mb-3"><i class="bi bi-file-text me-2"></i>Proposal Format</h5>
@@ -1275,7 +677,7 @@ echo <<<HTML
                     <div class="card-body text-center">
                         <i class="bi bi-calendar-plus text-success fs-2 mb-2"></i>
                         <h6 class="card-title">Call Opens</h6>
-                        <p class="card-text fw-bold text-success">1 February, 2025</p>
+                        <p class="card-text fw-bold text-success">1 February, 2026</p>
                     </div>
                 </div>
             </div>
@@ -1284,7 +686,7 @@ echo <<<HTML
                     <div class="card-body text-center">
                         <i class="bi bi-calendar-x text-warning fs-2 mb-2"></i>
                         <h6 class="card-title">Submission Deadline</h6>
-                        <p class="card-text fw-bold text-warning">28 February, 2025</p>
+                        <p class="card-text fw-bold text-warning">28 February, 2026</p>
                     </div>
                 </div>
             </div>
@@ -1293,7 +695,7 @@ echo <<<HTML
                     <div class="card-body text-center">
                         <i class="bi bi-bell text-info fs-2 mb-2"></i>
                         <h6 class="card-title">Notification of Selection</h6>
-                        <p class="card-text fw-bold text-info">10 March, 2025</p>
+                        <p class="card-text fw-bold text-info">10 March, 2026</p>
                     </div>
                 </div>
             </div>
@@ -1302,7 +704,7 @@ echo <<<HTML
                     <div class="card-body text-center">
                         <i class="bi bi-calendar-event text-primary fs-2 mb-2"></i>
                         <h6 class="card-title">Special Sessions Date</h6>
-                        <p class="card-text fw-bold text-primary">30-31 October 2025</p>
+                        <p class="card-text fw-bold text-primary">30-31 October 2026</p>
                     </div>
                 </div>
             </div>
@@ -1327,20 +729,20 @@ echo <<<HTML
     </p>
 </div> -->
 
-<div class="text-center py-5">
-        <i class="bi bi-calendar-event fa-4x mb-4" style="color: var(--primary-blue);"></i>
-        <!-- <h3 class="pdf-title mb-3">Conference Schedule</h3> -->
-        <p class="pdf-description fs-5">
-            <i class="bi bi-clock-history me-2"></i>
-            <strong>Will be available soon</strong>
-        </p>
-        <div class="d-flex justify-content-center align-items-center mt-4">
-            <div class="spinner-grow me-3" style="color: var(--accent-blue);" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <div class="text-center py-5">
+            <i class="bi bi-calendar-event fa-4x mb-4" style="color: var(--primary-blue);"></i>
+            <!-- <h3 class="pdf-title mb-3">Conference Schedule</h3> -->
+            <p class="pdf-description fs-5">
+                <i class="bi bi-clock-history me-2"></i>
+                <strong>Will be available soon</strong>
+            </p>
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <div class="spinner-grow me-3" style="color: var(--accent-blue);" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <span style="color: var(--text-dark);">Stay tuned for updates</span>
             </div>
-            <span style="color: var(--text-dark);">Stay tuned for updates</span>
         </div>
-    </div>
         <div class="body5" style="display:none">
             <div class="container5">
                 <div class="header5">
@@ -1354,17 +756,19 @@ echo <<<HTML
                     <div class="session-card5">
                         <div class="session-header5">
                             <div class="session-number5">Special Session 1</div>
-                            <h2 class="session-title5">Advanced approaches in Communication, Computer Sciences and Electrical Engineering</h2>
+                            <h2 class="session-title5">Advanced approaches in Communication, Computer Sciences and
+                                Electrical Engineering</h2>
                             <!-- <p class="session-description5">Driving innovation in electrical, electronics, and computing
                                 through AI and ML</p> -->
-                                <br>
+                            <br>
                             <div class="session-number5">Special Session Chairs</div>
                         </div>
                         <div class="speakers-grid5">
                             <div class="speaker-card5">
                                 <img src="./images/s1 1.jpeg" alt="" class="speaker-image5">
                                 <h3 class="speaker-name5">Dr. Smita Sharma</h3>
-                                <p class="speaker-title5">National Institute of Electronics and Information Technology (NIELIT), India</p>
+                                <p class="speaker-title5">National Institute of Electronics and Information Technology
+                                    (NIELIT), India</p>
                             </div>
                             <div class="speaker-card5">
                                 <img src="./images/s1 2.jpeg" alt="" class="speaker-image5">
@@ -1392,7 +796,7 @@ echo <<<HTML
                                 Intelligent Systems in Electrical, Electronics, and Computer Engineering</h2>
                             <!-- <p class="session-description5">Driving innovation in electrical, electronics, and computing
                                 through AI and ML</p> -->
-                                <br>
+                            <br>
                             <div class="session-number5">Special Session Chairs</div>
                         </div>
                         <div class="speakers-grid5">
@@ -1454,7 +858,7 @@ echo <<<HTML
                             <h2 class="session-title5">VLSI Design and Technology</h2>
                             <!-- <p class="session-description5">Innovations in VLSI architectures, fabrication, and
                                 integration</p> -->
-                                <br>
+                            <br>
                             <div class="session-number5">Special Session Chairs</div>
                         </div>
                         <div class="speakers-grid5">
@@ -1519,7 +923,8 @@ echo <<<HTML
                     <div class="session-card5">
                         <div class="session-header5">
                             <div class="session-number5">Special Session 6</div>
-                            <h2 class="session-title5">Converging Frontiers: Semiconductors and Computational Intelligence</h2>
+                            <h2 class="session-title5">Converging Frontiers: Semiconductors and Computational
+                                Intelligence</h2>
                             <!-- <p class="session-description5">Harnessing intelligent algorithms to extract insights from
                                 massive data volumes
 
@@ -1601,7 +1006,8 @@ echo <<<HTML
                     <div class="session-card5">
                         <div class="session-header5">
                             <div class="session-number5">Special Session 8</div>
-                            <h2 class="session-title5">Secure and Sustainable Technologies for Digital Health and Precision Agriculture</h2>
+                            <h2 class="session-title5">Secure and Sustainable Technologies for Digital Health and
+                                Precision Agriculture</h2>
                             <!-- <p class="session-description5">Harnessing intelligent algorithms to extract insights from
                                 massive data volumes
 
@@ -1638,13 +1044,14 @@ echo <<<HTML
                         </div>
                     </div>
 
-              
+
 
 
                     <div class="session-card5">
                         <div class="session-header5">
                             <div class="session-number5">Special Session 9</div>
-                            <h2 class="session-title5">Emerging Smart Healthcare Technologies, Internet of Things, and Blockchain in Disease Detection, Diagnosis, and Prognosis</h2>
+                            <h2 class="session-title5">Emerging Smart Healthcare Technologies, Internet of Things, and
+                                Blockchain in Disease Detection, Diagnosis, and Prognosis</h2>
                             <!-- <p class="session-description5">Harnessing intelligent algorithms to extract insights from
                                 massive data volumes
 
@@ -1698,12 +1105,14 @@ echo <<<HTML
                                 <!-- <div class="speaker-image5">MS</div> -->
                                 <img src="./images/s10 1.jpeg" alt="" class="speaker-image5">
                                 <h3 class="speaker-name5">Dr. Vandna Rani Verma</h3>
-                                <p class="speaker-title5">Galgotias College of Engineering & Technology Greater Noida, India</p>
+                                <p class="speaker-title5">Galgotias College of Engineering & Technology Greater Noida,
+                                    India</p>
                             </div>
                             <div class="speaker-card5">
                                 <img src="./images/s10 2.jpeg" alt="" class="speaker-image5">
                                 <h3 class="speaker-name5">Dr. Nonita Sharma</h3>
-                                <p class="speaker-title5">Indira Gandhi Delhi Technical University for Women New Delhi, India</p>
+                                <p class="speaker-title5">Indira Gandhi Delhi Technical University for Women New Delhi,
+                                    India</p>
                             </div>
 
                         </div>
@@ -1719,18 +1128,18 @@ echo <<<HTML
                                 <h3 class="speaker-name5">Ms. Vandana Rawat</h3>
                                 <p class="speaker-title5">Graphic Era (Deemed to be University), Dehradun, India</p>
                             </div> -->
-                         
-                                <div class="speaker-card5">
-                                    <img src="./images/s10 4.jpeg" alt="" class="speaker-image5">
-                                    <h3 class="speaker-name5">Dr. Woinshet Ayatu</h3>
-                                    <p class="speaker-title5">Wachamo University, Ethiopia</p>
-                                </div>
-                                <!-- <div class="speaker-card5">
+
+                            <div class="speaker-card5">
+                                <img src="./images/s10 4.jpeg" alt="" class="speaker-image5">
+                                <h3 class="speaker-name5">Dr. Woinshet Ayatu</h3>
+                                <p class="speaker-title5">Wachamo University, Ethiopia</p>
+                            </div>
+                            <!-- <div class="speaker-card5">
                                     <img src="./images/s6 4.jpeg" alt="" class="speaker-image5">
                                     <h3 class="speaker-name5">Ms. Vandana Rawat</h3>
                                     <p class="speaker-title5">Graphic Era (Deemed to be University), Dehradun, India</p>
                                 </div> -->
-                        
+
                         </div>
                     </div>
 
@@ -1783,56 +1192,56 @@ echo <<<HTML
                                 <div class="col-md-6">
                                     <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                         <h6 class="fw-bold text-warning mb-2">Paper Submission Opens</h6>
-                                        <p class="mb-0">1<sup>st</sup> February 2025</p>
+                                        <p class="mb-0">1<sup>st</sup> February 2026</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                         <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 1)</h6>
-                                        <p class="mb-0">28<sup>th</sup> February 2025</p>
+                                        <p class="mb-0">28<sup>th</sup> February 2026</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                         <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 2)</h6>
-                                        <p class="mb-0">31<sup>st</sup> March 2025</p>
+                                        <p class="mb-0">31<sup>st</sup> March 2026</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="date-card   rounded-3 p-4 highlight-cardf">
                                         <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 3)</h6>
-                                        <p class="mb-0">31<sup>st</sup> May 2025</p>
+                                        <p class="mb-0">31<sup>st</sup> May 2026</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="date-card  rounded-3 p-4 highlight-cardf">
                                         <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 4)</h6>
-                                        <p class="mb-0">31<sup>st</sup> July 2025</p>
+                                        <p class="mb-0">31<sup>st</sup> July 2026</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="date-card highlight-cardf rounded-3 p-4">
                                         <h6 class="fw-bold text-warning mb-2">Final Submission Deadline</h6>
-                                        <p class="mb-0">30<sup>th</sup> August 2025</p>
+                                        <p class="mb-0">30<sup>th</sup> August 2026</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="date-card highlight-cardf rounded-3 p-4">
                                         <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                        <p class="mb-0">1<sup>st</sup> September 2025</p>
+                                        <p class="mb-0">1<sup>st</sup> September 2026</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="date-card highlight-cardf rounded-3 p-4">
                                         <h6 class="fw-bold text-warning mb-2">Camera Ready Submission</h6>
-                                        <p class="mb-0">1<sup>st</sup> October 2025</p>
+                                        <p class="mb-0">1<sup>st</sup> October 2026</p>
                                     </div>
                                 </div>
                             </div>
@@ -1842,7 +1251,7 @@ echo <<<HTML
                                     <h4 class="fw-bold mb-2">
                                         <i class="bi bi-star-fill me-2"></i>Conference Date
                                     </h4>
-                                    <h3 class="display-6 fw-bold mb-0">30<sup>th</sup> - 31<sup>st</sup> October 2025
+                                    <h3 class="display-6 fw-bold mb-0">30<sup>th</sup> - 31<sup>st</sup> October 2026
                                     </h3>
                                 </div>
                             </div>
@@ -1962,8 +1371,5 @@ echo <<<HTML
 
 </html>
 
-HTML
-
-    ?>
 <?php include 'subFooter.php'; ?>
 <?php include 'footer.php'; ?>

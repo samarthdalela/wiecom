@@ -8,21 +8,21 @@
 
 // class EmailNotification {
 //     private $fromEmail = 'wieconnielit@gmail.com';
-//     private $fromName = 'UPWIECON 2025';
+//     private $fromName = 'UPWIECON 2026';
 //     private $replyToEmail = 'wieconnielit@gmail.com';
 //     private $appPassword = 'htil fgrm hpwf mgbo'; // Gmail App Password
 //     private $debugMode = true;
 //     private $maxRetries = 3;
 //     private $retryDelay = 2;
-    
+
 //     // SMTP Configuration
 //     private $smtpHost = 'smtp.gmail.com';
 //     private $smtpPort = 587;
 //     private $smtpSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    
+
 //     public function __construct() {
 //         date_default_timezone_set('Asia/Kolkata');
-        
+
 //         if (!is_dir('logs')) {
 //             mkdir('logs', 0755, true);
 //         }
@@ -30,27 +30,27 @@
 
 //     public function sendPaymentConfirmation($registrationDetails, $paymentDetails) {
 //         $to = $registrationDetails['sEmail'];
-//         $subject = 'UPWIECON 2025 - Payment Confirmation & Registration Success';
+//         $subject = 'UPWIECON 2026 - Payment Confirmation & Registration Success';
 //         $htmlMessage = $this->getSuccessEmailTemplate($registrationDetails, $paymentDetails);
 //         $textMessage = $this->getSuccessEmailTextTemplate($registrationDetails, $paymentDetails);
-        
+
 //         $this->logEmailAttempt('PAYMENT_SUCCESS', $to, $subject, $paymentDetails['order_id']);
 //         $result = $this->sendEmailWithRetry($to, $subject, $htmlMessage, $textMessage);
 //         $this->logEmailResult($to, $result ? 'SUCCESS' : 'FAILED', 'Payment confirmation email', $paymentDetails['order_id']);
-        
+
 //         return $result;
 //     }
 
 //     public function sendPaymentFailure($registrationDetails, $paymentDetails) {
 //         $to = $registrationDetails['sEmail'];
-//         $subject = 'UPWIECON 2025 - Payment Issue Notification';
+//         $subject = 'UPWIECON 2026 - Payment Issue Notification';
 //         $htmlMessage = $this->getFailureEmailTemplate($registrationDetails, $paymentDetails);
 //         $textMessage = $this->getFailureEmailTextTemplate($registrationDetails, $paymentDetails);
-        
+
 //         $this->logEmailAttempt('PAYMENT_FAILED', $to, $subject, $paymentDetails['order_id']);
 //         $result = $this->sendEmailWithRetry($to, $subject, $htmlMessage, $textMessage);
 //         $this->logEmailResult($to, $result ? 'SUCCESS' : 'FAILED', 'Payment failure email', $paymentDetails['order_id']);
-        
+
 //         return $result;
 //     }
 
@@ -124,7 +124,7 @@
 //                 $mail->AltBody = $textMessage;
 //             }
 
-//             $mail->addCustomHeader('X-Mailer', 'UPWIECON2025-PHPMailer');
+//             $mail->addCustomHeader('X-Mailer', 'UPWIECON2026-PHPMailer');
 //             $mail->addCustomHeader('X-Priority', '3');
 
 //             $mail->send();
@@ -157,7 +157,7 @@
 
 //     public function sendTestEmail($to = null, $testType = 'basic') {
 //         $testTo = $to ?? $this->fromEmail;
-//         $subject = 'UPWIECON 2025 - Email System Test (' . strtoupper($testType) . ')';
+//         $subject = 'UPWIECON 2026 - Email System Test (' . strtoupper($testType) . ')';
 //         $htmlMessage = $this->getTestEmailTemplate($testType);
 //         $textMessage = $this->getTestEmailTextTemplate($testType);
 
@@ -205,11 +205,11 @@
 
 //     // --- Templates ---
 //     private function getTestEmailTemplate($testType = 'basic') {
-//         return "<html><body><h2>Test Email</h2><p>This is a <strong>{$testType}</strong> test email from UPWIECON 2025.</p></body></html>";
+//         return "<html><body><h2>Test Email</h2><p>This is a <strong>{$testType}</strong> test email from UPWIECON 2026.</p></body></html>";
 //     }
 
 //     private function getTestEmailTextTemplate($testType = 'basic') {
-//         return "This is a plain text test email from UPWIECON 2025. Test type: " . strtoupper($testType);
+//         return "This is a plain text test email from UPWIECON 2026. Test type: " . strtoupper($testType);
 //     }
 
 //     private function getSuccessEmailTemplate($registration, $payment) {
@@ -220,7 +220,7 @@
 //         return <<<EOT
 // Dear {$registration['sName']},
 
-// Thank you for registering for UPWIECON 2025. Your payment has been successfully received.
+// Thank you for registering for UPWIECON 2026. Your payment has been successfully received.
 
 // Registration Details:
 // - Name: {$registration['sName']}
@@ -232,19 +232,19 @@
 // We look forward to your participation.
 
 // Regards,
-// UPWIECON 2025 Team
+// UPWIECON 2026 Team
 // EOT;
 //     }
 
 //     private function getFailureEmailTemplate($registration, $payment) {
-//         return "<html><body><h2>Payment Failed</h2><p>Dear {$registration['sName']},<br>Your payment attempt for UPWIECON 2025 was not successful.<br>Order ID: {$payment['order_id']}<br>Please try again.</p></body></html>";
+//         return "<html><body><h2>Payment Failed</h2><p>Dear {$registration['sName']},<br>Your payment attempt for UPWIECON 2026 was not successful.<br>Order ID: {$payment['order_id']}<br>Please try again.</p></body></html>";
 //     }
 
 //     private function getFailureEmailTextTemplate($registration, $payment) {
 //         return <<<EOT
 // Dear {$registration['sName']},
 
-// We regret to inform you that your payment for UPWIECON 2025 was unsuccessful.
+// We regret to inform you that your payment for UPWIECON 2026 was unsuccessful.
 
 // Please try again using the payment portal. If you've been charged, contact the support team with your details.
 
@@ -254,7 +254,7 @@
 // Thank you for your interest.
 
 // Regards,
-// UPWIECON 2025 Team
+// UPWIECON 2026 Team
 // EOT;
 //     }
 
@@ -308,68 +308,74 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-class EmailNotification {
+class EmailNotification
+{
     private $fromEmail = 'ieeeconference@nielit.ac.in';
-    private $fromName = 'UPWIECON 2025';
+    private $fromName = 'UPWIECON 2026';
     private $replyToEmail = 'ieeeconference@nielit.ac.in';
     private $appPassword = 'kvyw myci rdfd tuja'; // Gmail App Password
     private $debugMode = true;
     private $maxRetries = 3;
     private $retryDelay = 2;
-    
+
     // SMTP Configuration
     private $smtpHost = 'smtp.gmail.com';
     private $smtpPort = 587;
     private $smtpSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         date_default_timezone_set('Asia/Kolkata');
-        
+
         if (!is_dir('logs')) {
             mkdir('logs', 0755, true);
         }
     }
 
-    public function sendPaymentConfirmation($registrationDetails, $paymentDetails) {
+    public function sendPaymentConfirmation($registrationDetails, $paymentDetails)
+    {
         $to = $registrationDetails['sEmail'];
-        $subject = 'UPWIECON 2025 - Payment Confirmation & Registration Success';
+        $subject = 'UPWIECON 2026 - Payment Confirmation & Registration Success';
         $htmlMessage = $this->getSuccessEmailTemplate($registrationDetails, $paymentDetails);
         $textMessage = $this->getSuccessEmailTextTemplate($registrationDetails, $paymentDetails);
-        
+
         $this->logEmailAttempt('PAYMENT_SUCCESS', $to, $subject, $paymentDetails['order_id']);
         $result = $this->sendEmailWithRetry($to, $subject, $htmlMessage, $textMessage);
         $this->logEmailResult($to, $result ? 'SUCCESS' : 'FAILED', 'Payment confirmation email', $paymentDetails['order_id']);
-        
+
         return $result;
     }
 
-    public function sendPaymentFailure($registrationDetails, $paymentDetails) {
+    public function sendPaymentFailure($registrationDetails, $paymentDetails)
+    {
         $to = $registrationDetails['sEmail'];
-        $subject = 'UPWIECON 2025 - Payment Issue Notification';
+        $subject = 'UPWIECON 2026 - Payment Issue Notification';
         $htmlMessage = $this->getFailureEmailTemplate($registrationDetails, $paymentDetails);
         $textMessage = $this->getFailureEmailTextTemplate($registrationDetails, $paymentDetails);
-        
+
         $this->logEmailAttempt('PAYMENT_FAILED', $to, $subject, $paymentDetails['order_id']);
         $result = $this->sendEmailWithRetry($to, $subject, $htmlMessage, $textMessage);
         $this->logEmailResult($to, $result ? 'SUCCESS' : 'FAILED', 'Payment failure email', $paymentDetails['order_id']);
-        
+
         return $result;
     }
 
-    public function sendPaymentUnknown($registrationDetails, $paymentDetails) {
+    public function sendPaymentUnknown($registrationDetails, $paymentDetails)
+    {
         $to = $registrationDetails['sEmail'];
-        $subject = 'UPWIECON 2025 - Payment Status Under Review';
+        $subject = 'UPWIECON 2026 - Payment Status Under Review';
         $htmlMessage = $this->getUnknownStatusEmailTemplate($registrationDetails, $paymentDetails);
         $textMessage = $this->getUnknownStatusEmailTextTemplate($registrationDetails, $paymentDetails);
-        
+
         $this->logEmailAttempt('PAYMENT_UNKNOWN', $to, $subject, $paymentDetails['order_id']);
         $result = $this->sendEmailWithRetry($to, $subject, $htmlMessage, $textMessage);
         $this->logEmailResult($to, $result ? 'SUCCESS' : 'FAILED', 'Payment unknown status email', $paymentDetails['order_id']);
-        
+
         return $result;
     }
 
-    private function sendEmailWithRetry($to, $subject, $htmlMessage, $textMessage = '') {
+    private function sendEmailWithRetry($to, $subject, $htmlMessage, $textMessage = '')
+    {
         $attempts = 0;
         $lastError = '';
 
@@ -410,7 +416,8 @@ class EmailNotification {
         return false;
     }
 
-    private function sendViaPHPMailer($to, $subject, $htmlMessage, $textMessage = '') {
+    private function sendViaPHPMailer($to, $subject, $htmlMessage, $textMessage = '')
+    {
         try {
             $mail = new PHPMailer(true);
             $mail->isSMTP();
@@ -423,7 +430,7 @@ class EmailNotification {
 
             if ($this->debugMode) {
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-                $mail->Debugoutput = function($str, $level) {
+                $mail->Debugoutput = function ($str, $level) {
                     error_log("PHPMailer DEBUG: $str");
                 };
             }
@@ -439,7 +446,7 @@ class EmailNotification {
                 $mail->AltBody = $textMessage;
             }
 
-            $mail->addCustomHeader('X-Mailer', 'UPWIECON2025-PHPMailer');
+            $mail->addCustomHeader('X-Mailer', 'UPWIECON2026-PHPMailer');
             $mail->addCustomHeader('X-Priority', '3');
 
             $mail->send();
@@ -450,7 +457,8 @@ class EmailNotification {
         }
     }
 
-    private function sendViaBasicMail($to, $subject, $htmlMessage) {
+    private function sendViaBasicMail($to, $subject, $htmlMessage)
+    {
         try {
             $headers = "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
@@ -466,13 +474,15 @@ class EmailNotification {
         }
     }
 
-    private function isMailFunctionAvailable() {
+    private function isMailFunctionAvailable()
+    {
         return function_exists('mail');
     }
 
-    public function sendTestEmail($to = null, $testType = 'basic') {
+    public function sendTestEmail($to = null, $testType = 'basic')
+    {
         $testTo = $to ?? $this->fromEmail;
-        $subject = 'UPWIECON 2025 - Email System Test (' . strtoupper($testType) . ')';
+        $subject = 'UPWIECON 2026 - Email System Test (' . strtoupper($testType) . ')';
         $htmlMessage = $this->getTestEmailTemplate($testType);
         $textMessage = $this->getTestEmailTextTemplate($testType);
 
@@ -483,7 +493,8 @@ class EmailNotification {
         return $result;
     }
 
-    public function checkEmailConfig() {
+    public function checkEmailConfig()
+    {
         $config = [
             'phpmailer_available' => class_exists('PHPMailer\PHPMailer\PHPMailer'),
             'mail_function' => function_exists('mail'),
@@ -519,15 +530,18 @@ class EmailNotification {
     }
 
     // --- Templates ---
-    private function getTestEmailTemplate($testType = 'basic') {
-        return "<html><body><h2>Test Email</h2><p>This is a <strong>{$testType}</strong> test email from UPWIECON 2025.</p></body></html>";
+    private function getTestEmailTemplate($testType = 'basic')
+    {
+        return "<html><body><h2>Test Email</h2><p>This is a <strong>{$testType}</strong> test email from UPWIECON 2026.</p></body></html>";
     }
 
-    private function getTestEmailTextTemplate($testType = 'basic') {
-        return "This is a plain text test email from UPWIECON 2025. Test type: " . strtoupper($testType);
+    private function getTestEmailTextTemplate($testType = 'basic')
+    {
+        return "This is a plain text test email from UPWIECON 2026. Test type: " . strtoupper($testType);
     }
 
-    private function getSuccessEmailTemplate($registration, $payment) {
+    private function getSuccessEmailTemplate($registration, $payment)
+    {
         // return "<html><body><h2>Payment Successful</h2><p>Thank you, {$registration['sName']}, for registering.<br>Your payment of ₹{$payment['amount']} was successful.<br>Order ID: {$payment['order_id']}</p></body></html>";
         return "<html>
         <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4;\">
@@ -549,7 +563,7 @@ class EmailNotification {
                        </p>
                        
                        <p style=\"font-size: 16px; margin-bottom: 30px; line-height: 1.8;\">
-                           Thank you for registering for <strong>UPWIECON 2025</strong>! We're excited to confirm that your payment has been successfully processed.
+                           Thank you for registering for <strong>UPWIECON 2026</strong>! We're excited to confirm that your payment has been successfully processed.
                        </p>
                        
                        <!-- Payment Details Box -->
@@ -584,7 +598,7 @@ class EmailNotification {
                        </div>
                        
                        <p style=\"font-size: 16px; margin-top: 30px; text-align: center; color: #7f8c8d;\">
-                           Thank you for being part of <strong>UPWIECON 2025</strong>
+                           Thank you for being part of <strong>UPWIECON 2026</strong>
                        </p>
 <p style=\"font-size: 14px; margin: 15px 0 0 0; text-align: center; color: #2c3e50;\">
                          Need help? Write to us at
@@ -599,7 +613,7 @@ class EmailNotification {
                    <!-- Footer -->
                    <div style=\"background-color: #34495e; padding: 25px; text-align: center;\">
                        <p style=\"color: #bdc3c7; margin: 0 0 10px 0; font-size: 14px;\">
-                           <strong>UPWIECON 2025 Team</strong>
+                           <strong>UPWIECON 2026 Team</strong>
                        </p>
                        <p style=\"color: #95a5a6; margin: 0; font-size: 12px;\">
                            This is an automated confirmation email. Please save this for your records.
@@ -608,13 +622,15 @@ class EmailNotification {
                </div>
            </div>
         </body>
-        </html>";}
+        </html>";
+    }
 
-    private function getSuccessEmailTextTemplate($registration, $payment) {
+    private function getSuccessEmailTextTemplate($registration, $payment)
+    {
         return <<<EOT
 Dear {$registration['sName']},
 
-Thank you for registering for UPWIECON 2025. Your payment has been successfully received.
+Thank you for registering for UPWIECON 2026. Your payment has been successfully received.
 
 Registration Details:
 - Name: {$registration['sName']}
@@ -626,11 +642,12 @@ Registration Details:
 We look forward to your participation.
 
 Regards,
-UPWIECON 2025 Team
+UPWIECON 2026 Team
 EOT;
     }
 
-    private function getFailureEmailTemplate($registration, $payment) {
+    private function getFailureEmailTemplate($registration, $payment)
+    {
         return "<html>
         <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4;\">
            <div style=\"max-width: 600px; margin: 0 auto; padding: 20px;\">
@@ -651,7 +668,7 @@ EOT;
                        </p>
                        
                        <p style=\"font-size: 16px; margin-bottom: 25px; line-height: 1.8;\">
-                           We're sorry to inform you that your payment for <strong>UPWIECON 2025</strong> could not be processed successfully.
+                           We're sorry to inform you that your payment for <strong>UPWIECON 2026</strong> could not be processed successfully.
                        </p>
                        
                        <!-- Payment Details Box -->
@@ -709,7 +726,7 @@ EOT;
                        
                        
                        <p style=\"font-size: 16px; margin-top: 30px; text-align: center; color: #7f8c8d;\">
-                           We appreciate your interest in <strong>UPWIECON 2025</strong>
+                           We appreciate your interest in <strong>UPWIECON 2026</strong>
                        </p>
 <p style=\"font-size: 14px; margin: 15px 0 0 0; text-align: center; color: #2c3e50;\">
                          Need help? Write to us at
@@ -722,7 +739,7 @@ EOT;
                    <!-- Footer -->
                    <div style=\"background-color: #34495e; padding: 25px; text-align: center;\">
                        <p style=\"color: #bdc3c7; margin: 0 0 10px 0; font-size: 14px;\">
-                           <strong>UPWIECON 2025 Team</strong>
+                           <strong>UPWIECON 2026 Team</strong>
                        </p>
                        <p style=\"color: #95a5a6; margin: 0; font-size: 12px;\">
                            This is an automated notification. Please do not reply directly to this email.
@@ -734,11 +751,12 @@ EOT;
         </html>";
     }
 
-    private function getFailureEmailTextTemplate($registration, $payment) {
+    private function getFailureEmailTextTemplate($registration, $payment)
+    {
         return <<<EOT
 Dear {$registration['sName']},
 
-We regret to inform you that your payment for UPWIECON 2025 was unsuccessful.
+We regret to inform you that your payment for UPWIECON 2026 was unsuccessful.
 
 Please try again using the payment portal. If you've been charged, contact the support team with your details.
 
@@ -748,11 +766,12 @@ Email: {$registration['sEmail']}
 Thank you for your interest.
 
 Regards,
-UPWIECON 2025 Team
+UPWIECON 2026 Team
 EOT;
     }
 
-    private function getUnknownStatusEmailTemplate($registration, $payment) {
+    private function getUnknownStatusEmailTemplate($registration, $payment)
+    {
         return <<<HTML
 <html>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
@@ -761,7 +780,7 @@ EOT;
         
         <p>Dear <strong>{$registration['sName']}</strong>,</p>
         
-        <p>Thank you for your interest in UPWIECON 2025. We have received your payment request, but the current status is under review.</p>
+        <p>Thank you for your interest in UPWIECON 2026. We have received your payment request, but the current status is under review.</p>
         
         <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 20px 0;">
             <h3 style="color: #856404; margin-top: 0;">Payment Details:</h3>
@@ -788,12 +807,12 @@ EOT;
             <p style="margin: 10px 0;">If you have any urgent queries, please contact us with your Order ID: <strong>{$payment['order_id']}</strong></p>
         </div>
         
-        <p style="margin-top: 30px;">Thank you for your patience and interest in UPWIECON 2025.</p>
+        <p style="margin-top: 30px;">Thank you for your patience and interest in UPWIECON 2026.</p>
         
         <hr style="border: none; height: 1px; background-color: #ddd; margin: 30px 0;">
         
         <p style="font-size: 12px; color: #666; text-align: center;">
-            <strong>UPWIECON 2025 Team</strong><br>
+            <strong>UPWIECON 2026 Team</strong><br>
             Email: {$this->replyToEmail}<br>
             This is an automated message. Please do not reply directly to this email.
         </p>
@@ -803,11 +822,12 @@ EOT;
 HTML;
     }
 
-    private function getUnknownStatusEmailTextTemplate($registration, $payment) {
+    private function getUnknownStatusEmailTextTemplate($registration, $payment)
+    {
         return <<<EOT
 Dear {$registration['sName']},
 
-Thank you for your interest in UPWIECON 2025. We have received your payment request, but the current status is under review.
+Thank you for your interest in UPWIECON 2026. We have received your payment request, but the current status is under review.
 
 PAYMENT DETAILS:
 - Order ID: {$payment['order_id']}
@@ -825,10 +845,10 @@ Please do not attempt to pay again until you receive further instructions from o
 
 If you have any urgent queries, please contact us with your Order ID: {$payment['order_id']}
 
-Thank you for your patience and interest in UPWIECON 2025.
+Thank you for your patience and interest in UPWIECON 2026.
 
 Regards,
-UPWIECON 2025 Team
+UPWIECON 2026 Team
 Email: {$this->replyToEmail}
 
 This is an automated message. Please do not reply directly to this email.
@@ -836,7 +856,8 @@ EOT;
     }
 
     // --- Logging ---
-    private function logEmailAttempt($type, $to, $subject, $orderId = null) {
+    private function logEmailAttempt($type, $to, $subject, $orderId = null)
+    {
         $logData = [
             'timestamp' => date('Y-m-d H:i:s'),
             'type' => $type,
@@ -854,7 +875,8 @@ EOT;
         $this->writeToLogFile('email_attempts', $logData);
     }
 
-    private function logEmailResult($to, $status, $method, $orderId = null) {
+    private function logEmailResult($to, $status, $method, $orderId = null)
+    {
         $logData = [
             'timestamp' => date('Y-m-d H:i:s'),
             'to' => $to,
@@ -867,7 +889,8 @@ EOT;
         $this->writeToLogFile('email_results', $logData);
     }
 
-    private function writeToLogFile($logType, $data) {
+    private function writeToLogFile($logType, $data)
+    {
         try {
             $logFile = 'logs/' . $logType . '_' . date('Y-m-d') . '.txt';
             $logLine = date('Y-m-d H:i:s') . " | " . json_encode($data) . "\n";

@@ -1,25 +1,12 @@
 <?php include 'header.php'; ?>
 <style>
-    /* content style start here */
-    :root {
-        --primary-blue: rgba(70, 12, 82, 0.99);
-        --accent-blue: rgba(91, 2, 109, 0.99);
-        --light-blue: rgba(232, 217, 235, 0.99);
-        --gold: rgba(171, 103, 186, 0.78);
-        --text-dark: #2c3e50;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    /* Call for Paper page specific styles */
 
     .body52 {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
         color: var(--text-dark);
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 50%, #f8f9fa 100%);
         min-height: 100vh;
     }
 
@@ -32,7 +19,7 @@
     .header52 {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px rgba(255, 45, 149, 0.1);
         padding: 2rem 0;
         text-align: center;
         margin-bottom: 2rem;
@@ -42,24 +29,24 @@
     .title52 {
         font-size: 3.5rem;
         font-weight: 800;
-        background: linear-gradient(45deg, var(--primary-blue), var(--accent-blue));
+        background: var(--gradient-pink-blue);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         margin-bottom: 0.5rem;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
 
     .subtitle52 {
         font-size: 1.5rem;
-        color: var(--gold);
+        color: var(--primary-pink);
         font-weight: 300;
         margin-bottom: 1rem;
     }
 
     .welcome52 {
         font-size: 1.2rem;
-        color: var(--gold);
+        color: var(--primary-pink);
         font-style: italic;
     }
 
@@ -68,7 +55,7 @@
         backdrop-filter: blur(15px);
         border-radius: 20px;
         padding: 3rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
         margin-bottom: 2rem;
     }
 
@@ -88,7 +75,7 @@
         transform: translateX(-50%);
         width: 80px;
         height: 4px;
-        background: linear-gradient(45deg, var(--primary-blue), var(--accent-blue));
+        background: var(--gradient-pink-blue);
         border-radius: 2px;
     }
 
@@ -100,8 +87,8 @@
     }
 
     .track-card52 {
-        background: linear-gradient(135deg, rgba(70, 12, 82, 0.05), rgba(91, 2, 109, 0.05));
-        border: 2px solid rgba(70, 12, 82, 0.2);
+        background: linear-gradient(135deg, rgba(255, 45, 149, 0.02), rgba(0, 150, 199, 0.02));
+        border: 2px solid rgba(255, 45, 149, 0.1);
         border-radius: 16px;
         padding: 2rem;
         transition: all 0.3s ease;
@@ -116,19 +103,19 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(45deg, var(--primary-blue), var(--accent-blue));
+        background: var(--gradient-pink-blue);
     }
 
     .track-card52:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(70, 12, 82, 0.2);
-        border-color: rgba(70, 12, 82, 0.4);
+        box-shadow: 0 20px 40px rgba(255, 45, 149, 0.15);
+        border-color: var(--primary-pink);
     }
 
     .track-title52 {
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--text-dark);
+        color: var(--primary-blue);
         margin-bottom: 1rem;
         display: flex;
         align-items: center;
@@ -141,110 +128,74 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, var(--gold), var(--accent-blue));
+        background: var(--gradient-pink-blue);
         transform: scaleX(0);
         transition: transform 0.3s ease;
     }
 
-    /* Emoji indicators unchanged
-.track-title52::before {
-    content: '🔬';
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.track-card52:nth-child(1) .track-title52::before { content: '⚡'; }
-.track-card52:nth-child(2) .track-title52::before { content: '🌐'; }
-.track-card52:nth-child(3) .track-title52::before { content: '📊'; }
-.track-card52:nth-child(4) .track-title52::before { content: '💾'; }
-.track-card52:nth-child(5) .track-title52::before { content: '📡'; }
-.track-card52:nth-child(6) .track-title52::before { content: '🧬'; }
-.track-card52:nth-child(7) .track-title52::before { content: '🎥'; }
-.track-card52:nth-child(8) .track-title52::before { content: '⚡'; }
-.track-card52:nth-child(9) .track-title52::before { content: '🔍'; }
-.track-card52:nth-child(10) .track-title52::before { content: '⚙️'; }
-.track-card52:nth-child(11) .track-title52::before { content: '🤖'; }
-.track-card52:nth-child(12) .track-title52::before { content: '🔋'; }
-.track-card52:nth-child(13) .track-title52::before { content: '💻'; }
-.track-card52:nth-child(14) .track-title52::before { content: '♿'; } */
-    /* Impressive Bootstrap icons replacement */
-    /* Technical content-relevant Bootstrap icons */
     .track-title52::before {
         font-family: 'bootstrap-icons';
         content: '\F1E9';
-        /* bi-cpu-fill for Electronics */
         margin-right: 0.5rem;
         font-size: 1.2rem;
+        color: var(--primary-pink);
     }
 
+    /* Technical content-relevant Bootstrap icons with pink theme */
     .track-card52:nth-child(1) .track-title52::before {
         content: '\F1E9';
-        /* bi-cpu-fill - Electronics/Circuits/VLSI */
     }
 
     .track-card52:nth-child(2) .track-title52::before {
         content: '\F5B8';
-        /* bi-wifi - Network Technologies */
     }
 
     .track-card52:nth-child(3) .track-title52::before {
         content: '\F587';
-        /* bi-soundwave - Signal Processing */
     }
 
     .track-card52:nth-child(4) .track-title52::before {
         content: '\F1E3';
-        /* bi-cloud-fill - Data Mining/Big Data */
     }
 
     .track-card52:nth-child(5) .track-title52::before {
         content: '\F59A';
-        /* bi-broadcast-pin - Communication Systems */
     }
 
     .track-card52:nth-child(6) .track-title52::before {
         content: '\F26A';
-        /* bi-diagram-3-fill - Bioinformatics/Networks */
     }
 
     .track-card52:nth-child(7) .track-title52::before {
         content: '\F1C1';
-        /* bi-camera-fill - Multimedia/Image Processing */
     }
 
     .track-card52:nth-child(8) .track-title52::before {
         content: '\F325';
-        /* bi-plug-fill - Power Systems */
     }
 
     .track-card52:nth-child(9) .track-title52::before {
         content: '\F1FE';
-        /* bi-translate - Language Technologies */
     }
 
     .track-card52:nth-child(10) .track-title52::before {
         content: '\F4E3';
-        /* bi-gear-fill - Machines/Instrumentation */
     }
 
     .track-card52:nth-child(11) .track-title52::before {
         content: '\F585';
-        /* bi-robot - Robotics/AI */
     }
 
     .track-card52:nth-child(12) .track-title52::before {
         content: '\F15E';
-        /* bi-battery-charging - Power Electronics */
     }
 
     .track-card52:nth-child(13) .track-title52::before {
         content: '\F4C4';
-        /* bi-microscope - Semiconductors/Nanotech */
     }
 
     .track-card52:nth-child(14) .track-title52::before {
         content: '\F4EC';
-        /* bi-heart-pulse-fill - Assistive Technology */
     }
 
     .track-description52 {
@@ -254,17 +205,17 @@
     }
 
     .highlight52 {
-        background: linear-gradient(45deg, rgba(70, 12, 82, 0.05), rgba(91, 2, 109, 0.05));
+        background: rgba(255, 45, 149, 0.05);
         padding: 0.2rem 0.5rem;
         border-radius: 4px;
         font-weight: 600;
-        color: var(--primary-blue);
+        color: var(--primary-pink);
     }
 
     .footer52 {
         text-align: center;
         padding: 2rem 0;
-        color: var(--light-blue);
+        color: var(--primary-blue);
         font-size: 0.9rem;
     }
 
@@ -281,7 +232,7 @@
     .floating-circle52 {
         position: absolute;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 45, 149, 0.05);
         animation: float52 6s ease-in-out infinite;
     }
 
@@ -333,7 +284,7 @@
 
     .scroll-progress52 {
         height: 100%;
-        background: linear-gradient(45deg, var(--primary-blue), var(--accent-blue));
+        background: var(--gradient-pink-blue);
         width: 0%;
         transition: width 0.3s ease;
     }
@@ -356,20 +307,8 @@
         }
     }
 
-
-
-
-    /* content style end here */
-    :root {
-        --primary-blue: rgba(70, 12, 82, 0.99);
-        --accent-blue: rgba(91, 2, 109, 0.99);
-        --light-blue: rgba(232, 217, 235, 0.99);
-        --gold: #f39c12;
-        --text-dark: #2c3e50;
-    }
-
     .committee-hero {
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        background: var(--gradient-pink-blue);
         color: white;
         padding: 4rem 0;
         position: relative;
@@ -405,10 +344,10 @@
                 <div class="col-12 text-center">
                     <h1 class="display-4 fw-bold mb-3">
                         <i class="fas fa-users me-3"></i>
-                        UPWIECON2025
+                        UPWIECON 2026
                     </h1>
                     <p class="lead mb-4">International Conference on Emerging Technologies <br>Welcome to
-                        UPWIECON2025!!!</p>
+                        UPWIECON 2026!!!</p>
                     <!-- <div class="d-flex justify-content-center gap-4 flex-wrap">
                     <div class="text-center">
                         <i class="fas fa-crown fa-2x mb-2"></i>
@@ -443,9 +382,9 @@
 
     <div class="container52 my-4">
         <!-- <header class="header52">
-        <h1 class="title52">UPWIECON2025</h1>
+        <h1 class="title52">UPWIECON2026</h1>
         <p class="subtitle52">International Conference on Emerging Technologies</p>
-        <p class="welcome52">Welcome to UPWIECON2025!!!</p>
+        <p class="welcome52">Welcome to UPWIECON2026!!!</p>
       </header> -->
         <div class="floating-elements51">
             <div class="floating-element51"></div>
@@ -596,7 +535,8 @@
         </main>
 
         <footer class="footer52">
-            <p>&copy; 2025 UPWIECON2025. All rights reserved. | Submit your papers and be part of cutting-edge research!
+            <p>&copy; 2026 UPWIECON 2026. All rights reserved. | Submit your papers and be part of cutting-edge
+                research!
             </p>
         </footer>
     </div>
@@ -644,56 +584,56 @@
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Paper Submission Opens</h6>
-                                            <p class="mb-0">1<sup>st</sup> February 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 1)</h6>
-                                            <p class="mb-0">28<sup>th</sup> February 2025</p>
+                                            <p class="mb-0">28<sup>th</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 2)</h6>
-                                            <p class="mb-0">31<sup>st</sup> March 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> March 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card   rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 3)</h6>
-                                            <p class="mb-0">31<sup>st</sup> May 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> May 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 4)</h6>
-                                            <p class="mb-0">31<sup>st</sup> July 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> July 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Final Submission Deadline</h6>
-                                            <p class="mb-0">30<sup>th</sup> August 2025</p>
+                                            <p class="mb-0">30<sup>th</sup> August 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Camera Ready Submission</h6>
-                                            <p class="mb-0">1<sup>st</sup> October 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> October 2026</p>
                                         </div>
                                     </div>
                                 </div>
@@ -704,7 +644,7 @@
                                             <i class="bi bi-star-fill me-2"></i>Conference Date
                                         </h4>
                                         <h3 class="display-6 fw-bold mb-0">30<sup>th</sup> - 31<sup>st</sup> October
-                                            2025
+                                            2026
                                         </h3>
                                     </div>
                                 </div>

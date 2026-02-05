@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
     $username_value = htmlspecialchars($username);
-    
+
     if (empty($username) || empty($password)) {
         $error = 'Please fill in all fields';
     } else {
@@ -26,30 +26,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Create database connection using your Database class
             $database = new Database();
             $pdo = $database->connect();
-            
+
             // Prepare statement to prevent SQL injection
             $stmt = $pdo->prepare("SELECT username, password_hash FROM admin_users WHERE username = ? AND active = 1");
             $stmt->execute([$username]);
-            
+
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
+
             if ($user && password_verify($password, $user['password_hash'])) {
                 // Login successful
                 $_SESSION['admin_logged_in'] = true;
                 $_SESSION['admin_username'] = $user['username'];
                 $_SESSION['admin_login_time'] = time();
-                
+
                 // Update last login time (optional)
                 $updateStmt = $pdo->prepare("UPDATE admin_users SET last_login = NOW() WHERE username = ?");
                 $updateStmt->execute([$username]);
-                
+
                 // Redirect to admin home
                 header('Location: adminHome.php');
                 exit;
             } else {
                 $error = 'Invalid username or password';
             }
-            
+
         } catch (PDOException $e) {
             // Log the error for debugging (don't show to user)
             error_log('Database error: ' . $e->getMessage());
@@ -60,10 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - UPWIECON 2025</title>
+    <title>Admin Login - UPWIECON 2026</title>
     <style>
         * {
             margin: 0;
@@ -106,14 +107,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
             background-size: 20px 20px;
             animation: float 20s linear infinite;
         }
 
         @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-20px, -20px) rotate(360deg); }
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-20px, -20px) rotate(360deg);
+            }
         }
 
         .login-header h1 {
@@ -196,9 +202,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         .error-message i {
@@ -243,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -328,8 +344,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 480px) {
@@ -337,19 +358,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 margin: 10px;
                 border-radius: 15px;
             }
-            
+
             .login-header {
                 padding: 30px 20px;
             }
-            
+
             .login-form {
                 padding: 30px 20px;
             }
-            
+
             .admin-icon {
                 font-size: 40px;
             }
-            
+
             .login-header h1 {
                 font-size: 24px;
             }
@@ -358,6 +379,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-content">
@@ -371,20 +393,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-header">
             <i class="fas fa-user-shield admin-icon"></i>
             <h1>Admin Login</h1>
-            <p>UPWIECON 2025 Administration Panel</p>
+            <p>UPWIECON 2026 Administration Panel</p>
         </div>
 
         <div class="login-form">
             <div class="security-notice">
                 <i class="fas fa-shield-alt"></i>
-                <strong>Secure Login:</strong> This is a protected area. Only authorized administrators can access this panel.
+                <strong>Secure Login:</strong> This is a protected area. Only authorized administrators can access this
+                panel.
             </div>
 
             <?php if (!empty($error)): ?>
-            <div class="error-message">
-                <i class="fas fa-exclamation-triangle"></i>
-                <?php echo htmlspecialchars($error); ?>
-            </div>
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
             <?php endif; ?>
 
             <form method="POST" action="" id="loginForm">
@@ -392,16 +415,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="username">
                         <i class="fas fa-user"></i> Username
                     </label>
-                    <input type="text" id="username" name="username" required 
-                           placeholder="Enter your username" value="<?php echo $username_value; ?>">
+                    <input type="text" id="username" name="username" required placeholder="Enter your username"
+                        value="<?php echo $username_value; ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="password">
                         <i class="fas fa-lock"></i> Password
                     </label>
-                    <input type="password" id="password" name="password" required 
-                           placeholder="Enter your password">
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
                     <i class="fas fa-eye password-toggle" id="passwordToggle"></i>
                 </div>
 
@@ -419,7 +441,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-footer">
             <p><i class="fas fa-info-circle"></i> For security, sessions will expire after 2 hours of inactivity.</p>
             <p style="margin-top: 10px;">
-                <i class="fas fa-question-circle"></i> 
+                <i class="fas fa-question-circle"></i>
                 <strong>Forgot credentials?</strong> Contact system administrator
             </p>
         </div>
@@ -427,10 +449,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>
         // Password toggle functionality
-        document.getElementById('passwordToggle').addEventListener('click', function() {
+        document.getElementById('passwordToggle').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
             const toggleIcon = this;
-            
+
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleIcon.classList.remove('fa-eye');
@@ -443,23 +465,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         // Form submission with loading state
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
-            
+
             if (!username || !password) {
                 e.preventDefault();
                 alert('Please fill in all fields');
                 return;
             }
-            
+
             // Show loading overlay
             document.getElementById('loadingOverlay').style.display = 'flex';
-            
+
             // Disable form elements
             document.getElementById('loginBtn').disabled = true;
             document.getElementById('loginBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
-            
+
             // Add slight delay for better UX
             setTimeout(() => {
                 // Form will submit naturally after this timeout
@@ -467,12 +489,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         // Auto-focus username field
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('username').focus();
         });
 
         // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             // Ctrl+Enter to submit
             if (e.ctrlKey && e.key === 'Enter') {
                 document.getElementById('loginForm').submit();
@@ -480,7 +502,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         // Remember me functionality
-        document.getElementById('rememberMe').addEventListener('change', function() {
+        document.getElementById('rememberMe').addEventListener('change', function () {
             if (this.checked) {
                 localStorage.setItem('adminRememberMe', 'true');
             } else {
@@ -494,9 +516,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Security: Clear sensitive data on page unload
-        window.addEventListener('beforeunload', function() {
+        window.addEventListener('beforeunload', function () {
             document.getElementById('password').value = '';
         });
     </script>
 </body>
+
 </html>

@@ -15,7 +15,7 @@
             <!-- Navigation Menu Section -->
             <div class="col-lg-6">
                 <div class="h-100 p-3 rounded-4 position-relative"
-                    style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); z-index:100">
                     <div class="d-flex align-items-center mb-3">
                         <div class="p-3 rounded-3 me-3" style="background: linear-gradient(45deg, #3b82f6, #8b5cf6);">
                             <i class="bi bi-grid-3x3-gap text-white fs-5"></i>
@@ -71,7 +71,7 @@
             <!-- Map Section -->
             <div class="col-lg-6">
                 <div class="h-100 p-3 rounded-4 position-relative"
-                    style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); z-index:100">
                     <div class="d-flex align-items-center mb-3">
                         <div class="p-3 rounded-3 me-3" style="background: linear-gradient(45deg, #f56565, #ff8a65);">
                             <i class="bi bi-geo-alt text-white fs-5"></i>
@@ -88,7 +88,7 @@
                             </iframe> -->
                         <iframe width="100%" height="300" frameborder="0"
                             style="border:0; filter: grayscale(0.2) contrast(1.1);"
-                            src="https://maps.google.com/maps?width=600&height=400&hl=en&q=ExpoInn%20Suites%20%26%20Convention%2025-29%2C%20Knowledge%20Park%20II%2C%20Greater%20Noida%2C%20Noida%2C%20Uttar%20Pradesh&t=&z=14&ie=UTF8&iwloc=B&output=embed"
+                            src="https://maps.google.com/maps?width=600&height=400&hl=en&q=ExpoInn%20Suites%20%26%20Convention%2026-29%2C%20Knowledge%20Park%20II%2C%20Greater%20Noida%2C%20Noida%2C%20Uttar%20Pradesh&t=&z=14&ie=UTF8&iwloc=B&output=embed"
                             allowfullscreen>
 
                         </iframe>
@@ -156,12 +156,36 @@
             }
         }
 
+
         .nav-link-modern:hover {
             transform: translateY(-2px);
         }
 
         .transition-all {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #FF2D95 0%, #0096C7 100%);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 -4px 30px rgba(255, 45, 149, 0.25);
+            border-top: 2px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, #00B4D8, #00B4D8 10%, transparent 10%, transparent 20%, #00B4D8 20%, #00B4D8 30%, transparent 30%, transparent 40%, #00B4D8 40%, #00B4D8 50%, transparent 50%, transparent 60%, #00B4D8 60%, #00B4D8 70%, transparent 70%, transparent 80%, #00B4D8 80%, #00B4D8 90%, transparent 90%);
+            background-size: 3em 3em;
+            background-color: #FF2D95;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 1;
         }
     </style>
 </footer>

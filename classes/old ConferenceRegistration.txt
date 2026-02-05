@@ -12,7 +12,7 @@ class ConferenceRegistration {
     }
     
     public function createRegistration($data) {
-        $query = "INSERT INTO tblUPWIECON2025 
+        $query = "INSERT INTO tblUPWIECON2026 
                   (sEventName, sCampus, sNielit, sIEEEMember, sNationality, sEarlyBird, 
                    sCategory, sPaperId, sPaperTitle, sName, sMobile, sEmail, sPaperUpload, 
                    iAmount, sIP, dtCreated) 
@@ -66,7 +66,7 @@ class ConferenceRegistration {
     }
     
     public function getRegistrationById($id) {
-        $query = "SELECT * FROM tblUPWIECON2025 WHERE iRegId = :id";
+        $query = "SELECT * FROM tblUPWIECON2026 WHERE iRegId = :id";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -79,7 +79,7 @@ class ConferenceRegistration {
     }
     
     public function getRegistrationByEmail($email) {
-        $query = "SELECT * FROM tblUPWIECON2025 WHERE sEmail = :email LIMIT 1";
+        $query = "SELECT * FROM tblUPWIECON2026 WHERE sEmail = :email LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':email', $email);
@@ -98,7 +98,7 @@ class ConferenceRegistration {
     }
     
     public function getRegistrationByMobile($mobile) {
-        $query = "SELECT * FROM tblUPWIECON2025 WHERE sMobile = :mobile LIMIT 1";
+        $query = "SELECT * FROM tblUPWIECON2026 WHERE sMobile = :mobile LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':mobile', $mobile);
@@ -117,7 +117,7 @@ class ConferenceRegistration {
     }
     
     public function checkDuplicateRegistration($email, $mobile) {
-        $query = "SELECT iRegId, sEmail, sMobile FROM tblUPWIECON2025 
+        $query = "SELECT iRegId, sEmail, sMobile FROM tblUPWIECON2026 
                   WHERE sEmail = :email OR sMobile = :mobile LIMIT 1";
         try {
             $stmt = $this->conn->prepare($query);
@@ -220,7 +220,7 @@ class ConferenceRegistration {
             $params[':nationality'] = $filters['nationality'];
         }
         
-        $query = "SELECT * FROM tblUPWIECON2025 $whereClause 
+        $query = "SELECT * FROM tblUPWIECON2026 $whereClause 
                   ORDER BY dtCreated DESC 
                   LIMIT :limit OFFSET :offset";
         
@@ -258,7 +258,7 @@ class ConferenceRegistration {
             $params[':category'] = $filters['category'];
         }
         
-        $query = "SELECT COUNT(*) as total FROM tblUPWIECON2025 $whereClause";
+        $query = "SELECT COUNT(*) as total FROM tblUPWIECON2026 $whereClause";
         
         try {
             $stmt = $this->conn->prepare($query);
@@ -288,7 +288,7 @@ class ConferenceRegistration {
                     SUM(CASE WHEN sEarlyBird = 'Yes' THEN 1 ELSE 0 END) as early_bird_registrations,
                     SUM(iAmount) as total_registration_amount,
                     AVG(iAmount) as average_registration_amount
-                  FROM tblUPWIECON2025";
+                  FROM tblUPWIECON2026";
         
         try {
             $stmt = $this->conn->prepare($query);
@@ -324,7 +324,7 @@ class ConferenceRegistration {
     }
     
     public function updateRegistration($id, $data) {
-        $query = "UPDATE tblUPWIECON2025 SET 
+        $query = "UPDATE tblUPWIECON2026 SET 
                     sName = :sName,
                     sMobile = :sMobile,
                     sCategory = :sCategory,
@@ -359,7 +359,7 @@ class ConferenceRegistration {
     
     public function deleteRegistration($id) {
         // Soft delete - mark as deleted instead of actually deleting
-        $query = "UPDATE tblUPWIECON2025 SET 
+        $query = "UPDATE tblUPWIECON2026 SET 
                     sStatus = 'DELETED',
                     dtUpdated = NOW()
                   WHERE iRegId = :id";
@@ -376,7 +376,7 @@ class ConferenceRegistration {
     
     public function searchRegistrations($searchTerm, $limit = 20) {
         $searchTerm = '%' . $searchTerm . '%';
-        $query = "SELECT * FROM tblUPWIECON2025 
+        $query = "SELECT * FROM tblUPWIECON2026 
                   WHERE (sName LIKE :searchTerm 
                          OR sEmail LIKE :searchTerm 
                          OR sMobile LIKE :searchTerm 
@@ -398,7 +398,7 @@ class ConferenceRegistration {
     }
     
     public function getRecentRegistrations($limit = 10) {
-        $query = "SELECT * FROM tblUPWIECON2025 
+        $query = "SELECT * FROM tblUPWIECON2026 
                   WHERE (sStatus IS NULL OR sStatus != 'DELETED')
                   ORDER BY dtCreated DESC 
                   LIMIT :limit";

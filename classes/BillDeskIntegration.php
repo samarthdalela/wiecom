@@ -11,30 +11,33 @@ if (class_exists('Dotenv\Dotenv')) {
     $dotenv->load();
 }
 
-class EasebuzzIntegration {
+class EasebuzzIntegration
+{
     private $apiKey;
     private $salt;
     private $env; // 'test' or 'prod'
     private $returnUrl;
     private $conn;
     private $isTestMode;
-    
-    public function __construct($db) {
+
+    public function __construct($db)
+    {
         $this->conn = $db;
         $this->loadConfig();
     }
 
-    private function loadConfig() {
+    private function loadConfig()
+    {
         // Load configuration from environment variables
         $this->apiKey = $_ENV['EASEBUZZ_API_KEY'] ?? 'YOUR_TEST_API_KEY';
         $this->salt = $_ENV['EASEBUZZ_SALT'] ?? 'YOUR_TEST_SALT';
         $this->env = $_ENV['EASEBUZZ_ENV'] ?? 'test';
         $this->isTestMode = ($this->env === 'test');
-        
+
         // Set return URLs
         $baseUrl = $_ENV['BASE_URL'] ?? 'https://yourdomain.com';
         $this->returnUrl = $baseUrl . '/payment_response.php';
-        
+
         // Log configuration (without sensitive data)
         error_log("EaseBuzz Config Loaded - Environment: " . $this->env . ", Return URL: " . $this->returnUrl);
     }
@@ -46,17 +49,18 @@ class EasebuzzIntegration {
      * @param array $customerInfo - Customer information (name, email, mobile)
      * @return array|false - Payment request data or false on failure
      */
-    public function createPaymentRequest($orderId, $amount, $customerInfo) {
+    public function createPaymentRequest($orderId, $amount, $customerInfo)
+    {
         try {
             // Validate input parameters
             if (!$this->validateOrderId($orderId)) {
                 throw new Exception("Invalid order ID format: " . $orderId);
             }
-            
+
             if (!$this->validateAmount($amount)) {
                 throw new Exception("Invalid amount: " . $amount);
             }
-            
+
             if (!$this->validateCustomerInfo($customerInfo)) {
                 throw new Exception("Invalid customer information provided");
             }
@@ -69,14 +73,14 @@ class EasebuzzIntegration {
                 "firstname" => $this->sanitizeCustomerName($customerInfo['name'] ?? 'Customer'),
                 "email" => $customerInfo['email'] ?? 'test@test.com',
                 "phone" => $this->sanitizePhoneNumber($customerInfo['mobile'] ?? '9999999999'),
-                "productinfo" => "UPWIECON2025_REGISTRATION",
+                "productinfo" => "UPWIECON2026_REGISTRATION",
                 "surl" => $this->returnUrl, // Success URL
                 "furl" => $this->returnUrl, // Failure URL
                 "service_provider" => "payu_paisa",
-                
+
                 // Additional BillDesk-style parameters
                 "udf1" => "CONFERENCE_REG",
-                "udf2" => "UPWIECON2025",
+                "udf2" => "UPWIECON2026",
                 "udf3" => date('Y-m-d H:i:s'),
                 "udf4" => "",
                 "udf5" => "",
@@ -93,12 +97,12 @@ class EasebuzzIntegration {
 
             // Log transaction for audit trail
             $this->logTransaction($orderId, json_encode($paymentData), null, 'INITIATED');
-            
+
             // Log success
             error_log("EaseBuzz Payment Request Created - Order ID: " . $orderId . ", Amount: ₹" . $amount);
-            
+
             return $paymentData;
-            
+
         } catch (Exception $e) {
             error_log("EaseBuzz Payment Request Creation Error: " . $e->getMessage());
             error_log("Stack trace: " . $e->getTraceAsString());
@@ -111,7 +115,8 @@ class EasebuzzIntegration {
      * @param array $response - Payment gateway response
      * @return array - Standardized response format
      */
-    public function processResponse($response) {
+    public function processResponse($response)
+    {
         try {
             if (empty($response)) {
                 throw new Exception("Empty payment response received");
@@ -159,14 +164,14 @@ class EasebuzzIntegration {
 
             // Log transaction response
             $this->logTransaction($orderId, null, json_encode($response), $standardizedStatus);
-            
+
             error_log("EaseBuzz Payment Response Processed - Order ID: " . $orderId . ", Status: " . $standardizedStatus);
-            
+
             return $result;
-            
+
         } catch (Exception $e) {
             error_log("EaseBuzz Response Processing Error: " . $e->getMessage());
-            
+
             // Return error response in standardized format
             return [
                 'success' => false,
@@ -193,15 +198,16 @@ class EasebuzzIntegration {
      * @param bool $testMode - Optional test mode override
      * @return string - Payment gateway URL
      */
-    public function getPaymentUrl($testMode = null) {
+    public function getPaymentUrl($testMode = null)
+    {
         $useTestMode = $testMode !== null ? $testMode : $this->isTestMode;
-        
-        $url = $useTestMode 
+
+        $url = $useTestMode
             ? 'https://testpay.easebuzz.in/payment/initiateLink'
             : 'https://pay.easebuzz.in/payment/initiateLink';
-            
+
         error_log("EaseBuzz Payment URL: " . $url . " (Test Mode: " . ($useTestMode ? 'Yes' : 'No') . ")");
-        
+
         return $url;
     }
 
@@ -210,25 +216,26 @@ class EasebuzzIntegration {
      * @param array $data - Payment data
      * @return string - Hash string
      */
-    private function generateHashString($data) {
+    private function generateHashString($data)
+    {
         // EaseBuzz hash sequence for request
-        return $data['key'] . "|" . 
-               $data['txnid'] . "|" . 
-               $data['amount'] . "|" . 
-               $data['productinfo'] . "|" . 
-               $data['firstname'] . "|" . 
-               $data['email'] . "|" . 
-               ($data['udf1'] ?? '') . "|" . 
-               ($data['udf2'] ?? '') . "|" . 
-               ($data['udf3'] ?? '') . "|" . 
-               ($data['udf4'] ?? '') . "|" . 
-               ($data['udf5'] ?? '') . "|" . 
-               ($data['udf6'] ?? '') . "|" . 
-               ($data['udf7'] ?? '') . "|" . 
-               ($data['udf8'] ?? '') . "|" . 
-               ($data['udf9'] ?? '') . "|" . 
-               ($data['udf10'] ?? '') . "|" . 
-               $this->salt;
+        return $data['key'] . "|" .
+            $data['txnid'] . "|" .
+            $data['amount'] . "|" .
+            $data['productinfo'] . "|" .
+            $data['firstname'] . "|" .
+            $data['email'] . "|" .
+            ($data['udf1'] ?? '') . "|" .
+            ($data['udf2'] ?? '') . "|" .
+            ($data['udf3'] ?? '') . "|" .
+            ($data['udf4'] ?? '') . "|" .
+            ($data['udf5'] ?? '') . "|" .
+            ($data['udf6'] ?? '') . "|" .
+            ($data['udf7'] ?? '') . "|" .
+            ($data['udf8'] ?? '') . "|" .
+            ($data['udf9'] ?? '') . "|" .
+            ($data['udf10'] ?? '') . "|" .
+            $this->salt;
     }
 
     /**
@@ -236,34 +243,35 @@ class EasebuzzIntegration {
      * @param array $response - Payment response
      * @return bool - Hash verification result
      */
-    private function verifyResponseHash($response) {
+    private function verifyResponseHash($response)
+    {
         $receivedHash = $response['hash'] ?? '';
         if (empty($receivedHash)) {
             return false;
         }
 
         // EaseBuzz hash sequence for response (reverse order)
-        $hashSequence = $this->salt . "|" . 
-                       ($response['status'] ?? '') . "|" . 
-                       ($response['udf10'] ?? '') . "|" . 
-                       ($response['udf9'] ?? '') . "|" . 
-                       ($response['udf8'] ?? '') . "|" . 
-                       ($response['udf7'] ?? '') . "|" . 
-                       ($response['udf6'] ?? '') . "|" . 
-                       ($response['udf5'] ?? '') . "|" . 
-                       ($response['udf4'] ?? '') . "|" . 
-                       ($response['udf3'] ?? '') . "|" . 
-                       ($response['udf2'] ?? '') . "|" . 
-                       ($response['udf1'] ?? '') . "|" . 
-                       ($response['email'] ?? '') . "|" . 
-                       ($response['firstname'] ?? '') . "|" . 
-                       ($response['productinfo'] ?? '') . "|" . 
-                       ($response['amount'] ?? '') . "|" . 
-                       ($response['txnid'] ?? '') . "|" . 
-                       $this->apiKey;
+        $hashSequence = $this->salt . "|" .
+            ($response['status'] ?? '') . "|" .
+            ($response['udf10'] ?? '') . "|" .
+            ($response['udf9'] ?? '') . "|" .
+            ($response['udf8'] ?? '') . "|" .
+            ($response['udf7'] ?? '') . "|" .
+            ($response['udf6'] ?? '') . "|" .
+            ($response['udf5'] ?? '') . "|" .
+            ($response['udf4'] ?? '') . "|" .
+            ($response['udf3'] ?? '') . "|" .
+            ($response['udf2'] ?? '') . "|" .
+            ($response['udf1'] ?? '') . "|" .
+            ($response['email'] ?? '') . "|" .
+            ($response['firstname'] ?? '') . "|" .
+            ($response['productinfo'] ?? '') . "|" .
+            ($response['amount'] ?? '') . "|" .
+            ($response['txnid'] ?? '') . "|" .
+            $this->apiKey;
 
         $expectedHash = strtolower(hash('sha512', $hashSequence));
-        
+
         return hash_equals($expectedHash, strtolower($receivedHash));
     }
 
@@ -272,7 +280,8 @@ class EasebuzzIntegration {
      * @param string $status - Gateway status
      * @return string - Standardized status
      */
-    private function standardizeStatus($status) {
+    private function standardizeStatus($status)
+    {
         switch (strtolower($status)) {
             case 'success':
                 return 'SUCCESS';
@@ -294,7 +303,8 @@ class EasebuzzIntegration {
      * @param string $status - Payment status
      * @return string - Status message
      */
-    private function getStatusMessage($status) {
+    private function getStatusMessage($status)
+    {
         switch (strtolower($status)) {
             case 'success':
                 return 'Payment completed successfully';
@@ -316,11 +326,12 @@ class EasebuzzIntegration {
      * @param string $orderId - Order ID to validate
      * @return bool - Validation result
      */
-    public function validateOrderId($orderId) {
-        return !empty($orderId) && 
-               preg_match('/^[A-Za-z0-9_-]+$/', $orderId) && 
-               strlen($orderId) >= 3 && 
-               strlen($orderId) <= 50;
+    public function validateOrderId($orderId)
+    {
+        return !empty($orderId) &&
+            preg_match('/^[A-Za-z0-9_-]+$/', $orderId) &&
+            strlen($orderId) >= 3 &&
+            strlen($orderId) <= 50;
     }
 
     /**
@@ -328,11 +339,12 @@ class EasebuzzIntegration {
      * @param float $amount - Amount to validate
      * @return bool - Validation result
      */
-    public function validateAmount($amount) {
-        return is_numeric($amount) && 
-               $amount > 0 && 
-               $amount <= 1000000 && 
-               $amount >= 1;
+    public function validateAmount($amount)
+    {
+        return is_numeric($amount) &&
+            $amount > 0 &&
+            $amount <= 1000000 &&
+            $amount >= 1;
     }
 
     /**
@@ -340,12 +352,13 @@ class EasebuzzIntegration {
      * @param array $customerInfo - Customer information
      * @return bool - Validation result
      */
-    private function validateCustomerInfo($customerInfo) {
-        return !empty($customerInfo['name']) && 
-               !empty($customerInfo['email']) && 
-               !empty($customerInfo['mobile']) &&
-               filter_var($customerInfo['email'], FILTER_VALIDATE_EMAIL) &&
-               preg_match('/^[0-9]{10}$/', preg_replace('/\D/', '', $customerInfo['mobile']));
+    private function validateCustomerInfo($customerInfo)
+    {
+        return !empty($customerInfo['name']) &&
+            !empty($customerInfo['email']) &&
+            !empty($customerInfo['mobile']) &&
+            filter_var($customerInfo['email'], FILTER_VALIDATE_EMAIL) &&
+            preg_match('/^[0-9]{10}$/', preg_replace('/\D/', '', $customerInfo['mobile']));
     }
 
     /**
@@ -353,7 +366,8 @@ class EasebuzzIntegration {
      * @param string $name - Customer name
      * @return string - Sanitized name
      */
-    private function sanitizeCustomerName($name) {
+    private function sanitizeCustomerName($name)
+    {
         // Remove special characters, keep only letters, numbers, spaces
         $sanitized = preg_replace('/[^a-zA-Z0-9\s]/', '', $name);
         return substr(trim($sanitized), 0, 50) ?: 'Customer';
@@ -364,7 +378,8 @@ class EasebuzzIntegration {
      * @param string $phone - Phone number
      * @return string - Sanitized phone number
      */
-    private function sanitizePhoneNumber($phone) {
+    private function sanitizePhoneNumber($phone)
+    {
         $cleaned = preg_replace('/\D/', '', $phone);
         return strlen($cleaned) >= 10 ? substr($cleaned, -10) : '9999999999';
     }
@@ -376,7 +391,8 @@ class EasebuzzIntegration {
      * @param string $response - Response data
      * @param string $status - Transaction status
      */
-    public function logTransaction($orderId, $request = null, $response = null, $status = 'INITIATED') {
+    public function logTransaction($orderId, $request = null, $response = null, $status = 'INITIATED')
+    {
         try {
             $query = "INSERT INTO payment_transaction_log 
                       (gateway, order_id, request_data, response_data, status, created_at) 
@@ -389,7 +405,7 @@ class EasebuzzIntegration {
             $stmt->bindParam(':response_data', $response);
             $stmt->bindParam(':status', $status);
             $stmt->execute();
-            
+
         } catch (Exception $e) {
             error_log("EaseBuzz Transaction Log Error: " . $e->getMessage());
             // Don't throw exception as logging is not critical for payment flow
@@ -400,7 +416,8 @@ class EasebuzzIntegration {
      * Get configuration information (similar to BillDesk)
      * @return array - Configuration data
      */
-    public function getConfig() {
+    public function getConfig()
+    {
         return [
             'gateway' => 'EASEBUZZ',
             'api_key' => substr($this->apiKey, 0, 10) . '...', // Masked for security
@@ -416,19 +433,20 @@ class EasebuzzIntegration {
      * Debug response data (similar to BillDesk)
      * @param array $response - Response to debug
      */
-    public function debugResponse($response) {
+    public function debugResponse($response)
+    {
         if ($this->isTestMode) {
             error_log("=== EASEBUZZ DEBUG RESPONSE ===");
             error_log("Gateway: EaseBuzz");
             error_log("Environment: " . $this->env);
             error_log("Response Fields:");
-            
+
             foreach ($response as $key => $value) {
                 if ($key !== 'hash') { // Don't log hash for security
                     error_log("  [$key]: " . (is_array($value) ? json_encode($value) : $value));
                 }
             }
-            
+
             error_log("Hash Verification: " . ($this->verifyResponseHash($response) ? 'PASSED' : 'FAILED'));
             error_log("=== END EASEBUZZ DEBUG ===");
         }
@@ -439,18 +457,19 @@ class EasebuzzIntegration {
      * @param string $orderId - Order ID
      * @return array|false - Transaction details or false
      */
-    public function getTransactionStatus($orderId) {
+    public function getTransactionStatus($orderId)
+    {
         try {
             $query = "SELECT * FROM payment_transaction_log 
                       WHERE gateway = 'EASEBUZZ' AND order_id = :order_id 
                       ORDER BY created_at DESC LIMIT 1";
-            
+
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':order_id', $orderId);
             $stmt->execute();
-            
+
             return $stmt->fetch(PDO::FETCH_ASSOC);
-            
+
         } catch (Exception $e) {
             error_log("EaseBuzz Get Transaction Status Error: " . $e->getMessage());
             return false;
@@ -462,7 +481,8 @@ class EasebuzzIntegration {
      * @param string $orderId - Order ID to verify
      * @return array|false - Verification result
      */
-    public function verifyPayment($orderId) {
+    public function verifyPayment($orderId)
+    {
         // This would implement EaseBuzz's payment verification API
         // For now, return the logged transaction status
         return $this->getTransactionStatus($orderId);
@@ -554,7 +574,7 @@ class EasebuzzIntegration {
 //                 'NA',
 //                 'F',
 //                 $customerInfo['mobile'] ?? '9999999999',
-//                 'UPWIECON2025',
+//                 'UPWIECON2026',
 //                 $customerInfo['name'] ?? 'Customer',
 //                 'REGISTRATION',
 //                 $customerInfo['email'] ?? 'test@test.com',
@@ -581,20 +601,20 @@ class EasebuzzIntegration {
 //         }
 
 //         $responseArray = explode('|', $response);
-        
+
 //         // Log the response structure for debugging
 //         error_log("BillDesk Response Debug - Total fields: " . count($responseArray));
-        
+
 //         // Your actual response has 26 fields based on the example you provided
 //         if (count($responseArray) < 26) {
 //             throw new Exception("Incomplete response: expected 26 fields, got " . count($responseArray));
 //         }
 
 //         // Corrected field mapping based on your actual response format:
-//         // NIELIT|UPWIECON2025_60_1751619143|BHD58QF0PD3ATY|555109974322|1.00|HD5|NA|10|INR|DIRECT|NA|NA|0.00|04-07-2025 14:22:50|0300|NA|0789861859|UPWIECON2025|SAMARTH DALELA|REGISTRATION|samarthdalela@gmail.com|NA|NA|NA|PGS10001-Success|CCF90F2FB80201FD8E1509872F86EA3032D6ED64AB2CFB5A5CC08F4B1087F66A
-        
+//         // NIELIT|UPWIECON2026_60_1751619143|BHD58QF0PD3ATY|555109974322|1.00|HD5|NA|10|INR|DIRECT|NA|NA|0.00|04-07-2026 14:22:50|0300|NA|0789861859|UPWIECON2026|SAMARTH DALELA|REGISTRATION|samarthdalela@gmail.com|NA|NA|NA|PGS10001-Success|CCF90F2FB80201FD8E1509872F86EA3032D6ED64AB2CFB5A5CC08F4B1087F66A
+
 //         $merchantId = $responseArray[0];        // NIELIT
-//         $customerID = $responseArray[1];        // UPWIECON2025_60_1751619143 (Order ID)
+//         $customerID = $responseArray[1];        // UPWIECON2026_60_1751619143 (Order ID)
 //         $bankTxnId = $responseArray[2];         // BHD58QF0PD3ATY (Bank Transaction ID)
 //         $txnId = $responseArray[3];             // 555109974322 (Transaction ID)
 //         $txnAmount = $responseArray[4];         // 1.00 (Amount)
@@ -606,11 +626,11 @@ class EasebuzzIntegration {
 //         $field10 = $responseArray[10];          // NA
 //         $field11 = $responseArray[11];          // NA
 //         $field12 = $responseArray[12];          // 0.00
-//         $txnDate = $responseArray[13];          // 04-07-2025 14:22:50
+//         $txnDate = $responseArray[13];          // 04-07-2026 14:22:50
 //         $status = $responseArray[14];           // 0300 (ACTUAL STATUS CODE!)
 //         $field15 = $responseArray[15];          // NA
 //         $mobile = $responseArray[16];           // 0789861859
-//         $conferenceId = $responseArray[17];     // UPWIECON2025
+//         $conferenceId = $responseArray[17];     // UPWIECON2026
 //         $name = $responseArray[18];             // SAMARTH DALELA
 //         $regType = $responseArray[19];          // REGISTRATION
 //         $email = $responseArray[20];            // samarthdalela@gmail.com
@@ -664,7 +684,7 @@ class EasebuzzIntegration {
 //     private function getPaymentStatus($code) {
 //         $code = strtoupper(trim($code));
 //         error_log("BillDesk getPaymentStatus - Processing code: " . $code);
-        
+
 //         switch ($code) {
 //             case '0300':
 //             case 'SUCCESS':

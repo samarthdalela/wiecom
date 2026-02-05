@@ -7,7 +7,7 @@ echo <<<HTML
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPWIECON 2025</title>
+    <title>UPWIECON 2026</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -44,7 +44,7 @@ echo <<<HTML
         }
 
         .footer {
-            background: linear-gradient(135deg, rgba(171, 103, 186, 0.78), rgba(91, 2, 109, 0.99));
+            background: var(--gradient-pink-blue);
             backdrop-filter: blur(15px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -56,8 +56,8 @@ echo <<<HTML
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .header {
-            background: linear-gradient(135deg, rgba(228, 200, 234, 0.78), rgba(91, 2, 109, 0.99));
+        /* .header {
+            background: var(--gradient-pink-blue);
             backdrop-filter: blur(15px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -67,19 +67,19 @@ echo <<<HTML
             right: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+        } */
 
         .newText {
-            color: rgba(91, 2, 109, 0.99);
+            color: var(--primary-pink);
         }
 
         .newBg {
-            background-color: rgba(91, 2, 109, 0.99);
+            background: var(--gradient-pink-blue);
 
         }
 
         .btnNew {
-            background: rgba(91, 2, 109, 0.99);
+            background: var(--primary-pink);
         }
 
 
@@ -135,10 +135,10 @@ echo <<<HTML
         }
 
         /* Navigation - Centered */
-        .navbar {
+        /* .navbar {
             padding: 1rem 0;
-            background: #d0a8d3;
-        }
+            background: var(--light-pink);
+        } */
 
         .navbar-nav {
             display: flex;
@@ -177,9 +177,9 @@ echo <<<HTML
 
         .nav-link:hover {
             color: #ffffff !important;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-pink-blue);
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 45, 149, 0.3);
             border-color: transparent;
         }
 
@@ -200,7 +200,7 @@ echo <<<HTML
             height: 3px;
             bottom: -2px;
             left: 50%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: var(--gradient-pink-blue);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(-50%);
             border-radius: 2px;
@@ -214,7 +214,7 @@ echo <<<HTML
         .navbar-toggler {
             border: none;
             padding: 0.75rem 1rem;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            background: linear-gradient(135deg, rgba(255, 45, 149, 0.1), rgba(0, 180, 216, 0.1));
             border-radius: 12px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -618,15 +618,24 @@ echo <<<HTML
 
         /* new content styles start here */
         :root {
-            --primary-blue: rgba(70, 12, 82, 0.99);
-            --accent-blue: rgba(91, 2, 109, 0.99);
-            --light-blue: rgba(232, 217, 235, 0.99);
-            --gold: #f39c12;
-            --text-dark: #2c3e50;
+            --primary-pink: #FF2D95;
+            --primary-blue: #00B4D8;
+            --secondary-blue: #0096C7;
+            --accent-pink: #FF6FB5;
+            --deep-blue: #003459;
+            --light-pink: #FFB3D9;
+            --light-blue: #90E0EF;
+            --accent-yellow: #FFC107;
+            --dark-yellow: #FF9800;
+            --glass-white: rgba(255, 255, 255, 0.7);
+            --text-dark: #1a1a1a;
+            --gradient-pink-blue: linear-gradient(135deg, #FF2D95 0%, #00B4D8 100%);
+            --gradient-blue-pink: linear-gradient(135deg, #00B4D8 0%, #FF2D95 100%);
+            --gradient-light: linear-gradient(135deg, #FFB3D9 0%, #90E0EF 100%);
         }
 
         .committee-hero {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            background: var(--gradient-pink-blue);
             color: white;
             padding: 4rem 0;
             position: relative;
@@ -650,33 +659,34 @@ echo <<<HTML
         }
 
         .borderNW {
-            border: 2px solid var(--light-blue) !important;
+            border: 2px solid var(--primary-pink) !important;
         }
 
         .bg-light {
-            background-color: var(--light-blue) !important;
+            background-color: #f8f9fa !important;
         }
 
         .text-primary {
-            color: var(--primary-blue) !important;
+            color: var(--primary-pink) !important;
         }
 
         .btn-outline-primary {
-            color: var(--primary-blue);
-            border-color: var(--primary-blue);
+            color: var(--primary-pink);
+            border-color: var(--primary-pink);
         }
 
         .btn-outline-primary:hover {
-            background-color: var(--primary-blue);
-            border-color: var(--primary-blue);
+            background-color: var(--primary-pink);
+            border-color: var(--primary-pink);
+            color: white;
         }
 
         .border-primary {
-            border-color: var(--primary-blue) !important;
+            border-color: var(--primary-pink) !important;
         }
 
         .border-start.border-primary {
-            border-left-color: var(--primary-blue) !important;
+            border-left-color: var(--primary-pink) !important;
         }
 
         .list-group-item .bi-check-circle-fill {
@@ -684,41 +694,52 @@ echo <<<HTML
         }
 
         .alert-info {
-            background-color: var(--light-blue);
-            border-color: var(--accent-blue);
-            color: var(--text-dark);
+            background-color: #e3f2fd;
+            border-color: var(--primary-blue);
+            color: var(--deep-blue);
         }
 
         .alert-warning {
             background-color: #fff3cd;
-            border-color: var(--gold);
-            color: var(--text-dark);
+            border-color: var(--accent-yellow);
+            color: #856404;
         }
 
         .bg-warning.bg-opacity-25 {
-            background-color: rgba(243, 156, 18, 0.25) !important;
+            background-color: rgba(255, 193, 7, 0.25) !important;
         }
 
         .accordion-button:not(.collapsed) {
-            background-color: var(--light-blue);
-            color: var(--text-dark);
+            background-color: #f8f9fa;
+            color: var(--primary-pink);
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+        }
+
+        .accordion-button::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FF2D95'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FF2D95'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
         }
 
         .accordion-button:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 0.25rem rgba(91, 2, 109, 0.25);
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 0.25rem rgba(255, 45, 149, 0.25);
         }
 
         .card-header {
-            border-bottom: 1px solid var(--light-blue);
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            background-color: rgba(0,0,0,.03);
         }
 
         a {
-            color: var(--accent-blue);
+            color: var(--primary-blue);
+            text-decoration: none;
         }
 
         a:hover {
-            color: var(--primary-blue);
+            color: var(--primary-pink);
         }
 
         /* content style end herer  */
@@ -765,7 +786,7 @@ echo <<<HTML
         <!-- Header -->
 
         <!-- <div class="text-center mb-5 pb-4 border-bottom border-primary border-3">
-        <h1 class="display-4 fw-bold text-dark mb-2">UPWIECON-2025</h1>
+        <h1 class="display-4 fw-bold text-dark mb-2">UPWIECON-2026</h1>
         <p class="lead fst-italic text-muted">Instructions to Authors</p>
     </div> -->
 
@@ -776,7 +797,7 @@ echo <<<HTML
                     <span class="bg-warning bg-opacity-25 px-2 py-1 rounded fw-semibold">Manuscripts</span>,
                     which are here referred to as submissions/articles/papers are substantial pieces of academic
                     writing.
-                    Manuscripts for UPWiECon 2026 will ONLY be accepted in electronic format through Microsoft CMT
+                    Manuscripts for UPWIECON 2026 will ONLY be accepted in electronic format through Microsoft CMT
                     online submission system.
                 </p>
 
@@ -856,7 +877,7 @@ echo <<<HTML
         <!-- Note to Authors -->
         <div class="alert alert-info borderNW" role="alert">
             <h4 class="alert-heading"><i class="bi bi-info-circle me-2"></i>Note to Authors</h4>
-            <p class="mb-0">Papers submitted to UPWiECon 2026 need to include a <strong>quantitative discussion</strong>
+            <p class="mb-0">Papers submitted to UPWIECON 2026 need to include a <strong>quantitative discussion</strong>
                 related to why and how the proposed/analysed/discussed technology, concept, process etc. is a
                 significant technical improvement in its area.</p>
         </div>
@@ -867,7 +888,7 @@ echo <<<HTML
             <p class="mb-0">Papers that are principally cataloguing qualitative or managerial aspects like impact,
                 effect, case-study, rise, journey, study etc. will be insufficient to be accepted and are outside our
                 scope. Next to this, submissions focusing only on policy/decision making or economic aspects are
-                unsuitable to be accepted in UPWiECon 2026.</p>
+                unsuitable to be accepted in UPWIECON 2026.</p>
         </div>
 
         <!-- Types of Articles -->
@@ -876,7 +897,7 @@ echo <<<HTML
                 <h2 class="h4 mb-0"><i class="bi bi-journal-text me-2"></i>Types of Articles</h2>
             </div>
             <div class="card-body">
-                <p class="mb-4">UPWiECon 2026 authors can select from a variety of approaches for articles that fall
+                <p class="mb-4">UPWIECON 2026 authors can select from a variety of approaches for articles that fall
                     within the scope of this conference<span style="display:none;"> and IEEE</span>. These article types include, but are not limited to:
                 </p>
 
@@ -893,7 +914,7 @@ echo <<<HTML
                                     questions, limitations, definition of terms, referred or related work, methodology,
                                     technically in-depth investigation, details of experimental analysis, result and/or
                                     conclusion, further scope of work, references on the topic within the scope of
-                                    UPWiECon 2026<span style="display:none;"> and IEEE</span>. This may include additional materials, including figures,
+                                    UPWIECON 2026<span style="display:none;"> and IEEE</span>. This may include additional materials, including figures,
                                     tables, datasets, pictorial/graphical representations, and videos links.</p>
                             </div>
                         </div>
@@ -906,7 +927,7 @@ echo <<<HTML
                             </div>
                             <div class="card-body ">
                                 <p class="card-text text-justify">A thorough compilation and succinct summary of
-                                    research performed on the topic within the scope of UPWiECon 2026<span style="display:none;"> and IEEE</span>, in the
+                                    research performed on the topic within the scope of UPWIECON 2026<span style="display:none;"> and IEEE</span>, in the
                                     form of an electronic manuscript, which may include abstract, key words,
                                     introduction, problem statement or justification, objective, approach, significance,
                                     research questions, limitations, definition of terms, referred or related work,
@@ -957,7 +978,7 @@ echo <<<HTML
                         <div id="finalManuscript" class="accordion-collapse collapse show"
                             data-bs-parent="#acceptanceAccordion">
                             <div class="accordion-body text-justify">
-                                After the confirmation of the acceptance of the manuscript from the end of UPWiECon
+                                After the confirmation of the acceptance of the manuscript from the end of UPWIECON
                                 2026, author(s) will have to submit the final version of the manuscript which must
                                 include the suggestions/changes as per instructions/improvement mentioned by the
                                 Technical Program Committee/Program Committee Members/Reviewers in the comments, if any,
@@ -995,8 +1016,8 @@ echo <<<HTML
                         <div id="preprint" class="accordion-collapse collapse" data-bs-parent="#acceptanceAccordion">
                             <div class="accordion-body text-justify">
                                 The camera-ready-paper is here referred to as Preprint, which will be the final version
-                                of the manuscript at the end of the UPWiECon 2026. The preprint version of the eligible
-                                manuscripts will be sent<span style="display:none;"> to IEEE for inclusion in IEEE Digital Library</span>. UPWiECon 2026
+                                of the manuscript at the end of the UPWIECON 2026. The preprint version of the eligible
+                                manuscripts will be sent<span style="display:none;"> to IEEE for inclusion in IEEE Digital Library</span>. UPWIECON 2026
                                 organizing team will notify the corresponding author/author(s) with preprint copy of the
                                 manuscript via email for their consent on the final version.
                             </div>
@@ -1053,7 +1074,7 @@ echo <<<HTML
                         <h5 class="text-primary"><i class="bi bi-person-check me-2"></i>Corresponding Author Guidelines
                         </h5>
                         <p class="text-justify">The Corresponding Author is here referred to the author who will be
-                            doing the e-mail correspondence with UPWiECon 2026, irrespective of the author position in
+                            doing the e-mail correspondence with UPWIECON 2026, irrespective of the author position in
                             author sequence. In addition to the content of manuscript, Corresponding Author will solely
                             be responsible for putting the name and details of other authors/co-authors in the
                             submission manuscript.</p>
@@ -1074,8 +1095,8 @@ echo <<<HTML
 
                     <div class="col-md-6">
                         <h5 class="text-primary"><i class="bi bi-envelope me-2"></i>E-mailing and Notifications</h5>
-                        <p class="text-justify">After the submission of the manuscripts in UPWiECon 2026 authors will be
-                            notified by e-mail(s) only. UPWiECon 2026 will not be held liable for any lapses in e-mail
+                        <p class="text-justify">After the submission of the manuscripts in UPWIECON 2026 authors will be
+                            notified by e-mail(s) only. UPWIECON 2026 will not be held liable for any lapses in e-mail
                             communication, like non-receipt of mail, mail going junk/spam folder and similar glitches
                             alike.</p>
                     </div>
@@ -1144,56 +1165,56 @@ echo <<<HTML
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Paper Submission Opens</h6>
-                                            <p class="mb-0">1<sup>st</sup> February 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 1)</h6>
-                                            <p class="mb-0">28<sup>th</sup> February 2025</p>
+                                            <p class="mb-0">28<sup>th</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 2)</h6>
-                                            <p class="mb-0">31<sup>st</sup> March 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> March 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card   rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 3)</h6>
-                                            <p class="mb-0">31<sup>st</sup> May 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> May 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 4)</h6>
-                                            <p class="mb-0">31<sup>st</sup> July 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> July 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Final Submission Deadline</h6>
-                                            <p class="mb-0">30<sup>th</sup> August 2025</p>
+                                            <p class="mb-0">30<sup>th</sup> August 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Camera Ready Submission</h6>
-                                            <p class="mb-0">1<sup>st</sup> October 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> October 2026</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1204,7 +1225,7 @@ echo <<<HTML
                                             <i class="bi bi-star-fill me-2"></i>Conference Date
                                         </h4>
                                         <h3 class="display-6 fw-bold mb-0">30<sup>th</sup> - 31<sup>st</sup> October
-                                            2025
+                                            2026
                                         </h3>
                                     </div>
                                 </div>

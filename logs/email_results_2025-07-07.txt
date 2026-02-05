@@ -1,2 +1,2 @@
-2025-07-07 10:01:20 | {"timestamp":"2025-07-07 10:01:20","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
-2025-07-07 10:01:20 | {"timestamp":"2025-07-07 10:01:20","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2025_65_1751862648"}
+2026-07-07 10:01:20 | {"timestamp":"2026-07-07 10:01:20","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"PHPMailer SMTP - attempt 1","order_id":null}
+2026-07-07 10:01:20 | {"timestamp":"2026-07-07 10:01:20","to":"samarthdalela@gmail.com","status":"SUCCESS","method":"Payment confirmation email","order_id":"UPWIECON2026_65_1751862648"}

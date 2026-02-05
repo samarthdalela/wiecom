@@ -18,85 +18,36 @@ echo <<<HTML
     <style>
         .textCenter {
             text-align: justify;
-p
-        }
-
-        :root {
-            --primary-blue: rgba(70, 12, 82, 0.99);
-            --accent-blue: rgba(91, 2, 109, 0.99);
-            --light-blue: rgba(232, 217, 235, 0.99);
-            --gold: #f39c12;
-            --text-dark: #2c3e50;
-            --primarySecond: rgba(91, 2, 109, 0.99);
         }
 
         .hide-ieee, #ieee-header-logo {
             display: none !important;
         }
-       .venue-section {
+
+       /* .venue-section {
             background-image: url("images/caption.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             z-index: 10;
-        }
-        .img-fluid {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(247, 243, 247, 0.99));
-
-            backdrop-filter: blur(15px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-
-        }
-
-        .footer {
-            background: linear-gradient(135deg, rgba(171, 103, 186, 0.78), rgba(91, 2, 109, 0.99));
-            backdrop-filter: blur(15px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .header {
-            background: linear-gradient(135deg, rgba(228, 200, 234, 0.78), rgba(91, 2, 109, 0.99));
-            backdrop-filter: blur(15px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+        } */
 
         .newText {
-            color: rgba(91, 2, 109, 0.99);
+            color: var(--primary-blue);
         }
 
         .newBg {
-            background-color: rgba(91, 2, 109, 0.99);
-
+            background-color: var(--primary-blue);
         }
 
         .btnNew {
-            background: rgba(91, 2, 109, 0.99);
+            background: var(--gradient-pink-blue);
+            color: white;
+            border: none;
         }
-
 
         .header.scrolled {
             background: rgba(255, 255, 255, 0.99);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 40px rgba(255, 45, 149, 0.1);
             backdrop-filter: blur(20px);
         }
 
@@ -148,7 +99,7 @@ p
         /* Navigation - Centered */
         .navbar {
             padding: 1rem 0;
-            background: #d0a8d3;
+            /* background: #d0a8d3; */
         }
 
         .navbar-nav {
@@ -455,34 +406,36 @@ p
 
         .bgNew {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid hwb(0 100% 0% / 0.651);
-            background-color: #4b164cc1;
-            color: rgb(239, 235, 235);
+            border: 1px solid rgba(255, 45, 149, 0.2);
+            background: var(--gradient-pink-blue);
+            color: #ffffff;
             border-radius: 20px;
         }
 
         .highlight-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid hwb(0 100% 0% / 0.651);
-            background-color: #4b164cc1;
-            color: rgb(239, 235, 235);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            background: white;
+            color: var(--text-dark);
         }
 
         .highlight-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 180, 216, 0.2);
+            border-color: var(--primary-blue);
         }
 
         .highlight-cardf {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid hwb(0 100% 0% / 0.651);
-            background-color: #4b164c54;
-            color: rgb(239, 235, 235);
+            border: 1px solid rgba(255, 45, 149, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
         }
 
-        .highlight-card:hover {
+        .highlight-cardf:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(255, 45, 149, 0.2);
+            border-color: var(--primary-pink);
         }
 
         .animate-bounce {
@@ -490,63 +443,58 @@ p
         }
 
         @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-10px);
-            }
-
-            60% {
-                transform: translateY(-5px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
 
         /* About section styles */
         .about-card,
         .objective-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 180, 216, 0.1);
         }
 
         .about-card:hover,
         .objective-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.15);
+            border-color: var(--primary-blue);
         }
 
         .section-divider {
+            height: 4px;
+            background: var(--gradient-pink-blue);
+            width: 80px;
+            margin: 1rem auto;
+            border-radius: 2px;
             transition: transform 0.3s ease;
         }
 
         .section-header:hover .section-divider {
-            transform: scaleX(1.2);
+            transform: scaleX(1.5);
         }
 
         /* Date cards hover effect */
         .date-card {
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1) !important;
         }
 
         .date-card:hover {
             transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.2) !important;
+            background: rgba(255, 255, 255, 0.3) !important;
+            border-color: var(--primary-pink);
         }
 
         /* IEEE section card */
         .ieee-badge {
             transition: transform 0.3s ease;
-
         }
 
         .badge {
-            background: rgba(91, 2, 109, 0.99);
+            background: var(--gradient-pink-blue);
         }
 
         .ieee-section-card:hover .ieee-badge {
@@ -556,46 +504,31 @@ p
         /* Back to top button */
         #backToTop {
             transition: all 0.3s ease;
+            background: var(--primary-pink);
+            color: white;
         }
 
         #backToTop:hover {
             transform: scale(1.1);
+            background: var(--primary-blue);
         }
 
         /* Conference date highlight animation */
         .conference-date-highlight {
-            animation: pulse 3s infinite;
+            animation: pulse3s 3s infinite;
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+        @keyframes pulse3s {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .hero-area {
-                min-height: 90vh;
-            }
-
-            .display-3 {
-                font-size: 2.5rem;
-            }
-
-            .hero-actions .btn {
-                display: block;
-                margin: 0.5rem auto;
-                width: 80%;
-            }
+            .hero-area { min-height: 90vh; }
+            .display-3 { font-size: 2.5rem; }
+            .hero-actions .btn { display: block; margin: 0.5rem auto; width: 80%; }
         }
 
         /* Smooth link hover animations */
@@ -611,7 +544,7 @@ p
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 45, 149, 0.1), transparent);
             transition: left 0.5s;
         }
 
@@ -620,8 +553,8 @@ p
         }
 
         body47 {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, var(--light-blue), #fff);
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 50%, #f8f9fa 100%);
             padding: 10px 0;
             min-height: 100vh;
             display: flex;
@@ -641,15 +574,16 @@ p
             font-size: 2.5rem;
             margin-bottom: 50px;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .logo-scroller47 {
             overflow: hidden;
-            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(70, 12, 82, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 180, 216, 0.1);
             position: relative;
+            border: 1px solid rgba(0, 180, 216, 0.1);
         }
 
         .logo-scroller47::before,
@@ -665,19 +599,18 @@ p
 
         .logo-scroller47::before {
             left: 0;
-            background: linear-gradient(90deg, var(--primary-blue), transparent);
+            background: linear-gradient(90deg, white, transparent);
         }
 
         .logo-scroller47::after {
             right: 0;
-            background: linear-gradient(270deg, var(--accent-blue), transparent);
+            background: linear-gradient(270deg, white, transparent);
         }
 
         .logo-track47 {
             display: flex;
             animation: scroll 25s linear infinite;
-            width: calc(300px * 16);
-            /* 8 logos * 2 sets * width */
+            width: fit-content;
         }
 
         .logo-item47 {
@@ -687,8 +620,9 @@ p
             align-items: center;
             justify-content: center;
             margin: 20px;
-            background: var(--light-blue);
+            background: #fff;
             border-radius: 15px;
+            border: 1px solid rgba(255, 45, 149, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -701,7 +635,7 @@ p
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            background: linear-gradient(90deg, transparent, var(--primary-pink), transparent);
             opacity: 0.7;
             transition: left 2s ease;
         }
@@ -712,7 +646,7 @@ p
 
         .logo-item47:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(171, 103, 186, 0.4);
+            box-shadow: 0 15px 30px rgba(255, 45, 149, 0.2);
         }
 
         /* 
@@ -800,7 +734,7 @@ p
             position: absolute;
             width: 4px;
             height: 4px;
-            background: var(--gold);
+            background: var(--primary-pink);
             border-radius: 50%;
             animation: sparkle 2s infinite;
         }
@@ -824,7 +758,7 @@ p
             overflow: hidden;
             padding: 60px 0;
             position: relative;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
         }
 
@@ -842,12 +776,12 @@ p
 
         .logo-scroller10::before {
             left: 0;
-            background: linear-gradient(to right, rgba(104, 79, 109, 0.4), transparent);
+            background: linear-gradient(to right, white, transparent);
         }
 
         .logo-scroller10::after {
             right: 0;
-            background: linear-gradient(to left, rgba(104, 79, 109, 0.4), transparent);
+            background: linear-gradient(to left, white, transparent);
         }
 
         .logo-track10 {
@@ -873,7 +807,7 @@ p
 
         .logo-item10:hover {
             transform: translateY(-10px) scale(1.1);
-            filter: brightness(1.2);
+            filter: drop-shadow(0 10px 20px rgba(255, 45, 149, 0.2));
         }
 
         .logo10 {
@@ -894,8 +828,8 @@ p
 
         .logo10:hover {
             background: rgba(255, 255, 255, 1);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
-            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 12px 48px rgba(255, 45, 149, 0.15);
+            border-color: var(--primary-pink);
         }
 
         .logo10 img {
@@ -1050,15 +984,15 @@ p
             }
         }
 
-        .hero-section100 {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        .committee-hero {
+            background: var(--gradient-pink-blue);
             color: white;
             padding: 4rem 0;
             position: relative;
             overflow: hidden;
         }
 
-        .hero-section100::before {
+        .committee-hero::before {
             content: '';
             position: absolute;
             top: 0;
@@ -1069,40 +1003,15 @@ p
             opacity: 0.3;
         }
 
+        .committee-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
         .hero-content100 {
             position: relative;
             z-index: 2;
             animation: fadeInUp100 1s ease-out;
-        }
-
-        @keyframes fadeInUp100 {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .main-title100 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: titleGlow100 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes titleGlow100 {
-            from {
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            }
-
-            to {
-                text-shadow: 2px 2px 20px rgba(255, 255, 255, 0.3);
-            }
         }
 
         .subtitle100 {
@@ -1511,24 +1420,21 @@ p
 
     <body class="">
         <!-- Hero Section -->
-        <section class="hero-section100">
+        <section class="committee-hero">
             <div class="container">
-                <div class="hero-content100 text-center">
-                    <h1 class="main-title100">InnovateHer-2026</h1>
-                    <p class="subtitle100">STAR Project Competition - Empowering Girls Through Innovation for a
-                        Sustainable Future</p>
-                    <div class="conference-badge100">
-                        <i class="bi bi-calendar-event me-2"></i>
-                        Will be Hosted during UPWIECON 2026 | Noida, India
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 class="display-4 fw-bold mb-3">
+                            <i class="fas fa-rocket me-3"></i>
+                            InnovateHer-2026
+                        </h1>
+                        <h2 class="h3 mb-3">STAR Project Competition - Empowering Girls Through Innovation for a Sustainable Future</h2>
+                        <div class="conference-badge100">
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Will be Hosted during UPWIECON 2026 | Noida, India
+                        </div>
                     </div>
-                    <!-- <div class="sponsor-compact mt-4">
-    <span class="sponsor-label ">Sponsored By</span>
-    <div class="sponsor-logo-wrapper">
-        <img src="./images/academiQ.jpeg" alt="AcademiQ Logo" class="sponsor-img">
-    </div>
-</div>
-
-                </div> -->
+                </div>
             </div>
         </section>
     <section class="section100">
@@ -1720,14 +1626,14 @@ p
 
                             <div class="alert alert-warning">
                                 <strong><i class="bi bi-calendar-x me-2"></i>Submission Deadline:</strong> October 10<sup>th</sup>,
-                                2025
+                                2026
                             </div>
                         </div>
 <div class="flex">
     <a href="https://forms.gle/Z3XEPE8KNjrAgPZu7" target="_blank" class="btn-primary100 m-2">
         <i class="bi bi-link-45deg me-2"></i>Register Now
     </a>
-   <a href="./Recommendation Letter Format for InnovateHer2025.docx" target="_blank" class="btn-primary100 m-2" download>
+   <a href="./Recommendation Letter Format for InnovateHer2026.docx" target="_blank" class="btn-primary100 m-2" download>
                         <i class="bi bi-file-earmark-arrow-down"></i> Recommendation Letter Format
                     </a>
 </div>
@@ -1740,13 +1646,13 @@ p
                 <!-- Stage 2 -->
                 <div class="card100 animate-on-scroll100">
                     <h3 class="text-primary mb-3"><i class="bi bi-2-circle-fill me-2"></i>Stage 2: Final Presentation @
-                        UPWIECON 2025</h3>
+                        UPWIECON 2026</h3>
                     <div class="row">
                         <div class="col-md-8">
                             <ul>
                                 <li><strong>Top 3 teams</strong> from each category will be selected for the final round
                                 </li>
-                                <li>Teams will display and present their projects at <strong>UPWIECON2025</strong></li>
+                                <li>Teams will display and present their projects at <strong>UPWIECON2026</strong></li>
                                 <li><strong>1 team from each category</strong> will be selected as winner</li>
                             </ul>
                         </div>
@@ -1768,43 +1674,43 @@ p
                 <div class="timeline100">
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">15th June 2025</div>
+                            <div class="timeline-date100">15th June 2026</div>
                             <h5>Proposal Launch</h5>
                             <p>Official announcement and call for participation</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">15th July 2025</div>
+                            <div class="timeline-date100">15th July 2026</div>
                             <h5>School Outreach & Registrations</h5>
                             <p>Active outreach to schools and registration period begins</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">10th October 2025</div>
+                            <div class="timeline-date100">10th October 2026</div>
                             <h5>Video Submissions Deadline</h5>
                             <p>Final deadline for Stage 1 submissions</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">19th October 2025</div>
+                            <div class="timeline-date100">19th October 2026</div>
                             <h5>Jury Evaluation & Selection</h5>
                             <p>Expert panel evaluates and selects finalists</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">20th October 2025</div>
+                            <div class="timeline-date100">20th October 2026</div>
                             <h5>Finalist Announcement</h5>
                             <p>Selected teams are notified and announced</p>
                         </div>
                     </div>
                     <div class="timeline-item100 animate-on-scroll100">
                         <div class="timeline-content100">
-                            <div class="timeline-date100">31st October 2025</div>
-                            <h5>Project Display at UPWIECON2025</h5>
+                            <div class="timeline-date100">31st October 2026</div>
+                            <h5>Project Display at UPWIECON2026</h5>
                             <p>Final presentations and winner selection</p>
                         </div>
                     </div>
@@ -1979,7 +1885,7 @@ p
             <div class="container text-center">
                 <div class="animate-on-scroll100">
                     <h2 class="section-title100">Ready to Innovate?</h2>
-                    <p class="lead mb-4">Join InnovateHer-2025 and be part of the change towards a sustainable future!
+                    <p class="lead mb-4">Join InnovateHer-2026 and be part of the change towards a sustainable future!
                     </p>
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
                         <a href="https://forms.gle/Z3XEPE8KNjrAgPZu7" target="_blank" class="btn-primary100">
@@ -1991,7 +1897,7 @@ p
                     </div>
                     <br>
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <!-- <a href="./Recommendation Letter Format for InnovateHer2025.docx" target="_blank" class="btn-primary100" download>
+                    <!-- <a href="./Recommendation Letter Format for InnovateHer2026.docx" target="_blank" class="btn-primary100" download>
                         <i class="bi bi-file-earmark-arrow-down"></i>Download Recommendation Letter Format
                     </a> -->
           </div>
@@ -2005,12 +1911,12 @@ p
             <div class="container text-center">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>InnovateHer-2025</h3>
+                        <h3>InnovateHer-2026</h3>
                         <p class="mb-3">Empowering Girls Through Innovation for a Sustainable Future</p>
                         <div class="d-flex justify-content-center gap-4 mb-3">
                             <div>
                                 <i class="bi bi-calendar-event"></i>
-                                <span class="ms-2">October 30-31, 2025</span>
+                                <span class="ms-2">October 30-31, 2026</span>
                             </div>
                             <div>
                                 <i class="bi bi-geo-alt"></i>
@@ -2019,7 +1925,7 @@ p
                         </div>
                         <p class="small opacity-75">
                             Organized under <span class="hide-ieee">IEEE</span> Student-Teacher and Research Engineer/Scientist (STAR) Program<br>
-                            <span class="hide-ieee">IEEE</span> UP Section WiE Affinity Group | UPWIECON 2025
+                            <span class="hide-ieee">IEEE</span> UP Section WiE Affinity Group | UPWIECON 2026
                         </p>
                     </div>
                 </div>
@@ -2079,56 +1985,56 @@ p
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Paper Submission Opens</h6>
-                                            <p class="mb-0">1<sup>st</sup> February 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 1)</h6>
-                                            <p class="mb-0">28<sup>th</sup> February 2025</p>
+                                            <p class="mb-0">28<sup>th</sup> February 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  backdrop-blur rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 2)</h6>
-                                            <p class="mb-0">31<sup>st</sup> March 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> March 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card   rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 3)</h6>
-                                            <p class="mb-0">31<sup>st</sup> May 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> May 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card  rounded-3 p-4 highlight-cardf">
                                             <h6 class="fw-bold text-warning mb-2">Rolling Acceptance (Round 4)</h6>
-                                            <p class="mb-0">31<sup>st</sup> July 2025</p>
+                                            <p class="mb-0">31<sup>st</sup> July 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Final Submission Deadline</h6>
-                                            <p class="mb-0">30<sup>th</sup> August 2025</p>
+                                            <p class="mb-0">30<sup>th</sup> August 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Early Bird Registration</h6>
-                                            <p class="mb-0">1<sup>st</sup> September 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> September 2026</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="date-card highlight-cardf rounded-3 p-4">
                                             <h6 class="fw-bold text-warning mb-2">Camera Ready Submission</h6>
-                                            <p class="mb-0">1<sup>st</sup> October 2025</p>
+                                            <p class="mb-0">1<sup>st</sup> October 2026</p>
                                         </div>
                                     </div>
                                 </div>
@@ -2139,7 +2045,7 @@ p
                                             <i class="bi bi-star-fill me-2"></i>Conference Date
                                         </h4>
                                         <h3 class="display-6 fw-bold mb-0">30<sup>th</sup> - 31<sup>st</sup> October
-                                            2025
+                                            2026
                                         </h3>
                                     </div>
                                 </div>

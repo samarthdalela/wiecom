@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-md-4">
                                 <p class="banner-info wow fadeInUp" data-wow-duration="1.5s" data-wow-delay="500ms">
-                                    1<sup>st</sup> February - 15<sup>th</sup> October 2025</p>
+                                    1<sup>st</sup> February - 15<sup>th</sup> October 2026</p>
                                 <h1 class="banner-title wow fadeInUp" data-wow-duration="1.5s" data-wow-delay="700ms">
                                     NIELIT</h1>
                             </div>
@@ -76,7 +76,7 @@
                     </h2>
                     <p class="text-justify">
                         The IEEE Uttar Pradesh Section Women in Engineering International Conference on Electrical
-                        Electronics and Computer Engineering <b>(UPWIECON 2025)"</b> is a top-level International
+                        Electronics and Computer Engineering <b>(UPWIECON 2026)"</b> is a top-level International
                         Conference covering broad topics in the areas of Electrical, Computer and Electronics
                         Engineering, will be organized this year by NIELIT Dehradun, India. <b>UPWIECON</b> conference
                         is the flagship Conference of IEEE UP Section Wie Affinity Group. This conference will provide
@@ -111,7 +111,7 @@
             </h2>
             <p class="text-justify">
                 IEEE Uttar Pradesh Section Women in Engineering International Conference on Electrical Electronics and
-                Computer Engineering (UPWIECON 2025) is being organized with the prime objective of bringing together
+                Computer Engineering (UPWIECON 2026) is being organized with the prime objective of bringing together
                 research scholars, practicing scientists, and industrialists from across the world, and from a wide
                 spectrum of engineering and management domains, especially for women (but not limited to) onto a common
                 platform for the following outcome:
@@ -451,17 +451,17 @@
                         <!--<p><a href="registration.php" class="footer-btn1">Registration</a> | <a href="callforpaper.php" class="footer-btn1">Call for Paper</a></p>-->
                         <p><b>IMPORTANT DATES:</b></p>
                         <p>
-                            Paper Submission Opens on: 1<sup>st</sup> February 2025<br>
-                            Rolling Acceptance (Round 1): 28 <sup>th</sup> February 2025<br>
-                            Rolling Acceptance (Round 2): 31<sup>st</sup> March 2025<br>
-                            Rolling Acceptance (Round 3): 31<sup>st</sup> May 2025<br>
-                            Rolling Acceptance (Round 4): 31<sup>st</sup> July 2025<br>
-                            Final Paper Submission Deadline: 30<sup>th</sup> August 2025<br>
-                            Rolling Acceptance (Round 5): 15 <sup>th</sup> September 2025<br>
-                            Early Bird Registration Deadline*: 1 <sup>st</sup> September 2025<br>
-                            Camera Ready Submission: 1<sup>st</sup> October 2025<br>
-                            Late Registration (with extra fee) Deadline: 15 <sup>th</sup> October 2025<br><br>
-                            <strong>Conference Date: 30<sup>th</sup>-31<sup>st</sup> October 2025</strong><br>
+                            Paper Submission Opens on: 1<sup>st</sup> February 2026<br>
+                            Rolling Acceptance (Round 1): 28 <sup>th</sup> February 2026<br>
+                            Rolling Acceptance (Round 2): 31<sup>st</sup> March 2026<br>
+                            Rolling Acceptance (Round 3): 31<sup>st</sup> May 2026<br>
+                            Rolling Acceptance (Round 4): 31<sup>st</sup> July 2026<br>
+                            Final Paper Submission Deadline: 30<sup>th</sup> August 2026<br>
+                            Rolling Acceptance (Round 5): 15 <sup>th</sup> September 2026<br>
+                            Early Bird Registration Deadline*: 1 <sup>st</sup> September 2026<br>
+                            Camera Ready Submission: 1<sup>st</sup> October 2026<br>
+                            Late Registration (with extra fee) Deadline: 15 <sup>th</sup> October 2026<br><br>
+                            <strong>Conference Date: 30<sup>th</sup>-31<sup>st</sup> October 2026</strong><br>
                             <strong>*Papers Accepted in Round 1,2 and 3 of Rolling Acceptance will be asked to pay
                                 registration fee early</strong><br>
                         </p>
@@ -478,16 +478,16 @@
     <!-- footer start-->
     <?php include 'footer.php'; ?>
 
-<!-- Specific Scripts -->
-<script src="js/jquery.js"></script>
-<script src="js/jquery.appear.min.js"></script>
-<script src="js/jquery.jCounter.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/isotope.pkgd.min.js"></script>
-<script src="js/main.js"></script>
+    <!-- Specific Scripts -->
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.appear.min.js"></script>
+    <script src="js/jquery.jCounter.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/main.js"></script>
 
-</body>
+    </body>
 
-</html>
+    </html>

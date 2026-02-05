@@ -155,7 +155,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPWIECON 2025 - Payment Result</title>
+    <title>UPWIECON 2026 - Payment Result</title>
     <style>
     * {
         margin: 0;
@@ -364,7 +364,7 @@ try {
 <body>
     <div class="result-container">
         <div class="conference-header">
-            <h1>UPWIECON 2025</h1>
+            <h1>UPWIECON 2026</h1>
             <p>IEEE Uttar Pradesh Women in Engineering Conference</p>
         </div>
 
@@ -486,11 +486,11 @@ try {
         <div style="margin-top: 30px;">
             <?php if ($responseData['status'] === 'SUCCESS'): ?>
             <a href="Default.php" class="btn btn-primary">Return to Home</a>
-            <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Registration Confirmation&body=Registration ID: <?php echo $registrationDetails['iRegId']; ?>%0AOrder ID: <?php echo $responseData['order_id']; ?>"
+            <a href="mailto:support@upwiecon2026.org?subject=UPWIECON2026 Registration Confirmation&body=Registration ID: <?php echo $registrationDetails['iRegId']; ?>%0AOrder ID: <?php echo $responseData['order_id']; ?>"
                 class="btn btn-secondary">Contact Support</a>
             <?php else: ?>
             <a href="registrationform.php" class="btn btn-primary">Try Again</a>
-            <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Payment Issue&body=Order ID: <?php echo $responseData['order_id']; ?>%0ATransaction ID: <?php echo $responseData['transaction_id']; ?>"
+            <a href="mailto:support@upwiecon2026.org?subject=UPWIECON2026 Payment Issue&body=Order ID: <?php echo $responseData['order_id']; ?>%0ATransaction ID: <?php echo $responseData['transaction_id']; ?>"
                 class="btn btn-secondary">Contact Support</a>
             <?php endif; ?>
         </div>
@@ -511,7 +511,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPWIECON 2025 - Payment Error</title>
+    <title>UPWIECON 2026 - Payment Error</title>
     <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -581,7 +581,7 @@ try {
             Reference ID: <?php echo date('YmdHis') . '_' . substr(md5($e->getMessage()), 0, 8); ?>
         </p>
         <a href="registrationform.php" class="btn">Try Again</a>
-        <a href="mailto:support@upwiecon2025.org?subject=UPWIECON2025 Payment Processing Error&body=Reference ID: <?php echo date('YmdHis') . '_' . substr(md5($e->getMessage()), 0, 8); ?>"
+        <a href="mailto:support@upwiecon2026.org?subject=UPWIECON2026 Payment Processing Error&body=Reference ID: <?php echo date('YmdHis') . '_' . substr(md5($e->getMessage()), 0, 8); ?>"
             class="btn btn-secondary">Contact Support</a>
     </div>
 </body>
@@ -593,7 +593,7 @@ try {
 // Helper functions for production email fallbacks
 function sendProductionEmail($registrationDetails, $responseData) {
     $to = $registrationDetails['sEmail'];
-    $subject = "UPWIECON 2025 - Payment " . $responseData['status'];
+    $subject = "UPWIECON 2026 - Payment " . $responseData['status'];
     
     $message = "Dear " . $registrationDetails['sName'] . ",\n\n";
     $message .= "Payment Status: " . $responseData['status'] . "\n";
@@ -603,9 +603,9 @@ function sendProductionEmail($registrationDetails, $responseData) {
     $message .= "Amount: ₹" . number_format($responseData['amount'], 2) . "\n\n";
     
     if ($responseData['status'] === 'SUCCESS') {
-        $message .= "Your registration for UPWIECON 2025 is confirmed!\n\n";
+        $message .= "Your registration for UPWIECON 2026 is confirmed!\n\n";
         $message .= "Conference Details:\n";
-        $message .= "- Event: IEEE Uttar Pradesh Women in Engineering Conference 2025\n";
+        $message .= "- Event: IEEE Uttar Pradesh Women in Engineering Conference 2026\n";
         $message .= "- Registration Category: " . $registrationDetails['sCategory'] . "\n";
         $message .= "- IEEE Member: " . $registrationDetails['sIEEEMember'] . "\n";
         if (!empty($registrationDetails['ieee_id'])) {
@@ -616,30 +616,30 @@ function sendProductionEmail($registrationDetails, $responseData) {
         $message .= "Your payment could not be processed. Please try again or contact support.\n\n";
     }
     
-    $message .= "Best regards,\nUPWIECON 2025 Organizing Committee\n";
-    $message .= "Email: support@upwiecon2025.org";
+    $message .= "Best regards,\nUPWIECON 2026 Organizing Committee\n";
+    $message .= "Email: support@upwiecon2026.org";
     
-    $headers = "From: UPWIECON 2025 <noreply@upwiecon2025.org>\r\n";
-    $headers .= "Reply-To: support@upwiecon2025.org\r\n";
+    $headers = "From: UPWIECON 2026 <noreply@upwiecon2026.org>\r\n";
+    $headers .= "Reply-To: support@upwiecon2026.org\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    $headers .= "X-Mailer: UPWIECON2025 Production System\r\n";
+    $headers .= "X-Mailer: UPWIECON2026 Production System\r\n";
     
     return mail($to, $subject, $message, $headers);
 }
 
 function sendProductionFallbackEmail($registrationDetails, $responseData) {
     $to = $registrationDetails['sEmail'];
-    $subject = "UPWIECON 2025 - Payment " . $responseData['status'] . " [Ref: " . $responseData['order_id'] . "]";
+    $subject = "UPWIECON 2026 - Payment " . $responseData['status'] . " [Ref: " . $responseData['order_id'] . "]";
     
     $message = "<html><body style='font-family: Arial, sans-serif;'>";
     $message .= "<div style='max-width: 600px; margin: 0 auto; padding: 20px;'>";
-    $message .= "<h2 style='color: #460C52; border-bottom: 2px solid #460C52; padding-bottom: 10px;'>UPWIECON 2025</h2>";
+    $message .= "<h2 style='color: #460C52; border-bottom: 2px solid #460C52; padding-bottom: 10px;'>UPWIECON 2026</h2>";
     $message .= "<p>Dear " . htmlspecialchars($registrationDetails['sName']) . ",</p>";
     
     if ($responseData['status'] === 'SUCCESS') {
         $message .= "<div style='background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0;'>";
         $message .= "<h3 style='margin: 0 0 10px 0;'>✓ Payment Successful!</h3>";
-        $message .= "<p style='margin: 0;'>Your registration for UPWIECON 2025 has been confirmed.</p>";
+        $message .= "<p style='margin: 0;'>Your registration for UPWIECON 2026 has been confirmed.</p>";
         $message .= "</div>";
     } else {
         $message .= "<div style='background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 5px; margin: 20px 0;'>";
@@ -656,15 +656,15 @@ function sendProductionFallbackEmail($registrationDetails, $responseData) {
     $message .= "<tr><td style='border: 1px solid #ddd; padding: 8px; font-weight: bold;'>Status:</td><td style='border: 1px solid #ddd; padding: 8px;'>" . htmlspecialchars($responseData['status']) . "</td></tr>";
     $message .= "</table>";
     
-    $message .= "<p style='margin-top: 30px;'>Best regards,<br><strong>UPWIECON 2025 Organizing Committee</strong></p>";
-    $message .= "<p style='font-size: 12px; color: #666; margin-top: 20px;'>For support, contact: support@upwiecon2025.org</p>";
+    $message .= "<p style='margin-top: 30px;'>Best regards,<br><strong>UPWIECON 2026 Organizing Committee</strong></p>";
+    $message .= "<p style='font-size: 12px; color: #666; margin-top: 20px;'>For support, contact: support@upwiecon2026.org</p>";
     $message .= "</div></body></html>";
     
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: UPWIECON 2025 <noreply@upwiecon2025.org>\r\n";
-    $headers .= "Reply-To: support@upwiecon2025.org\r\n";
-    $headers .= "X-Mailer: UPWIECON2025 Production System\r\n";
+    $headers .= "From: UPWIECON 2026 <noreply@upwiecon2026.org>\r\n";
+    $headers .= "Reply-To: support@upwiecon2026.org\r\n";
+    $headers .= "X-Mailer: UPWIECON2026 Production System\r\n";
     
     return mail($to, $subject, $message, $headers);
 }

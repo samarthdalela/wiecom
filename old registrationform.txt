@@ -50,7 +50,7 @@ function isOptionSelected($name, $value)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPWIECON 2025 Registration</title>
+    <title>UPWIECON 2026 Registration</title>
     <style>
         :root {
             --primary-blue: rgba(70, 12, 82, 0.99);
@@ -543,7 +543,7 @@ function isOptionSelected($name, $value)
 
     <div class="registration-container">
         <div class="form-header">
-            <h1><i class="fas fa-graduation-cap"></i> UPWIECON 2025</h1>
+            <h1><i class="fas fa-graduation-cap"></i> UPWIECON 2026</h1>
             <p>IEEE Uttar Pradesh Women in Engineering Conference - Registration Form</p>
         </div>
 
@@ -735,11 +735,11 @@ function isOptionSelected($name, $value)
                             <div class="radio-group">
                                 <div class="radio-option">
                                     <input type="radio" id="earlyBirdYes" name="rdbEarlyBird" value="1" <?php echo isRadioSelected('rdbEarlyBird', '1'); ?> onchange="calculateAmount()">
-                                    <label for="earlyBirdYes">Yes (Before Aug 1, 2025)</label>
+                                    <label for="earlyBirdYes">Yes (Before Aug 1, 2026)</label>
                                 </div>
                                 <div class="radio-option">
                                     <input type="radio" id="earlyBirdNo" name="rdbEarlyBird" value="2" <?php echo isRadioSelected('rdbEarlyBird', '2'); ?> onchange="calculateAmount()">
-                                    <label for="earlyBirdNo">Regular (After Aug 1, 2025)</label>
+                                    <label for="earlyBirdNo">Regular (After Aug 1, 2026)</label>
                                 </div>
                             </div>
                         </div>
@@ -943,12 +943,12 @@ function isOptionSelected($name, $value)
         const pricingMatrix = {
             // Format: "category_earlybird_nationality_ieeemember_professionalstatus"
             // Category: 1=Presenter, 2=Listener, 3=Ph.D. Colloquium
-            // Early Bird: 1=Yes (Before 1 Aug 2025), 2=No (After 1-Aug-2025)
+            // Early Bird: 1=Yes (Before 1 Aug 2026), 2=No (After 1-Aug-2026)
             // Nationality: 1=Indian, 2=Foreign
             // IEEE Member: 1=Yes, 2=No
             // Professional Status: 1=Academic/Professional, 2=Student
 
-            // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
+            // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2026) - ACADEMIC/PROFESSIONAL ==========
             "1_1_1_1_1": 9000.00, // Presenter, Early Bird, Indian, IEEE Member, Academic/Professional
             "1_1_1_2_1": 10000.00, // Presenter, Early Bird, Indian, Non-IEEE, Academic/Professional
             "2_1_1_1_1": 4000.00, // Listener, Early Bird, Indian, IEEE Member, Academic/Professional
@@ -956,7 +956,7 @@ function isOptionSelected($name, $value)
             "3_1_1_1_1": 2500.00, // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Academic/Professional
             "3_1_1_2_1": 2500.00, // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Academic/Professional
 
-            // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
+            // ========== INDIAN DELEGATES - EARLY BIRD (Before 1 Aug 2026) - STUDENT ==========
             "1_1_1_1_2": 7000.00, // Presenter, Early Bird, Indian, IEEE Member, Student
             "1_1_1_2_2": 8000.00, // Presenter, Early Bird, Indian, Non-IEEE, Student
             "2_1_1_1_2": 3000.00, // Listener, Early Bird, Indian, IEEE Member, Student
@@ -964,7 +964,7 @@ function isOptionSelected($name, $value)
             "3_1_1_1_2": 2500.00, // Ph.D. Colloquium, Early Bird, Indian, IEEE Member, Student
             "3_1_1_2_2": 2500.00, // Ph.D. Colloquium, Early Bird, Indian, Non-IEEE, Student
 
-            // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2025) - ACADEMIC/PROFESSIONAL ==========
+            // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2026) - ACADEMIC/PROFESSIONAL ==========
             "1_2_1_1_1": 10000.00, // Presenter, Regular, Indian, IEEE Member, Academic/Professional
             "1_2_1_2_1": 11000.00, // Presenter, Regular, Indian, Non-IEEE, Academic/Professional
             "2_2_1_1_1": 5000.00, // Listener, Regular, Indian, IEEE Member, Academic/Professional
@@ -972,7 +972,7 @@ function isOptionSelected($name, $value)
             "3_2_1_1_1": 2500.00, // Ph.D. Colloquium, Regular, Indian, IEEE Member, Academic/Professional
             "3_2_1_2_1": 2500.00, // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Academic/Professional
 
-            // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
+            // ========== INDIAN DELEGATES - REGULAR (After 1-Aug-2026) - STUDENT ==========
             "1_2_1_1_2": 8000.00, // Presenter, Regular, Indian, IEEE Member, Student
             "1_2_1_2_2": 9000.00, // Presenter, Regular, Indian, Non-IEEE, Student
             "2_2_1_1_2": 4000.00, // Listener, Regular, Indian, IEEE Member, Student
@@ -980,7 +980,7 @@ function isOptionSelected($name, $value)
             "3_2_1_1_2": 2500.00, // Ph.D. Colloquium, Regular, Indian, IEEE Member, Student
             "3_2_1_2_2": 2500.00, // Ph.D. Colloquium, Regular, Indian, Non-IEEE, Student
 
-            // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - ACADEMIC/PROFESSIONAL ==========
+            // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2026) - ACADEMIC/PROFESSIONAL ==========
             // // Note: Converting USD to INR at approximate rate of USD 1 = INR 86
             // "1_1_2_1_1": 25722.00, // Presenter, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 300)
             // "1_1_2_2_1": 344.00, // Presenter, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 400)
@@ -989,7 +989,7 @@ function isOptionSelected($name, $value)
             // "3_1_2_1_1": 10750.00, // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Academic/Professional (USD 100)
             // "3_1_2_2_1": 12900.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Academic/Professional (USD 100)
 
-            // // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
+            // // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2026) - STUDENT ==========
             // "1_1_2_1_2": 20640.00, // Presenter, Early Bird, Foreign, IEEE Member, Student (USD 200)
             // "1_1_2_2_2": 25800.00, // Presenter, Early Bird, Foreign, Non-IEEE, Student (USD 300)
             // "2_1_2_1_2": 10320.00, // Listener, Early Bird, Foreign, IEEE Member, Student (USD 100)
@@ -997,7 +997,7 @@ function isOptionSelected($name, $value)
             // "3_1_2_1_2": 8600.00,  // Ph.D. Colloquium, Early Bird, Foreign, IEEE Member, Student (USD 100)
             // "3_1_2_2_2": 10320.00, // Ph.D. Colloquium, Early Bird, Foreign, Non-IEEE, Student (USD 100)
 
-            // // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - ACADEMIC/PROFESSIONAL ==========
+            // // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2026) - ACADEMIC/PROFESSIONAL ==========
             // "1_2_2_1_1": 30100.00, // Presenter, Regular, Foreign, IEEE Member, Academic/Professional (USD 350)
             // "1_2_2_2_1": 38700.00, // Presenter, Regular, Foreign, Non-IEEE, Academic/Professional (USD 450)
             // "2_2_2_1_1": 17200.00, // Listener, Regular, Foreign, IEEE Member, Academic/Professional (USD 200)
@@ -1005,7 +1005,7 @@ function isOptionSelected($name, $value)
             // "3_2_2_1_1": 12900.00, // Ph.D. Colloquium, Regular, Foreign, IEEE Member, Academic/Professional (USD 100)
             // "3_2_2_2_1": 15480.00, // Ph.D. Colloquium, Regular, Foreign, Non-IEEE, Academic/Professional (USD 100)
 
-            // // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
+            // // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2026) - STUDENT ==========
             // "1_2_2_1_2": 25800.00, // Presenter, Regular, Foreign, IEEE Member, Student (USD 250)
             // "1_2_2_2_2": 30100.00, // Presenter, Regular, Foreign, Non-IEEE, Student (USD 350)
             // "2_2_2_1_2": 12900.00, // Listener, Regular, Foreign, IEEE Member, Student (USD 150)
@@ -1019,7 +1019,7 @@ function isOptionSelected($name, $value)
             "3_1_2_1_1": 8573.00, // USD 100
             "3_1_2_2_1": 8573.00, // USD 100
 
-            // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2025) - STUDENT ==========
+            // ========== FOREIGN DELEGATES - EARLY BIRD (Before 1 Aug 2026) - STUDENT ==========
             "1_1_2_1_2": 17146.00, // USD 200
             "1_1_2_2_2": 25719.00, // USD 300
             "2_1_2_1_2": 8573.00, // USD 100
@@ -1027,7 +1027,7 @@ function isOptionSelected($name, $value)
             "3_1_2_1_2": 8573.00, // USD 100
             "3_1_2_2_2": 8573.00, // USD 100
 
-            // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - ACADEMIC/PROFESSIONAL ==========
+            // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2026) - ACADEMIC/PROFESSIONAL ==========
             "1_2_2_1_1": 30005.50, // USD 350
             "1_2_2_2_1": 38578.50, // USD 450
             "2_2_2_1_1": 17146.00, // USD 200
@@ -1035,7 +1035,7 @@ function isOptionSelected($name, $value)
             "3_2_2_1_1": 8573.00, // USD 100
             "3_2_2_2_1": 8573.00, // USD 100
 
-            // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2025) - STUDENT ==========
+            // ========== FOREIGN DELEGATES - REGULAR (After 1-Aug-2026) - STUDENT ==========
             "1_2_2_1_2": 21432.50, // USD 250
             "1_2_2_2_2": 30005.50, // USD 350
             "2_2_2_1_2": 12859.50, // USD 150
