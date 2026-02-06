@@ -1,6 +1,6 @@
 <section class="venue-section py-5">
-    <section class="py-5"
-        style="background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px), linear-gradient(135deg, rgba(255, 45, 149, 0.35), rgba(0, 210, 255, 0.35)); background-size: 20px 20px, 100% 100%; color: white; backdrop-filter: blur(4px);">
+    <section class="py-5 bg-criss-cross"
+        style="background: linear-gradient(135deg, rgba(255, 45, 149, 0.35), rgba(0, 210, 255, 0.35)); color: white; backdrop-filter: blur(4px);">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
@@ -98,7 +98,7 @@
                             </div>
 
                             <div class="conference-date-highlight mt-5">
-                                <div class="rounded-4 p-4 d-inline-block"
+                                <div class="rounded-4 p-4 d-inline-block bg-criss-cross"
                                     style="background: var(--gradient-pink-blue); color: white; border: none; box-shadow: 0 8px 25px rgba(255, 45, 149, 0.4);">
                                     <h4 class="fw-bold mb-2">
                                         <i class="bi bi-star-fill me-2"></i>Conference Date

@@ -48,6 +48,26 @@
         padding: 25px 30px;
         color: #fff !important;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .bgNew::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='cross' width='12' height='12' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 0 L12 12 M12 0 L0 12' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23cross)'/%3E%3C/svg%3E");
+        opacity: 0.35;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .bgNew > * {
+        position: relative;
+        z-index: 2;
     }
 
     .bgNew h1 {
@@ -170,7 +190,7 @@
                             19-20 November 2026
                         </span>
                     </div>
-                    <div class="bgNew">
+                    <div class="bgNew ">
 
                         <h1 class="display-3 fw-bold  text-shadow">
                             UPWIECON 2026
@@ -479,8 +499,7 @@
                     </div>
 
                     <div class="col-lg-12">
-                        <div class="objective-card text-white rounded-4 shadow-lg p-4"
-                            style="background: var(--gradient-pink-blue) !important; border: none;">
+                        <div class="objective-card text-white rounded-4 shadow-lg p-4 bgNew" style="">
                             <div class="objective-icon text-white mb-3">
                                 <i class="bi bi-heart-fill display-5" style="color: white !important;"></i>
                             </div>
