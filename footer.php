@@ -88,11 +88,10 @@
                             </iframe> -->
                         <iframe width="100%" height="300" frameborder="0"
                             style="border:0; filter: grayscale(0.2) contrast(1.1);"
-                            src="https://maps.google.com/maps?width=600&height=400&hl=en&q=ExpoInn%20Suites%20%26%20Convention%2026-29%2C%20Knowledge%20Park%20II%2C%20Greater%20Noida%2C%20Noida%2C%20Uttar%20Pradesh&t=&z=14&ie=UTF8&iwloc=B&output=embed"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d64466.72926827137!2d77.44967196808709!3d28.46156567521656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cc1d95ad7e3df%3A0xd205216f488558f3!2sINDIA%20EXPO%20CENTRE%20%26%20MART!5e0!3m2!1sen!2sin!4v1770354809196!5m2!1sen!2sin"
                             allowfullscreen>
 
                         </iframe>
-
                         <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.2482095580162!2d77.99284937556311!3d30.286994774802288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092b87b417273f%3A0xfb79cf6738499266!2sNIELIT%20Dehradun!5e0!3m2!1sen!2sin!4v1748493195158!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
 
                         <div class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none"
@@ -104,10 +103,11 @@
                         <div class="d-flex align-items-start mb-1">
                             <i class="bi bi-building me-2 mt-1" style="color: #3b82f6;"></i>
                             <div>
-                                <p class="mb-1 text-white fw-medium">ExpoInn Suites & Convention </p>
+                                <p class="mb-1 text-white fw-medium">INDIA EXPO CENTRE & MART </p>
                                 <p class="mb-0 small" style="color: #cbd5e1;">
                                     <i class="bi bi-pin-map me-1" style="color: #f56565;"></i>
-                                    25-29, Knowledge Park II, Greater Noida, Noida, Uttar Pradesh
+                                    Plot No. 23-25 & 27-29, Knowledge Park-II, Gautam Buddha Nagar, Greater Noida -
+                                    201306
                                 </p>
                             </div>
                         </div>

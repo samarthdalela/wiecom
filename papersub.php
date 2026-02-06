@@ -1251,7 +1251,7 @@ echo <<<HTML
 
     <!-- Back to Top Button -->
     <button class="btn btn-warning position-fixed bottom-0 end-0 m-4 rounded-circle p-3 shadow-lg" id="backToTop"
-        style="z-index: 999; display: none; width: 60px; height: 60px;">
+        style="z-index: 9999; display: none; width: 60px; height: 60px;">
         <i class="bi bi-arrow-up newText"></i>
     </button>
 

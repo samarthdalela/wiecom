@@ -13,8 +13,8 @@
 
                         <div class="venue-info highlight-cardf backdrop-blur rounded-4 p-5 mb-5">
                             <h3 class="h4 fw-bold text-white mb-3">
-                                ExpoInn Suites & Convention 25-29, Knowledge Park II, Greater Noida, Noida, Uttar
-                                Pradesh</h3>
+                                INDIA EXPO CENTRE & MART, Plot No. 23-25 & 27-29, Knowledge Park-II, Gautam Buddha
+                                Nagar, Greater Noida - 201306</h3>
                             <div class="contact-info">
                                 <!-- <p class="mb-2">
                                     <i class="bi bi-envelope-fill me-2"></i>
