@@ -224,7 +224,8 @@
                         <i class="fas fa-map-marked-alt me-3"></i>
                         VENUE INFORMATION
                     </h1>
-                    <p class="lead mb-0">UPWIECON 2026 | Noida, India</p>
+                    <p class="lead mb-0"> INDIA EXPO CENTRE & MART, Plot No. 23-25 & 27-29, Knowledge Park-II, Gautam
+                        Buddha Nagar, Greater Noida - 201306</p>
                 </div>
             </div>
         </div>

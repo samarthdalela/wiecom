@@ -1,6 +1,13 @@
 <section class="venue-section py-5">
-    <section class="py-5 bg-criss-cross"
-        style="background: linear-gradient(135deg, rgba(255, 45, 149, 0.35), rgba(0, 210, 255, 0.35)); color: white; backdrop-filter: blur(4px);">
+    <section class="py-5 hero-overlay " style=" color: white;  
+        backdrop-filter: blur(4px);
+        background-color: transparent !important;
+        background-image:
+            radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px),
+            linear-gradient(135deg, rgba(255, 45, 150, 0.42), rgba(0, 208, 255, 0.44)) !important;
+        background-size: 20px 20px, 100% 100%;
+        backdrop-filter: blur(5px);
+    } ">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">

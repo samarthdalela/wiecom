@@ -16,7 +16,7 @@ if (!class_exists('ConferenceRegistration')) {
         public function createRegistration($data)
         {
             // ✅ UPDATED: Include IEEE ID in the insert query
-            $query = "INSERT INTO tblupwiecon2026 
+            $query = "INSERT INTO tblupwiecon2025
                   (sEventName, sCampus, sNielit, sIEEEMember, ieee_id, sNationality, sEarlyBird, 
                    sCategory, sPaperId, sPaperTitle, sName, sMobile, sEmail, sPaperUpload, 
                    iAmount, sIP, dtCreated) 
@@ -75,7 +75,7 @@ if (!class_exists('ConferenceRegistration')) {
 
         public function getRegistrationById($id)
         {
-            $query = "SELECT * FROM tblupwiecon2026 WHERE iRegId = :id";
+            $query = "SELECT * FROM tblupwiecon2025 WHERE iRegId = :id";
             try {
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -90,8 +90,8 @@ if (!class_exists('ConferenceRegistration')) {
         // ALTER TABLE tblupwiecon2026 DROP INDEX unique_email;
         public function getRegistrationByEmail($email)
         {
-            $query = "SELECT u.* FROM tblupwiecon2026 u 
-                  JOIN tblupwiecon2026payment p ON u.iRegId = p.RefId 
+            $query = "SELECT u.* FROM tblupwiecon2025 u 
+                  JOIN tblupwiecon2025payment p ON u.iRegId = p.RefId 
                   WHERE u.sEmail = :email AND p.payment_status = 'SUCCESS' 
                   LIMIT 1;";
 
@@ -113,7 +113,7 @@ if (!class_exists('ConferenceRegistration')) {
         }
         public function getRegistrationByMobile($mobile)
         {
-            $query = "SELECT * FROM tblupwiecon2026 WHERE sMobile = :mobile LIMIT 1";
+            $query = "SELECT * FROM tblupwiecon2025 WHERE sMobile = :mobile LIMIT 1";
             try {
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindParam(':mobile', $mobile);
@@ -134,7 +134,7 @@ if (!class_exists('ConferenceRegistration')) {
         // ✅ NEW: Method to check registration by IEEE ID
         public function getRegistrationByIEEEId($ieeeId)
         {
-            $query = "SELECT * FROM tblupwiecon2026 WHERE ieee_id = :ieee_id LIMIT 1";
+            $query = "SELECT * FROM tblupwiecon2025 WHERE ieee_id = :ieee_id LIMIT 1";
             try {
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindParam(':ieee_id', $ieeeId);
@@ -154,7 +154,7 @@ if (!class_exists('ConferenceRegistration')) {
 
         public function checkDuplicateRegistration($email, $mobile)
         {
-            $query = "SELECT iRegId, sEmail, sMobile FROM tblupwiecon2026 
+            $query = "SELECT iRegId, sEmail, sMobile FROM tblupwiecon2025 
                   WHERE sEmail = :email OR sMobile = :mobile LIMIT 1";
             try {
                 $stmt = $this->conn->prepare($query);
@@ -198,7 +198,7 @@ if (!class_exists('ConferenceRegistration')) {
                 $params[':ieee_id'] = $ieeeId;
             }
 
-            $query = "SELECT iRegId, sEmail, sMobile, ieee_id FROM tblupwiecon2026 
+            $query = "SELECT iRegId, sEmail, sMobile, ieee_id FROM tblupwiecon2025
                   WHERE " . implode(' OR ', $conditions) . " LIMIT 1";
 
             try {
@@ -314,7 +314,7 @@ if (!class_exists('ConferenceRegistration')) {
                 $params[':ieee_id'] = '%' . $filters['ieee_id'] . '%';
             }
 
-            $query = "SELECT * FROM tblupwiecon2026 $whereClause 
+            $query = "SELECT * FROM tblupwiecon2025 $whereClause 
                   ORDER BY dtCreated DESC 
                   LIMIT :limit OFFSET :offset";
 
@@ -359,7 +359,7 @@ if (!class_exists('ConferenceRegistration')) {
                 $params[':ieee_id'] = '%' . $filters['ieee_id'] . '%';
             }
 
-            $query = "SELECT COUNT(*) as total FROM tblupwiecon2026 $whereClause";
+            $query = "SELECT COUNT(*) as total FROM tblupwiecon2025 $whereClause";
 
             try {
                 $stmt = $this->conn->prepare($query);
@@ -392,7 +392,7 @@ if (!class_exists('ConferenceRegistration')) {
                     SUM(CASE WHEN sEarlyBird = 'Yes' THEN 1 ELSE 0 END) as early_bird_registrations,
                     SUM(iAmount) as total_registration_amount,
                     AVG(iAmount) as average_registration_amount
-                  FROM tblupwiecon2026";
+                  FROM tblupwiecon2025";
 
             try {
                 $stmt = $this->conn->prepare($query);
@@ -436,7 +436,7 @@ if (!class_exists('ConferenceRegistration')) {
         public function updateRegistration($id, $data)
         {
             // ✅ UPDATED: Include IEEE ID in update query
-            $query = "UPDATE tblupwiecon2026 SET 
+            $query = "UPDATE tblupwiecon2025 SET 
                     sName = :sName,
                     sMobile = :sMobile,
                     sCategory = :sCategory,
@@ -474,7 +474,7 @@ if (!class_exists('ConferenceRegistration')) {
         public function deleteRegistration($id)
         {
             // Soft delete - mark as deleted instead of actually deleting
-            $query = "UPDATE tblupwiecon2026 SET 
+            $query = "UPDATE tblupwiecon2025 SET 
                     sStatus = 'DELETED',
                     dtUpdated = NOW()
                   WHERE iRegId = :id";
@@ -493,7 +493,7 @@ if (!class_exists('ConferenceRegistration')) {
         {
             $searchTerm = '%' . $searchTerm . '%';
             // ✅ UPDATED: Include IEEE ID in search
-            $query = "SELECT * FROM tblupwiecon2026 
+            $query = "SELECT * FROM tblupwiecon2025
                   WHERE (sName LIKE :searchTerm 
                          OR sEmail LIKE :searchTerm 
                          OR sMobile LIKE :searchTerm 
@@ -517,7 +517,7 @@ if (!class_exists('ConferenceRegistration')) {
 
         public function getRecentRegistrations($limit = 10)
         {
-            $query = "SELECT * FROM tblupwiecon2026 
+            $query = "SELECT * FROM tblupwiecon2025
                   WHERE (sStatus IS NULL OR sStatus != 'DELETED')
                   ORDER BY dtCreated DESC 
                   LIMIT :limit";
@@ -650,7 +650,7 @@ if (!class_exists('ConferenceRegistration')) {
         public function getIEEEMembersWithIds($limit = 50, $offset = 0)
         {
             $query = "SELECT iRegId, sName, sEmail, ieee_id, sCategory, dtCreated 
-                  FROM tblupwiecon2026 
+                  FROM tblupwiecon2025 
                   WHERE sIEEEMember = 'Yes' 
                     AND ieee_id IS NOT NULL 
                     AND ieee_id != ''
@@ -674,7 +674,7 @@ if (!class_exists('ConferenceRegistration')) {
         public function getIEEEMembersWithoutIds($limit = 50, $offset = 0)
         {
             $query = "SELECT iRegId, sName, sEmail, sCategory, dtCreated 
-                  FROM tblupwiecon2026 
+                  FROM tblupwiecon2025 
                   WHERE sIEEEMember = 'Yes' 
                     AND (ieee_id IS NULL OR ieee_id = '')
                     AND (sStatus IS NULL OR sStatus != 'DELETED')
@@ -705,7 +705,7 @@ if (!class_exists('ConferenceRegistration')) {
             }
 
             // Uniqueness validation
-            $query = "SELECT iRegId, sName, sEmail FROM tblupwiecon2026 
+            $query = "SELECT iRegId, sName, sEmail FROM tblupwiecon2025
                   WHERE ieee_id = :ieee_id";
 
             if ($excludeRegistrationId) {
@@ -740,7 +740,7 @@ if (!class_exists('ConferenceRegistration')) {
         // ✅ NEW: Update only IEEE ID for existing registration
         public function updateIEEEId($registrationId, $ieeeId)
         {
-            $query = "UPDATE tblupwiecon2026 SET 
+            $query = "UPDATE tblupwiecon2025 SET 
                     ieee_id = :ieee_id,
                     dtUpdated = NOW()
                   WHERE iRegId = :registration_id";
@@ -775,7 +775,7 @@ if (!class_exists('ConferenceRegistration')) {
                     SUM(CASE WHEN sCategory = 'Student' AND sIEEEMember = 'Yes' THEN 1 ELSE 0 END) as ieee_student,
                     SUM(CASE WHEN sNationality = 'Indian' AND sIEEEMember = 'Yes' THEN 1 ELSE 0 END) as ieee_indian,
                     SUM(CASE WHEN sNationality = 'Foreign' AND sIEEEMember = 'Yes' THEN 1 ELSE 0 END) as ieee_foreign
-                  FROM tblupwiecon2026 
+                  FROM tblupwiecon2025
                   WHERE sIEEEMember = 'Yes' 
                     AND (sStatus IS NULL OR sStatus != 'DELETED')";
 
@@ -829,7 +829,7 @@ if (!class_exists('ConferenceRegistration')) {
             $this->conn->beginTransaction();
 
             try {
-                $query = "UPDATE tblupwiecon2026 SET 
+                $query = "UPDATE tblupwiecon2025 SET 
                         ieee_id = :ieee_id,
                         dtUpdated = NOW()
                       WHERE iRegId = :registration_id";

@@ -65,7 +65,7 @@
         z-index: 1;
     }
 
-    .bgNew > * {
+    .bgNew>* {
         position: relative;
         z-index: 2;
     }
@@ -372,8 +372,8 @@
                             <p class="text-muted" style="text-align: justify; text-justify: inter-word;">
                                 Organized by NIELIT Noida, India, <strong>UPWIECON</strong> is the flagship
                                 Conference of
-                                <!-- <span>IEEE UP Section </span> -->
-                                WIE Affinity Group, providing an excellent platform
+                                <!-- <span>IEEE UP Section 
+                                WIE Affinity Group,</span> --> providing an excellent platform
                                 for researchers to present their work and connect with the global research
                                 community.
                             </p>

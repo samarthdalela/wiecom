@@ -803,7 +803,8 @@ echo <<<HTML
                 </p>
 
                 <div class="d-grid gap-2 d-md-block mb-3">
-                    <a href="https://cmt3.research.microsoft.com/" class="btn btn-outline-primary btn-lg"
+                    <!-- <a href="https://cmt3.research.microsoft.com/" class="btn btn-outline-primary btn-lg" -->
+                    <a href="#" class="btn btn-outline-primary btn-lg"
                         target="_blank">
                         <i class="bi bi-file-earmark-text me-2"></i>Submit via Microsoft CMT
                     </a>

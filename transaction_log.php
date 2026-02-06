@@ -11,8 +11,8 @@ $database = new Database();
 $conn = $database->connect();
 
 $sql = "SELECT p.*, r.* 
-        FROM tblupwiecon2026payment p 
-        JOIN tblupwiecon2026 r ON p.RefId = r.iRegId 
+        FROM tblupwiecon2025payment p 
+        JOIN tblupwiecon2025 r ON p.RefId = r.iRegId 
         ORDER BY p.iPaymentId DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();

@@ -66,10 +66,10 @@ class EasebuzzIntegration
                 "firstname" => $sanitizedName,
                 "email" => $sanitizedEmail,
                 "phone" => $sanitizedPhone,
-                "productinfo" => "UPWIECON2026 Registration",
+                "productinfo" => "UPWIECON2025 Registration",
                 "surl" => $this->returnUrl,
                 "furl" => $this->returnUrl,
-                "udf1" => "UPWIECON2026",
+                "udf1" => "UPWIECON2025",
                 "udf2" => "CONFERENCE",
                 "udf3" => date('Y-m-d'),
                 "udf4" => "",
@@ -156,7 +156,7 @@ class EasebuzzIntegration
             CURLOPT_TIMEOUT => 10,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_USERAGENT => 'UPWIECON2026-URLTest/1.0'
+            CURLOPT_USERAGENT => 'UPWIECON2025-URLTest/1.0'
         ]);
 
         $response = curl_exec($curl);
@@ -209,7 +209,7 @@ class EasebuzzIntegration
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/x-www-form-urlencoded',
-                'User-Agent: UPWIECON2026-System/1.0'
+                'User-Agent: UPWIECON2025-System/1.0'
             ],
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
@@ -311,10 +311,10 @@ class EasebuzzIntegration
             "firstname" => $sanitizedName,
             "email" => $sanitizedEmail,
             "phone" => $sanitizedPhone,
-            "productinfo" => "UPWIECON2026 Registration",
+            "productinfo" => "UPWIECON2025 Registration",
             "surl" => $this->returnUrl,
             "furl" => $this->returnUrl,
-            "udf1" => "UPWIECON2026",
+            "udf1" => "UPWIECON2025",
             "udf2" => "CONFERENCE",
             "udf3" => date('Y-m-d'),
             "udf4" => "",

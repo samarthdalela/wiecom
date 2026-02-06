@@ -115,11 +115,11 @@
                                 style="background:white">
                         </a>
                     </div>
-                    <div class="logo-container">
+                    <!-- <div class="logo-container">
                         <a class="navbar-brand" href="Default.php">
                             <img src="images/ieee_up.jpg" alt="UPWIECON 2026 Logo" class="logo-img img-fluid">
                         </a>
-                    </div>
+                    </div> -->
                     <!-- <div class="logo-container">
                         <a class="navbar-brand" href="Default.php">
                             <img src="images/ieee_logo.jpg" alt="Conference Logo" class="logo-img img-fluid">

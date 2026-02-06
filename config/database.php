@@ -5,7 +5,7 @@ if (!class_exists('Database')) {
     {
         private $host = 'localhost';
         private $port = '3306'; // ✅ Custom MySQL port
-        private $db_name = 'upwiecon2026_registration';
+        private $db_name = 'upwiecon2025_registration';
         private $username = 'upwieconuser';
         private $password = 'Nielit@123';
         private $conn;

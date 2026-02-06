@@ -73,14 +73,14 @@ class EasebuzzIntegration
                 "firstname" => $this->sanitizeCustomerName($customerInfo['name'] ?? 'Customer'),
                 "email" => $customerInfo['email'] ?? 'test@test.com',
                 "phone" => $this->sanitizePhoneNumber($customerInfo['mobile'] ?? '9999999999'),
-                "productinfo" => "UPWIECON2026_REGISTRATION",
+                "productinfo" => "UPWIECON2025_REGISTRATION",
                 "surl" => $this->returnUrl, // Success URL
                 "furl" => $this->returnUrl, // Failure URL
                 "service_provider" => "payu_paisa",
 
                 // Additional BillDesk-style parameters
                 "udf1" => "CONFERENCE_REG",
-                "udf2" => "UPWIECON2026",
+                "udf2" => "UPWIECON2025",
                 "udf3" => date('Y-m-d H:i:s'),
                 "udf4" => "",
                 "udf5" => "",

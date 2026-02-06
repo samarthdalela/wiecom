@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 $database = new Database();
 $conn = $database->connect();
 
-$sql = "SELECT * from tblupwiecon2026
+$sql = "SELECT * from tblupwiecon2025
         ORDER BY iRegId DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
